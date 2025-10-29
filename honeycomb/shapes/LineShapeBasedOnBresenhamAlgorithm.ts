@@ -1,13 +1,14 @@
 import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File LineShapeBasedOnBresenhamAlgorithm.ts created am_empty
 // Date of creation Mon Oct 20 2025 09:32:47 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineShapeBasedOnBresenhamAlgorithm')
-export class LineShapeBasedOnBresenhamAlgorithm extends Shape<Location>
+export class LineShapeBasedOnBresenhamAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -27,9 +28,10 @@ export class LineShapeBasedOnBresenhamAlgorithm extends Shape<Location>
 
 
 
-    constructor(startPos:Vec3, endPos:Vec3)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                startPos:Vec3, endPos:Vec3)
     {
-        super();
+        super(locationConstructor);
         
         /* const dx:number = Math.abs(endPos.x - startPos.x);
         const dy:number = Math.abs(endPos.y - startPos.y);
@@ -78,10 +80,7 @@ export class LineShapeBasedOnBresenhamAlgorithm extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

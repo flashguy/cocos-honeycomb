@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 import { Position } from '../enums/Position';
 import { Grid } from '../abstractions/Grid';
 const { ccclass } = _decorator;
@@ -9,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Tue Oct 21 2025 21:47:45 GMT+0300 (Москва, стандартное время),
 
 @ccclass('HexagonFlatShape')
-export class HexagonFlatShape extends Shape<Location>
+export class HexagonFlatShape<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,9 +29,10 @@ export class HexagonFlatShape extends Shape<Location>
 
 
 
-    constructor(grid:Grid, centerPos:Vec3, radius:number, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                grid:Grid, centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
         
         if (radius <= 0)
         {
@@ -108,10 +109,7 @@ export class HexagonFlatShape extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

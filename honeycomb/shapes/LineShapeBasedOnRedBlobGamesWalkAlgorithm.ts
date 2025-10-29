@@ -1,6 +1,7 @@
 import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/line-drawing/
@@ -8,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 08:25:37 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineShapeBasedOnRedBlobGamesWalkAlgorithm')
-export class LineShapeBasedOnRedBlobGamesWalkAlgorithm extends Shape<Location>
+export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -28,9 +29,10 @@ export class LineShapeBasedOnRedBlobGamesWalkAlgorithm extends Shape<Location>
 
 
 
-    constructor(startPos:Vec3, endPos:Vec3)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                startPos:Vec3, endPos:Vec3)
     {
-        super();
+        super(locationConstructor);
 
         const dx:number = endPos.x - startPos.x;
         const dy:number = endPos.y - startPos.y;
@@ -65,10 +67,7 @@ export class LineShapeBasedOnRedBlobGamesWalkAlgorithm extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

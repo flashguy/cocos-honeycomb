@@ -1,6 +1,6 @@
 import { _decorator, Vec3 } from 'cc';
-import { Location } from '../locations/Location';
 import { Shape } from '../abstractions/Shape';
+import { ILocation } from '../locations/ILocation';
 import { Grid } from '../abstractions/Grid';
 import { Position } from '../enums/Position';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
@@ -11,7 +11,7 @@ const { ccclass } = _decorator;
 // Date of creation Thu Oct 23 2025 14:27:35 GMT+0300 (Москва, стандартное время),
 
 @ccclass('SpiralShiftedShape')
-export class SpiralShiftedShape extends Shape<Location>
+export class SpiralShiftedShape<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -31,9 +31,10 @@ export class SpiralShiftedShape extends Shape<Location>
 
 
 
-    constructor(grid:Grid, centerPos:Vec3, radius:number, startSpiralDirection:Position, clockwise:boolean)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                grid:Grid, centerPos:Vec3, radius:number, startSpiralDirection:Position, clockwise:boolean)
     {
-        super();
+        super(locationConstructor);
         
         if (grid instanceof HalfShiftedGrid)
         {
@@ -231,10 +232,7 @@ export class SpiralShiftedShape extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

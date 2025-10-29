@@ -1,17 +1,17 @@
 import { _decorator, Component, Node, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
 import { Grid } from '../abstractions/Grid';
 import { Position } from '../enums/Position';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
+import { ILocation } from '../locations/ILocation';
 const { ccclass } = _decorator;
 
 // File TriangleShape.ts created am_empty
 // Date of creation Thu Oct 23 2025 21:43:38 GMT+0300 (Москва, стандартное время),
 
 @ccclass('TriangleShape')
-export class TriangleShape extends Shape<Location>
+export class TriangleShape<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -31,9 +31,10 @@ export class TriangleShape extends Shape<Location>
 
 
 
-    constructor(grid:Grid, startPos:Vec3, distance:number, directionTo:Position)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                grid:Grid, startPos:Vec3, distance:number, directionTo:Position)
     {
-        super()
+        super(locationConstructor)
 
         if (grid instanceof HalfShiftedGrid)
         {
@@ -178,10 +179,7 @@ export class TriangleShape extends Shape<Location>
     // protected methods
     // -----------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

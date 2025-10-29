@@ -1,15 +1,16 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 import { HMath } from '../utils/HMath';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File LineCubeShapeBasedOnGetRedBlobGamesAlgorithm.ts created am_empty
 // Date of creation Wed Oct 22 2025 10:45:43 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineCubeShapeBasedOnGetRedBlobGamesAlgorithm')
-export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm extends Shape<Location>
+export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,9 +30,10 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm extends Shape<Location
 
 
 
-    constructor(grid:Grid, startPos:Vec3, endPos:Vec3)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                grid:Grid, startPos:Vec3, endPos:Vec3)
     {
-        super();
+        super(locationConstructor);
 
         const distance:number = grid.getDistance(startPos, endPos);
         const step:number = 1.0 / Math.max(distance, 1);
@@ -51,10 +53,7 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm extends Shape<Location
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

@@ -1,13 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File CircleShapeBasedOnMidpointAlgorithm.ts created am_empty
 // Date of creation Wed Oct 15 2025 22:39:11 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnMidpointAlgorithm')
-export class CircleShapeBasedOnMidpointAlgorithm extends Shape<Location>
+export class CircleShapeBasedOnMidpointAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -25,9 +26,10 @@ export class CircleShapeBasedOnMidpointAlgorithm extends Shape<Location>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(centerPos:Vec3, radius:number, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
         
         if (radius <= 0)
         {
@@ -87,10 +89,7 @@ export class CircleShapeBasedOnMidpointAlgorithm extends Shape<Location>
     // protected methods
     // -----------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

@@ -1,13 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File CircleShapeBasedOnBresenhamAlgorithm.ts created am_empty
 // Date of creation Wed Oct 15 2025 21:53:03 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnBresenhamAlgorithm')
-export class CircleShapeBasedOnBresenhamAlgorithm extends Shape<Location>
+export class CircleShapeBasedOnBresenhamAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -25,9 +26,10 @@ export class CircleShapeBasedOnBresenhamAlgorithm extends Shape<Location>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(centerPos:Vec3, radius:number, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
         
         let x:number = -radius;
         let y:number = 0;
@@ -77,10 +79,7 @@ export class CircleShapeBasedOnBresenhamAlgorithm extends Shape<Location>
     // protected methods
     // -----------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+
 
     // --------------
     // public methods

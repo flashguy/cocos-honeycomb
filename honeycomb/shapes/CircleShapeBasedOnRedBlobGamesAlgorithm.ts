@@ -1,6 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/circle-drawing/
@@ -8,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 07:54:58 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnRedBlobGamesAlgorithm')
-export class CircleShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
+export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -26,9 +27,10 @@ export class CircleShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(centerPos:Vec3, radius:number, smooth:boolean = false, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                centerPos:Vec3, radius:number, smooth:boolean = false, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
 
         const distancef:number = radius + (smooth ? 0.5 : 0);
 
@@ -72,10 +74,7 @@ export class CircleShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

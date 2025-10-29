@@ -1,14 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Position } from '../enums/Position';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 const { ccclass } = _decorator;
 
 // File RectangleShape.ts created am_empty
 // Date of creation Tue Jun 10 2025 22:23:30 GMT+0300 (Москва, стандартное время),
 
 @ccclass('RectangleShape')
-export class RectangleShape extends Shape<Location>
+export class RectangleShape<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -30,10 +30,10 @@ export class RectangleShape extends Shape<Location>
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
 
-    // TODO: Добавить сортировку ячеек по разным направлениям использовать index в Location E:\projects\as3\Honeycomb-Grid-Explorer4\src\honeycomb\math\PointsSorter.as
-    constructor(columns:number, rows:number, startPos:Vec3, directionTo:Position, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                columns:number, rows:number, startPos:Vec3, directionTo:Position, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
 
         this._columns = columns;
         this._rows = rows;
@@ -141,11 +141,6 @@ export class RectangleShape extends Shape<Location>
     // -----------------
     // protected methods
     // -----------------
-
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
 
     // --------------
     // public methods

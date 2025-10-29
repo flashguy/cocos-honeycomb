@@ -1,5 +1,5 @@
 import { _decorator, v3, Vec3 } from 'cc';
-import { Location } from './Location';
+import { ILocation } from './ILocation';
 const { ccclass } = _decorator;
 
 // File LocationSorter.ts created am_empty
@@ -13,7 +13,7 @@ export class LocationSorter
      * |3|4|5|
      * |6|7|8|
      */
-    public static LT_RT_B(a:Location, b:Location):number
+    public static LT_RT_B(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return 1;
@@ -33,7 +33,7 @@ export class LocationSorter
      * |3|4|5|
      * |0|1|2|
      */
-    public static LB_RB_T(a:Location, b:Location):number
+    public static LB_RB_T(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return -1;
@@ -53,7 +53,7 @@ export class LocationSorter
      * |5|4|3|
      * |2|1|0|
      */
-    public static RB_LB_T(a:Location, b:Location):number
+    public static RB_LB_T(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return -1;
@@ -73,7 +73,7 @@ export class LocationSorter
      * |5|4|3|
      * |8|7|6|
      */
-    public static RT_LT_B(a:Location, b:Location):number
+    public static RT_LT_B(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return 1;
@@ -93,7 +93,7 @@ export class LocationSorter
      * |1|4|7|
      * |0|3|6|
      */
-    public static LB_LT_R(a:Location, b:Location):number
+    public static LB_LT_R(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x < b.gridPos.x)
             return -1;
@@ -113,7 +113,7 @@ export class LocationSorter
      * |1|4|7|
      * |2|5|8|
      */
-    public static LT_LB_R(a:Location, b:Location):number
+    public static LT_LB_R(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x < b.gridPos.x)
             return -1;
@@ -133,7 +133,7 @@ export class LocationSorter
      * |7|4|1|
      * |8|5|2|
      */
-    public static RT_RB_L(a:Location, b:Location):number
+    public static RT_RB_L(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x > b.gridPos.x)
             return -1;
@@ -153,7 +153,7 @@ export class LocationSorter
      * |7|4|1|
      * |6|3|0|
      */
-    public static RB_RT_L(a:Location, b:Location):number
+    public static RB_RT_L(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x > b.gridPos.x)
             return -1;
@@ -173,7 +173,7 @@ export class LocationSorter
      * |3|4|5|
      * |2|1|0|
      */
-    public static ZIGZAG_RB_LB_T(a:Location, b:Location):number
+    public static ZIGZAG_RB_LB_T(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return -1;
@@ -193,7 +193,7 @@ export class LocationSorter
      * |5|4|3|
      * |0|1|2|
      */
-    public static ZIGZAG_LB_RB_T(a:Location, b:Location):number
+    public static ZIGZAG_LB_RB_T(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return -1;
@@ -213,7 +213,7 @@ export class LocationSorter
      * |5|4|3|
      * |6|7|8|
      */
-    public static ZIGZAG_LT_RT_B(a:Location, b:Location):number
+    public static ZIGZAG_LT_RT_B(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return 1;
@@ -233,7 +233,7 @@ export class LocationSorter
      * |3|4|5|
      * |8|7|6|
      */
-    public static ZIGZAG_RT_LT_B(a:Location, b:Location):number
+    public static ZIGZAG_RT_LT_B(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.y < b.gridPos.y)
             return 1;
@@ -253,7 +253,7 @@ export class LocationSorter
      * |1|4|7|
      * |2|3|8|
      */
-    public static ZIGZAG_LT_LB_R(a:Location, b:Location):number
+    public static ZIGZAG_LT_LB_R(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x < b.gridPos.x)
             return -1;
@@ -273,7 +273,7 @@ export class LocationSorter
      * |1|4|7|
      * |0|5|6|
      */
-    public static ZIGZAG_LB_LT_R(a:Location, b:Location):number
+    public static ZIGZAG_LB_LT_R(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x < b.gridPos.x)
             return -1;
@@ -293,7 +293,7 @@ export class LocationSorter
      * |7|4|1|
      * |6|5|0|
      */
-    public static ZIGZAG_RB_RT_L(a:Location, b:Location):number
+    public static ZIGZAG_RB_RT_L(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x > b.gridPos.x)
             return -1;
@@ -313,7 +313,7 @@ export class LocationSorter
      * |7|4|1|
      * |8|3|2|
      */
-    public static ZIGZAG_RT_RB_L(a:Location, b:Location):number
+    public static ZIGZAG_RT_RB_L(a:ILocation, b:ILocation):number
     {
         if (a.gridPos.x > b.gridPos.x)
             return -1;
@@ -353,7 +353,7 @@ export class LocationSorter
             return angle;
         };
 
-        return (a:Location, b:Location):number => {
+        return (a:ILocation, b:ILocation):number => {
             const vecA:Vec3 = new Vec3(a.gridPos.x - centerPos.x, a.gridPos.y - centerPos.y);
             const vecB:Vec3 = new Vec3(b.gridPos.x - centerPos.x, b.gridPos.y - centerPos.y);
 

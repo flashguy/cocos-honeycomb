@@ -1,7 +1,8 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 import { HMath } from '../utils/HMath';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/circle-drawing/
@@ -9,7 +10,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 10:27:41 GMT+0300 (Москва, стандартное время),
 
 @ccclass('SectorShapeBasedOnRedBlobGamesAlgorithm')
-export class SectorShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
+export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,9 +30,10 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
 
 
 
-    constructor(centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
-        super();
+        super(locationConstructor);
 
         // !!! РАСКОМЕНТИРОВАТЬ СТРОЧКИ С СЕКТОРОМ В GridViewer
 
@@ -79,10 +81,7 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods

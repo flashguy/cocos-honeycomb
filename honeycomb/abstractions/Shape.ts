@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
-import { Location } from '../locations/Location';
 import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File Shape.ts created am_empty
@@ -29,7 +29,13 @@ export abstract class Shape<T extends ILocation>
     // public properties / getters and setters
     // ---------------------------------------
 
-
+    constructor(
+        protected locationConstructor: new (
+            gridPos?:Vec3, 
+            position?:Position, 
+            index?:number
+        ) => T
+    ) {}
 
     // ---------------
     // private methods
@@ -41,7 +47,10 @@ export abstract class Shape<T extends ILocation>
     // protected methods
     // -----------------
 
-    protected abstract createLocation():T;
+    protected createLocation():T
+    {
+        return new this.locationConstructor(v3(), Position.NONE, 0);
+    }
 
     protected vec3ToKey(vec3:Vec3):string
     {
@@ -130,7 +139,7 @@ export abstract class Shape<T extends ILocation>
         return this._locations.length;
     }
 
-    public sort(sortFunc:(a:Location, b:Location) => number):void
+    public sort(sortFunc:(a:ILocation, b:ILocation) => number):void
     {
         this._locations.sort(sortFunc);
     }

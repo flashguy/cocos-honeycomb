@@ -1,13 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
+import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
 // File EllipseShape.ts created am_empty
 // Date of creation Sun Oct 19 2025 19:52:56 GMT+0300 (Москва, стандартное время),
 
 @ccclass('EllipseShape')
-export class EllipseShape extends Shape<Location>
+export class EllipseShape<T extends ILocation> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -25,9 +26,10 @@ export class EllipseShape extends Shape<Location>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(centerPos:Vec3, radiusX:number, radiusY:number, fill:boolean = false)
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                centerPos:Vec3, radiusX:number, radiusY:number, fill:boolean = false)
     {
-        super();
+        super(locationConstructor);
 
         let x:number = 0;
         let y:number = radiusY;
@@ -140,10 +142,7 @@ export class EllipseShape extends Shape<Location>
     // private methods
     // ---------------
 
-    protected override createLocation():Location
-    {
-        return new Location();
-    }
+    
 
     // --------------
     // public methods
