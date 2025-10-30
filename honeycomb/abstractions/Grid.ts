@@ -1,14 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Cell } from './Cell';
 import { Position } from '../enums/Position';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 const { ccclass } = _decorator;
 
 // File Grid.ts created am_empty
 // Date of creation Tue Jun 10 2025 19:52:56 GMT+0300 (Москва, стандартное время),
 
 @ccclass('Grid')
-export abstract class Grid
+export abstract class Grid<T extends ILocation>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -38,7 +38,7 @@ export abstract class Grid
     public get gap():Vec3 { return this._gap; }
     public get anchor():Vec3 { return this._anchor; }
 
-    constructor(cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(protected locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         this._cell = cell;
         this._anchor = anchor;
@@ -57,6 +57,11 @@ export abstract class Grid
 
     protected abstract setNeighbors():void;
     protected abstract calculateGridSpecificPrameters():void;
+
+    protected createLocation():T
+    {
+        return new this.locationConstructor(v3(), Position.NONE, 0);
+    }
 
     protected initialize():void
     {
@@ -132,7 +137,7 @@ export abstract class Grid
     // --------------
 
     public abstract gridToWorld(gridPos:Vec3):Vec3;
-    public abstract worldToGrid(wopldPoint:Vec3):Location;
+    public abstract worldToGrid(wopldPoint:Vec3):T;
     public abstract getCellNeighbor(gridPos:Vec3, position:Position):Vec3;
     public abstract getCellNeighbors(gridPos:Vec3):Map<Position, Vec3>;
 

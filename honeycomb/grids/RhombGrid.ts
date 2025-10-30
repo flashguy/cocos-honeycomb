@@ -5,14 +5,14 @@ import { Position } from '../enums/Position';
 import { RhombGridType } from '../enums/RhombGridType';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 const { ccclass } = _decorator;
 
 // File RhombGrid.ts created am_empty
 // Date of creation Wed Oct 08 2025 20:57:59 GMT+0300 (Москва, стандартное время),
 
 @ccclass('RhombGrid')
-export class RhombGrid extends Grid
+export class RhombGrid<T extends ILocation> extends Grid<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -33,9 +33,10 @@ export class RhombGrid extends Grid
 
 
 
-    constructor(rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
-        super(cell, anchor, gap);
+        super(locationConstructor, cell, anchor, gap);
 
         this._rhombGridType = rhombType;
         this.initialize();
@@ -141,11 +142,11 @@ export class RhombGrid extends Grid
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):Location
+    public override worldToGrid(wopldPoint:Vec3):T
     {
         let result:Vec3 = v3();
         let position:Position;
-        let location:Location = new Location(null, Position.OUT);
+        let location:T = new this.locationConstructor(null, Position.OUT);
 
         // работет без _anchor и _gap
         // result.x = Math.floor((wopldPoint.y / this._shift.y + (wopldPoint.x - this._shift.x) / this._shift.x) * 0.5);
@@ -163,7 +164,7 @@ export class RhombGrid extends Grid
         {
             case Position.IN:
             {
-                location = new Location(result, Position.IN);
+                location = new this.locationConstructor(result, Position.IN);
                 break;
             }
             default:
@@ -173,7 +174,7 @@ export class RhombGrid extends Grid
                 position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
                 if (position == Position.IN)
-                    location = new Location(result, Position.IN);
+                    location = new this.locationConstructor(result, Position.IN);
 
                 break;
             }

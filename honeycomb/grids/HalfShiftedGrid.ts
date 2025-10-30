@@ -6,14 +6,14 @@ import { CellType } from '../enums/CellType';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
 import { HexagonCell } from '../cells/HexagonCell';
 import { HMath } from '../utils/HMath';
-import { Location } from '../locations/Location';
+import { ILocation } from '../locations/ILocation';
 const { ccclass } = _decorator;
 
 // File HalfShiftedGrid.ts created am_empty
 // Date of creation Tue Jul 29 2025 20:03:12 GMT+0300 (Москва, стандартное время),
 
 @ccclass('HalfShiftedGrid')
-export class HalfShiftedGrid extends Grid
+export class HalfShiftedGrid<T extends ILocation> extends Grid<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -34,9 +34,10 @@ export class HalfShiftedGrid extends Grid
 
     public get shiftGridType():ShiftedGridType { return this._shiftGridType; }
 
-    constructor(shiftType:ShiftedGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+                shiftType:ShiftedGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
-        super(cell, anchor, gap);
+        super(locationConstructor, cell, anchor, gap);
 
         this._shiftGridType = shiftType;
         this.initialize();
@@ -353,14 +354,14 @@ export class HalfShiftedGrid extends Grid
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):Location
+    public override worldToGrid(wopldPoint:Vec3):T
     {
         let result:Vec3 = v3();
         let offsetPos:Vec3 = v3(); // Учёт смещений по позиции ячеек
         let offsetSize:Vec3 = v3(); // Учёт смещений по размеру ячеек
         let position:Position;
-        let location:Location = new Location(null, Position.OUT);
-              
+        let location:T = new this.locationConstructor(null, Position.OUT);
+        
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
          || this._shiftGridType == ShiftedGridType.RIGHT_ODD
          || this._shiftGridType == ShiftedGridType.LEFT_EVEN
@@ -441,7 +442,7 @@ export class HalfShiftedGrid extends Grid
         {
             case Position.IN:
             {
-                location = new Location(result, Position.IN);
+                location = new this.locationConstructor(result, Position.IN);
                 break;
             }
             default:
@@ -450,7 +451,7 @@ export class HalfShiftedGrid extends Grid
                 position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
                 if (position == Position.IN)
-                    location = new Location(result, Position.IN);
+                    location = new this.locationConstructor(result, Position.IN);
 
                 break;
             }

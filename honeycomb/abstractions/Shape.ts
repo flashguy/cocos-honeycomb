@@ -29,13 +29,10 @@ export abstract class Shape<T extends ILocation>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(
-        protected locationConstructor: new (
-            gridPos?:Vec3, 
-            position?:Position, 
-            index?:number
-        ) => T
-    ) {}
+    constructor(protected locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T)
+    {
+        
+    }
 
     // ---------------
     // private methods
