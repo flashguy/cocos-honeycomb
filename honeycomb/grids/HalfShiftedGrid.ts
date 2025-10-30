@@ -310,15 +310,16 @@ export class HalfShiftedGrid<T extends ILocation> extends Grid<T>
         // else
         {
             let offsetPos:Vec3 = v3(); // Учет смещений по позиции ячеек
+            let gapOffset:Vec3 = v3(); // Учет смещений по расстаянию между ячейками (gap)
             
-            if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(gridPos.y % 2) == 1) offsetPos.x =  this._shift.x; }
-            else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(gridPos.y % 2) == 0) offsetPos.x =  this._shift.x; }
-            else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(gridPos.y % 2) == 1) offsetPos.x = -this._shift.x; }
-            else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(gridPos.y % 2) == 0) offsetPos.x = -this._shift.x; }
-            else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { if (Math.abs(gridPos.x % 2) == 1) offsetPos.y =  this._shift.y; }
-            else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(gridPos.x % 2) == 0) offsetPos.y =  this._shift.y; }
-            else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(gridPos.x % 2) == 1) offsetPos.y = -this._shift.y; }
-            else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(gridPos.x % 2) == 0) offsetPos.y = -this._shift.y; }
+            if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(gridPos.y % 2) == 1) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(gridPos.y % 2) == 0) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(gridPos.y % 2) == 1) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(gridPos.y % 2) == 0) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { if (Math.abs(gridPos.x % 2) == 1) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(gridPos.x % 2) == 0) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(gridPos.x % 2) == 1) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(gridPos.x % 2) == 0) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
 
             if (this._cell.type == CellType.ELLIPSE
             || this._cell.type == CellType.HEXAGON_FLAT
@@ -346,9 +347,9 @@ export class HalfShiftedGrid<T extends ILocation> extends Grid<T>
                     }
                 }
             }
-
-            result.x = this._anchor.x + gridPos.x * (this._cell.width + this._gap.x) + offsetPos.x;
-            result.y = this._anchor.y + gridPos.y * (this._cell.height + this._gap.y) + offsetPos.y;
+            
+            result.x = this._anchor.x + gridPos.x * (this._cell.width + this._gap.x) + offsetPos.x + gapOffset.x;
+            result.y = this._anchor.y + gridPos.y * (this._cell.height + this._gap.y) + offsetPos.y + gapOffset.y;
         }
 
         return result;
