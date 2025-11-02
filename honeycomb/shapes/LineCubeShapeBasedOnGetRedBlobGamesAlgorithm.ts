@@ -31,7 +31,7 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends ILocation> e
 
 
     constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
-                grid:Grid, startPos:Vec3, endPos:Vec3)
+                grid:Grid<T>, startPos:Vec3, endPos:Vec3)
     {
         super(locationConstructor);
 

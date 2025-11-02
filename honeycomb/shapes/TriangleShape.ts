@@ -32,7 +32,7 @@ export class TriangleShape<T extends ILocation> extends Shape<T>
 
 
     constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
-                grid:Grid, startPos:Vec3, distance:number, directionTo:Position)
+                grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Position)
     {
         super(locationConstructor)
 
