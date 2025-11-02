@@ -60,10 +60,19 @@ export abstract class Shape<T extends ILocation>
 
     public isInShape(gridPos:Vec3):boolean
     {
-        return this._locationMap.has(this.vec3ToKey(gridPos));
+        const key:string = this.vec3ToKey(gridPos);
+
+        return this._locationMap.has(key);
     }
 
-    public getIndexByGridPos(pos:Vec3):number
+    public getLocationByGridPos(gridPos:Vec3):T
+    {
+        const key:string = this.vec3ToKey(gridPos);
+
+        return this._locationMap.get(key)
+    }
+
+    public getIndexByGridPos(gridPos:Vec3):number
     {
         // TODO: расчитать для всех сеток
         return 0;
