@@ -50,39 +50,31 @@ export class HexagonFlatShape<T extends ILocation> extends Shape<T>
                 return;
         }
 
-        let neighborPos:Vec3;
-
         if (fill)
         {
-            let stepX:number = radius + 1;
-            let stepY:number = radius * 2 + 1;
+            let lineIter:number = radius + 1;
+            let linesIter:number = radius * 2 + 1;
             let gridPos:Vec3 = v3();
 
-            for (let y = 0; y < stepY; y++)
+            for (let lines = 0; lines < linesIter; lines++)
             {
-                gridPos.y = startPos.y;
+                gridPos.set(startPos);
 
-                for (let x = 0; x < stepX; x++)
+                for (let line = 0; line < lineIter; line++)
                 {
-                    gridPos.x = startPos.x + x;
                     this.add(gridPos);
+                    gridPos.set(grid.getCellNeighbor(gridPos, Position.R));
                 }
 
-                if (y < radius)
+                if (lines < radius)
                 {
-                    stepX += 1;
-                    neighborPos = grid.getCellNeighbor(startPos, Position.LT);
-
-                    if (neighborPos != null)
-                        startPos.set(neighborPos);
+                    lineIter += 1;
+                    startPos.set(grid.getCellNeighbor(startPos, Position.LT));
                 }
                 else
                 {
-                    stepX -= 1;
-                    neighborPos = grid.getCellNeighbor(startPos, Position.RT);
-
-                    if (neighborPos != null)
-                        startPos.set(neighborPos);
+                    lineIter -= 1;
+                    startPos.set(grid.getCellNeighbor(startPos, Position.RT));
                 }
             }
         }
@@ -95,11 +87,7 @@ export class HexagonFlatShape<T extends ILocation> extends Shape<T>
                 for (let j = 0; j < radius; j++)
                 {
                     this.add(startPos);
-                    
-                    neighborPos = grid.getCellNeighbor(startPos, directions[i]);
-
-                    if (neighborPos != null)
-                        startPos.set(neighborPos);
+                    startPos.set(grid.getCellNeighbor(startPos, directions[i]));
                 }
             }
         }
