@@ -1,8 +1,5 @@
 import { Enum } from 'cc';
 
-// File ShiftedGridType.ts created am_empty
-// Date of creation Tue Jul 29 2025 20:37:48 GMT+0300 (Москва, стандартное время),
-
 export enum ShiftedGridType
 {
     NONE,

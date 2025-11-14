@@ -9,9 +9,6 @@ import { HMath } from '../utils/HMath';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File HalfShiftedGrid.ts created am_empty
-// Date of creation Tue Jul 29 2025 20:03:12 GMT+0300 (Москва, стандартное время),
-
 @ccclass('HalfShiftedGrid')
 export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 {

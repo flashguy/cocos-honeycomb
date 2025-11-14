@@ -4,9 +4,6 @@ import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File RectangleShape.ts created am_empty
-// Date of creation Tue Jun 10 2025 22:23:30 GMT+0300 (Москва, стандартное время),
-
 @ccclass('RectangleShape')
 export class RectangleShape<T extends IPlacement> extends Shape<T>
 {

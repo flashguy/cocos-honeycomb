@@ -1,9 +1,6 @@
 import { _decorator, Vec3 } from 'cc';
 const { ccclass } = _decorator;
 
-// File HMath.ts created am_empty
-// Date of creation Mon Oct 27 2025 12:52:31 GMT+0300 (Москва, стандартное время),
-
 @ccclass('HMath')
 export class HMath
 {

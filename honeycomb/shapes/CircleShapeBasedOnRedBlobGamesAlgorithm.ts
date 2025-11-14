@@ -5,8 +5,6 @@ import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/circle-drawing/
-// File CircleShapeBasedOnRedBlobGamesAlgorithm.ts created am_empty
-// Date of creation Mon Oct 20 2025 07:54:58 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnRedBlobGamesAlgorithm')
 export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>

@@ -7,9 +7,6 @@ import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
 const { ccclass } = _decorator;
 
-// File SpiralShiftedShape.ts created am_empty
-// Date of creation Thu Oct 23 2025 14:27:35 GMT+0300 (Москва, стандартное время),
-
 @ccclass('SpiralShiftedShape')
 export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
 {

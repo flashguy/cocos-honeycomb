@@ -5,8 +5,6 @@ import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/line-drawing/
-// File LineShapeBasedOnRedBlobGamesWalkAlgorithm.ts created am_empty
-// Date of creation Mon Oct 20 2025 08:25:37 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineShapeBasedOnRedBlobGamesWalkAlgorithm')
 export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends IPlacement> extends Shape<T>

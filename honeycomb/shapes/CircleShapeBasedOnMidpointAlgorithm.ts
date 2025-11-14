@@ -4,9 +4,6 @@ import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File CircleShapeBasedOnMidpointAlgorithm.ts created am_empty
-// Date of creation Wed Oct 15 2025 22:39:11 GMT+0300 (Москва, стандартное время),
-
 @ccclass('CircleShapeBasedOnMidpointAlgorithm')
 export class CircleShapeBasedOnMidpointAlgorithm<T extends IPlacement> extends Shape<T>
 {

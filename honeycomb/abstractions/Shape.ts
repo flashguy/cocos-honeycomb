@@ -3,9 +3,6 @@ import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File Shape.ts created am_empty
-// Date of creation Tue Jun 10 2025 21:28:14 GMT+0300 (Москва, стандартное время),
-
 // x - column
 // y - row
 

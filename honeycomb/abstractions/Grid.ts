@@ -4,9 +4,6 @@ import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File Grid.ts created am_empty
-// Date of creation Tue Jun 10 2025 19:52:56 GMT+0300 (Москва, стандартное время),
-
 @ccclass('Grid')
 export abstract class Grid<T extends IPlacement>
 {

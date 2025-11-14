@@ -1,9 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 const { ccclass } = _decorator;
 
-// File Edge.ts created am_empty
-// Date of creation Tue Jun 10 2025 19:24:27 GMT+0300 (Москва, стандартное время),
-
 @ccclass('Edge')
 export class Edge
 {

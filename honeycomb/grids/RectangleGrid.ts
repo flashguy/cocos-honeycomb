@@ -5,9 +5,6 @@ import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File RectangleGrid.ts created am_empty
-// Date of creation Tue Jun 10 2025 22:10:36 GMT+0300 (Москва, стандартное время),
-
 @ccclass('RectangleGrid')
 export class RectangleGrid<T extends IPlacement> extends Grid<T>
 {

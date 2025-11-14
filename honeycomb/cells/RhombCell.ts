@@ -5,9 +5,6 @@ import { CellType } from '../enums/CellType';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File RhombCell.ts created am_empty
-// Date of creation Tue Oct 07 2025 9:57:11 GMT+0300 (Москва, стандартное время),
-
 @ccclass('RhombCell')
 export class RhombCell extends Cell
 {

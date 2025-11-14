@@ -5,9 +5,6 @@ import { HexagonCell } from './HexagonCell';
 import { CellType } from '../enums/CellType';
 const { ccclass } = _decorator;
 
-// File IsometricHexagonFlatCell.ts created am_empty
-// Date of creation Sun Oct 12 2025 17:10:48 GMT+0300 (Москва, стандартное время),
-
 @ccclass('IsometricHexagonFlatCell')
 export class IsometricHexagonFlatCell extends HexagonCell
 {

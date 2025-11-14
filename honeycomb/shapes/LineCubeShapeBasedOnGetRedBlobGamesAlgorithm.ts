@@ -6,9 +6,6 @@ import { HMath } from '../utils/HMath';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File LineCubeShapeBasedOnGetRedBlobGamesAlgorithm.ts created am_empty
-// Date of creation Wed Oct 22 2025 10:45:43 GMT+0300 (Москва, стандартное время),
-
 @ccclass('LineCubeShapeBasedOnGetRedBlobGamesAlgorithm')
 export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {

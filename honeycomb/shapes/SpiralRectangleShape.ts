@@ -4,9 +4,6 @@ import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File SpiralRectangleShape.ts created am_empty
-// Date of creation Thu Oct 23 2025 13:35:11 GMT+0300 (Москва, стандартное время),
-
 @ccclass('SpiralRectangleShape')
 export class SpiralRectangleShape<T extends IPlacement> extends Shape<T>
 {

@@ -8,9 +8,6 @@ import { HexagonCell } from '../cells/HexagonCell';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File ParallelogramGrid.ts created am_empty
-// Date of creation Thu Oct 09 2025 21:15:23 GMT+0300 (Москва, стандартное время),
-
 @ccclass('ParallelogramGrid')
 export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
 {

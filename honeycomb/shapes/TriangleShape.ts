@@ -7,9 +7,6 @@ import { ShiftedGridType } from '../enums/ShiftedGridType';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File TriangleShape.ts created am_empty
-// Date of creation Thu Oct 23 2025 21:43:38 GMT+0300 (Москва, стандартное время),
-
 @ccclass('TriangleShape')
 export class TriangleShape<T extends IPlacement> extends Shape<T>
 {

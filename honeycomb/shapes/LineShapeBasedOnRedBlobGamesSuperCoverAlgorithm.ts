@@ -5,8 +5,6 @@ import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/line-drawing/
-// File LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm.ts created am_empty
-// Date of creation Mon Oct 20 2025 09:03:03 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm')
 export class LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm<T extends IPlacement> extends Shape<T>

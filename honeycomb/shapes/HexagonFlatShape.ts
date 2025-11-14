@@ -5,9 +5,6 @@ import { Location } from '../enums/Location';
 import { Grid } from '../abstractions/Grid';
 const { ccclass } = _decorator;
 
-// File HexagonFlatShape.ts created am_empty
-// Date of creation Tue Oct 21 2025 21:47:45 GMT+0300 (Москва, стандартное время),
-
 @ccclass('HexagonFlatShape')
 export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
 {

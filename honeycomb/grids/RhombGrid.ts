@@ -8,9 +8,6 @@ import { HexagonCell } from '../cells/HexagonCell';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File RhombGrid.ts created am_empty
-// Date of creation Wed Oct 08 2025 20:57:59 GMT+0300 (Москва, стандартное время),
-
 @ccclass('RhombGrid')
 export class RhombGrid<T extends IPlacement> extends Grid<T>
 {

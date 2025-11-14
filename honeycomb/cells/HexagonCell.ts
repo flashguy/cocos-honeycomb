@@ -3,9 +3,6 @@ import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File HexagonCell.ts created am_empty
-// Date of creation Wed Jul 30 2025 19:33:59 GMT+0300 (Москва, стандартное время),
-
 @ccclass('HexagonCell')
 export class HexagonCell extends Cell
 {

@@ -5,9 +5,6 @@ import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
 const { ccclass } = _decorator;
 
-// File IsometricHexagonPointyCell.ts created am_empty
-// Date of creation Sun Oct 12 2025 17:11:47 GMT+0300 (Москва, стандартное время),
-
 @ccclass('IsometricHexagonPointyCell')
 export class IsometricHexagonPointyCell extends HexagonCell
 {

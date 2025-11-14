@@ -5,9 +5,6 @@ import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
-// File HexagonPointyShape.ts created am_empty
-// Date of creation Wed Oct 22 2025 09:07:39 GMT+0300 (Москва, стандартное время),
-
 @ccclass('HexagonPointyShape')
 export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
 {

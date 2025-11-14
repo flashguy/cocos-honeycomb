@@ -4,9 +4,6 @@ import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File CircleShapeBasedOnBresenhamAlgorithm.ts created am_empty
-// Date of creation Wed Oct 15 2025 21:53:03 GMT+0300 (Москва, стандартное время),
-
 @ccclass('CircleShapeBasedOnBresenhamAlgorithm')
 export class CircleShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends Shape<T>
 {

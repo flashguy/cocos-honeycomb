@@ -5,9 +5,6 @@ import { CellType } from '../enums/CellType';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// File RectangleCell.ts created am_empty
-// Date of creation Tue Jun 10 2025 21:59:01 GMT+0300 (Москва, стандартное время),
-
 @ccclass('RectangleCell')
 export class RectangleCell extends Cell
 {

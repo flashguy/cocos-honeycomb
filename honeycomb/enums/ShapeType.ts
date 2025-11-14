@@ -1,8 +1,5 @@
 import { Enum } from 'cc';
 
-// File ShapeType.ts created am_empty
-// Date of creation Mon Jul 28 2025 19:32:58 GMT+0300 (Москва, стандартное время),
-
 export enum ShapeType
 {
     NONE,
