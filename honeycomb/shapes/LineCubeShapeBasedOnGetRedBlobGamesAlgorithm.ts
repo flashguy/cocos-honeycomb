@@ -27,7 +27,7 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> 
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

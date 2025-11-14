@@ -31,7 +31,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
     public get shiftGridType():ShiftedGridType { return this._shiftGridType; }
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 shiftType:ShiftedGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -262,7 +262,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
     // public methods
     // --------------
 
-    public override gridToWorld(gridPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3):Vec3
     {
         let result:Vec3 = v3();
 
@@ -271,52 +271,52 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         //     let offsetPos:Vec3 = v3(); // Учет смещений по позиции ячеек
 
         //     // result.x = this._anchor.x
-        //     //             + (gridPos.x - gridPos.y)
+        //     //             + (cellPos.x - cellPos.y)
         //     //             * (this._cell.width - this._shift.x * 2)
-        //     //             + Math.abs(gridPos.x % 2 * (this._cell.halfWidth - this._shift.x))
-        //     //             - this._shift.x * gridPos.x;
+        //     //             + Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
+        //     //             - this._shift.x * cellPos.x;
 
         //     // result.y = this._anchor.y
-        //     //             + (gridPos.x + gridPos.y)
+        //     //             + (cellPos.x + cellPos.y)
         //     //             * (this._cell.height - this._shift.y * 2)
-        //     //             - Math.abs(gridPos.x % 2 * (this._cell.halfHeight - this._shift.y))
-        //     //             - this._shift.y * gridPos.x;
+        //     //             - Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
+        //     //             - this._shift.y * cellPos.x;
                        
-        //     // result.x = this._anchor.x + (gridPos.x - gridPos.y) * (this._shift.x + this._gap.x);
-        //     // result.y = this._anchor.y + (gridPos.x + gridPos.y) * (this._shift.y + this._gap.y);
+        //     // result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x);
+        //     // result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y);
 
-        //     if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(gridPos.y % 2) == 1) offsetPos.x =  this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(gridPos.y % 2) == 0) offsetPos.x =  this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(gridPos.y % 2) == 1) offsetPos.x = -this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(gridPos.y % 2) == 0) offsetPos.x = -this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { //if (Math.abs(gridPos.x % 2) == 1)
+        //     if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(cellPos.y % 2) == 1) offsetPos.x =  this._shift.x; }
+        //     else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(cellPos.y % 2) == 0) offsetPos.x =  this._shift.x; }
+        //     else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(cellPos.y % 2) == 1) offsetPos.x = -this._shift.x; }
+        //     else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(cellPos.y % 2) == 0) offsetPos.x = -this._shift.x; }
+        //     else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { //if (Math.abs(cellPos.x % 2) == 1)
         //     {
-        //         // offsetPos.x =  -Math.abs(gridPos.x % 2 * this._shift.x) - this._shift.x * gridPos.x;
-        //         // offsetPos.y =  this._shift.y/*  * gridPos.y */;
-        //         console.log(gridPos.toString(), (gridPos.x - gridPos.y))
+        //         // offsetPos.x =  -Math.abs(cellPos.x % 2 * this._shift.x) - this._shift.x * cellPos.x;
+        //         // offsetPos.y =  this._shift.y/*  * cellPos.y */;
+        //         console.log(cellPos.toString(), (cellPos.x - cellPos.y))
         //         offsetPos.x = this._shift.x;
         //         offsetPos.y = this._shift.y;
         //     } }
-        //     else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(gridPos.x % 2) == 0) offsetPos.y =  this._shift.y; }
-        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(gridPos.x % 2) == 1) offsetPos.y = -this._shift.y; }
-        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(gridPos.x % 2) == 0) offsetPos.y = -this._shift.y; }
+        //     else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(cellPos.x % 2) == 0) offsetPos.y =  this._shift.y; }
+        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(cellPos.x % 2) == 1) offsetPos.y = -this._shift.y; }
+        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(cellPos.x % 2) == 0) offsetPos.y = -this._shift.y; }
 
-        //     result.x = this._anchor.x + gridPos.x * (this._cell.width + this._gap.x) + offsetPos.x;
-        //     result.y = this._anchor.y + gridPos.y * (this._cell.height + this._gap.y) + offsetPos.y;
+        //     result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x) + offsetPos.x;
+        //     result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y) + offsetPos.y;
         // }
         // else
         {
             let offsetPos:Vec3 = v3(); // Учет смещений по позиции ячеек
             let gapOffset:Vec3 = v3(); // Учет смещений по расстаянию между ячейками (gap)
             
-            if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(gridPos.y % 2) == 1) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(gridPos.y % 2) == 0) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(gridPos.y % 2) == 1) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(gridPos.y % 2) == 0) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { if (Math.abs(gridPos.x % 2) == 1) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(gridPos.x % 2) == 0) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(gridPos.x % 2) == 1) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
-            else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(gridPos.x % 2) == 0) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
+            if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(cellPos.y % 2) == 1) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(cellPos.y % 2) == 0) { offsetPos.x =  this._shift.x; gapOffset.x =  this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(cellPos.y % 2) == 1) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(cellPos.y % 2) == 0) { offsetPos.x = -this._shift.x; gapOffset.x = -this._gap.x / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { if (Math.abs(cellPos.x % 2) == 1) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(cellPos.x % 2) == 0) { offsetPos.y =  this._shift.y; gapOffset.y =  this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(cellPos.x % 2) == 1) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
+            else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(cellPos.x % 2) == 0) { offsetPos.y = -this._shift.y; gapOffset.y = -this._gap.y / 2; } }
 
             if (this._cell.type == CellType.ELLIPSE
             || this._cell.type == CellType.HEXAGON_FLAT
@@ -331,7 +331,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                     case ShiftedGridType.LEFT_EVEN:
                     case ShiftedGridType.LEFT_ODD:
                     {
-                        offsetPos.y = -(gridPos.y * this._shift.y);
+                        offsetPos.y = -(cellPos.y * this._shift.y);
                         break;
                     }
                     case ShiftedGridType.TOP_EVEN:
@@ -339,14 +339,14 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                     case ShiftedGridType.BOTTOM_EVEN:
                     case ShiftedGridType.BOTTOM_ODD:
                     {
-                        offsetPos.x = -(gridPos.x * this._shift.x);
+                        offsetPos.x = -(cellPos.x * this._shift.x);
                         break;
                     }
                 }
             }
             
-            result.x = this._anchor.x + gridPos.x * (this._cell.width + this._gap.x) + offsetPos.x + gapOffset.x;
-            result.y = this._anchor.y + gridPos.y * (this._cell.height + this._gap.y) + offsetPos.y + gapOffset.y;
+            result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x) + offsetPos.x + gapOffset.x;
+            result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y) + offsetPos.y + gapOffset.y;
         }
 
         return result;
@@ -458,35 +458,35 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return placement;
     }
 
-    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
+    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
     {
-        let result:Vec3 = gridPos.clone();
+        let result:Vec3 = cellPos.clone();
         let neighbor:Vec3;
 
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN || this._shiftGridType == ShiftedGridType.LEFT_EVEN)
         {
-            if (Math.abs(gridPos.y % 2) == 0)
+            if (Math.abs(cellPos.y % 2) == 0)
                 neighbor = this.neighbors.get(location);
             else
                 neighbor = this.neighborsShifted.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD || this._shiftGridType == ShiftedGridType.LEFT_ODD)
         {
-            if (Math.abs(gridPos.y % 2) == 0)
+            if (Math.abs(cellPos.y % 2) == 0)
                 neighbor = this.neighborsShifted.get(location);
             else
                 neighbor = this.neighbors.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_EVEN || this._shiftGridType == ShiftedGridType.BOTTOM_EVEN)
         {
-            if (Math.abs(gridPos.x % 2) == 0)
+            if (Math.abs(cellPos.x % 2) == 0)
                 neighbor = this.neighbors.get(location);
             else
                 neighbor = this.neighborsShifted.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_ODD || this._shiftGridType == ShiftedGridType.BOTTOM_ODD)
         {
-            if (Math.abs(gridPos.x % 2) == 0)
+            if (Math.abs(cellPos.x % 2) == 0)
                 neighbor = this.neighborsShifted.get(location);
             else
                 neighbor = this.neighbors.get(location);
@@ -498,34 +498,34 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
+    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
     {
         let result:Map<Location, Vec3> = new Map<Location, Vec3>();
 
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN || this._shiftGridType == ShiftedGridType.LEFT_EVEN)
         {
-            if (Math.abs(gridPos.y % 2) == 0)
+            if (Math.abs(cellPos.y % 2) == 0)
                 return this.neighbors;
             else
                 return this.neighborsShifted;
         }
         else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD || this._shiftGridType == ShiftedGridType.LEFT_ODD)
         {
-            if (Math.abs(gridPos.y % 2) == 0)
+            if (Math.abs(cellPos.y % 2) == 0)
                 return this.neighborsShifted;
             else
                 return this.neighbors;
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_EVEN || this._shiftGridType == ShiftedGridType.BOTTOM_EVEN)
         {
-            if (Math.abs(gridPos.x % 2) == 0)
+            if (Math.abs(cellPos.x % 2) == 0)
                 return this.neighbors;
             else
                 return this.neighborsShifted;
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_ODD || this._shiftGridType == ShiftedGridType.BOTTOM_ODD)
         {
-            if (Math.abs(gridPos.x % 2) == 0)
+            if (Math.abs(cellPos.x % 2) == 0)
                 return this.neighborsShifted;
             else
                 return this.neighbors;

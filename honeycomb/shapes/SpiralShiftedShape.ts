@@ -28,7 +28,7 @@ export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, startSpiralDirection:Location, clockwise:boolean)
     {
         super(placementConstructor);

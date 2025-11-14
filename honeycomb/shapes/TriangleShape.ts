@@ -28,7 +28,7 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Location)
     {
         super(placementConstructor)

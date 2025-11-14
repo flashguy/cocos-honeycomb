@@ -35,7 +35,7 @@ export abstract class Grid<T extends IPlacement>
     public get gap():Vec3 { return this._gap; }
     public get anchor():Vec3 { return this._anchor; }
 
-    constructor(protected placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(protected placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         this._cell = cell;
         this._anchor = anchor;
@@ -66,9 +66,9 @@ export abstract class Grid<T extends IPlacement>
         this.calculateGridSpecificPrameters();
     }
 
-    protected getNeighbor(gridPos:Vec3, location:Location):Vec3
+    protected getNeighbor(cellPos:Vec3, location:Location):Vec3
     {
-        let resultPlacement:Vec3 = gridPos.clone();
+        let resultPlacement:Vec3 = cellPos.clone();
         
         if (this.neighbors.has(location))
             return resultPlacement.add(this.neighbors.get(location));
@@ -76,9 +76,9 @@ export abstract class Grid<T extends IPlacement>
             return null;
     }
 
-    protected getNeighborShifted(gridPos:Vec3, location:Location, notFromShifted:boolean):Vec3
+    protected getNeighborShifted(cellPos:Vec3, location:Location, notFromShifted:boolean):Vec3
     {
-        let result:Vec3 = gridPos.clone();
+        let result:Vec3 = cellPos.clone();
         
         if (notFromShifted)
         {
@@ -96,14 +96,14 @@ export abstract class Grid<T extends IPlacement>
         }
     }
 
-    protected getNeighborShiftedByX(gridPos:Vec3, location:Location):Vec3
+    protected getNeighborShiftedByX(cellPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighborShifted(gridPos, location, gridPos.x % 2 == 0);
+        return this.getNeighborShifted(cellPos, location, cellPos.x % 2 == 0);
     }
 
-    protected getNeighborShiftedByY(gridPos:Vec3, location:Location):Vec3
+    protected getNeighborShiftedByY(cellPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighborShifted(gridPos, location, gridPos.y % 2 == 0);
+        return this.getNeighborShifted(cellPos, location, cellPos.y % 2 == 0);
     }
     
     protected getNeighbors(gridPoint:Vec3):Map<Location, Vec3>
@@ -119,24 +119,24 @@ export abstract class Grid<T extends IPlacement>
             return this.neighborsShifted;
     }
 
-    protected getNeighborsShiftedByX(gridPos:Vec3):Map<Location, Vec3>
+    protected getNeighborsShiftedByX(cellPos:Vec3):Map<Location, Vec3>
     {
-        return this.getNeighborsShifted(gridPos.x % 2 == 0);
+        return this.getNeighborsShifted(cellPos.x % 2 == 0);
     }
     
-    protected getNeighborsShiftedByY(gridPos:Vec3):Map<Location, Vec3>
+    protected getNeighborsShiftedByY(cellPos:Vec3):Map<Location, Vec3>
     {
-        return this.getNeighborsShifted(gridPos.y % 2 == 0);
+        return this.getNeighborsShifted(cellPos.y % 2 == 0);
     }
 
     // --------------
     // public methods
     // --------------
 
-    public abstract gridToWorld(gridPos:Vec3):Vec3;
+    public abstract gridToWorld(cellPos:Vec3):Vec3;
     public abstract worldToGrid(wopldPoint:Vec3):T;
-    public abstract getCellNeighbor(gridPos:Vec3, location:Location):Vec3;
-    public abstract getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>;
+    public abstract getCellNeighbor(cellPos:Vec3, location:Location):Vec3;
+    public abstract getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>;
 
     public getDistance(gridStartPos:Vec3, gridEndPos:Vec3):number
     {

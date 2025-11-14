@@ -30,7 +30,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 parallelogramType:ParallelogramGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -247,7 +247,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
     // public methods
     // --------------
 
-    public override gridToWorld(gridPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3):Vec3
     {
         let result:Vec3 = v3();
 
@@ -255,27 +255,27 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
         {
             case ParallelogramGridType.LEFT:
             {
-                result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.y * this._shift.x;
-                result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) - gridPos.y * this._shift.y;
+                result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.y * this._shift.x;
+                result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.y * this._shift.y;
                 break;
             }
             case ParallelogramGridType.RIGHT:
             {
-                result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) + gridPos.y * this._shift.x;
-                result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) - gridPos.y * this._shift.y;
+                result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) + cellPos.y * this._shift.x;
+                result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.y * this._shift.y;
                 break;
             }
             case ParallelogramGridType.BOTTOM:
             {
                 if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
                 {
-                    result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.x * this._shift.x;
-                    result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) - gridPos.x * this._shift.y;
+                    result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
+                    result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.x * this._shift.y;
                 }
                 else
                 {
-                    result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.x * this._shift.x;
-                    result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) - gridPos.x * this._shift.y;
+                    result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
+                    result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.x * this._shift.y;
                 }
                 break;
             }
@@ -283,16 +283,16 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             {
                 // if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
                 // {
-                //     // result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.x * this._shift.x + gridPos.y * this._shift.x;
-                //     // result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) + (gridPos.x - gridPos.y) * this._shift.y;
+                //     // result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x + cellPos.y * this._shift.x;
+                //     // result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) + (cellPos.x - cellPos.y) * this._shift.y;
 
-                //     result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.x * this._shift.x;
-                //     result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) + gridPos.x * this._shift.y;
+                //     result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
+                //     result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) + cellPos.x * this._shift.y;
                 // }
                 // else
                 // {
-                    result.x = (this._anchor.x + gridPos.x * (this._cell.width + this._gap.x)) - gridPos.x * this._shift.x;
-                    result.y = (this._anchor.y + gridPos.y * (this._cell.height + this._gap.y)) + gridPos.x * this._shift.y;
+                    result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
+                    result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) + cellPos.x * this._shift.y;
                 // }
                 break;
             }
@@ -359,13 +359,13 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
         return placement;
     }
 
-    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
+    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighbor(gridPos, location);
+        return this.getNeighbor(cellPos, location);
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
+    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
     {
-        return this.getNeighbors(gridPos);
+        return this.getNeighbors(cellPos);
     }
 }

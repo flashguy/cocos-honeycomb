@@ -30,7 +30,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -129,12 +129,12 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     // public methods
     // --------------
 
-    public override gridToWorld(gridPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3):Vec3
     {
         let result:Vec3 = v3();
 
-        result.x = this._anchor.x + (gridPos.x - gridPos.y) * (this._shift.x + this._gap.x);
-        result.y = this._anchor.y + (gridPos.x + gridPos.y) * (this._shift.y + this._gap.y);
+        result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x);
+        result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y);
 
         return result;
     }
@@ -180,13 +180,13 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         return placement;
     }
 
-    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
+    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighbor(gridPos, location);
+        return this.getNeighbor(cellPos, location);
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
+    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
     {
-        return this.getNeighbors(gridPos);
+        return this.getNeighbors(cellPos);
     }
 }

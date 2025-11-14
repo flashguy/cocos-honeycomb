@@ -27,7 +27,7 @@ export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends IPlacement> ext
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

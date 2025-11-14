@@ -22,13 +22,13 @@ export class Placement implements IPlacement
     // public properties / getters and setters
     // ---------------------------------------
 
-    public gridPos:Vec3;
+    public cellPos:Vec3;
     public location:Location;
     public index:number;
 
-    constructor(gridPos:Vec3 = v3(), location:Location = Location.NONE, index:number = 0)
+    constructor(cellPos:Vec3 = v3(), location:Location = Location.NONE, index:number = 0)
     {
-        this.gridPos = gridPos;
+        this.cellPos = cellPos;
         this.location = location;
         this.index = index;
     }

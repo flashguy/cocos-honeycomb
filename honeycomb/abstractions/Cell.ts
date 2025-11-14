@@ -4,7 +4,6 @@ import { CellType } from '../enums/CellType';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// TODO: возможно назвать вот так Point
 @ccclass('Cell')
 export abstract class Cell
 {

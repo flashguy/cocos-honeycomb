@@ -27,7 +27,7 @@ export class LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm<T extends IPlacemen
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

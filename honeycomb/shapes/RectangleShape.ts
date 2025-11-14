@@ -27,7 +27,7 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 columns:number, rows:number, startPos:Vec3, directionTo:Location, fill:boolean = false)
     {
         super(placementConstructor);
@@ -35,7 +35,7 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
         this._columns = columns;
         this._rows = rows;
 
-        let gridPos:Vec3 = startPos.clone();
+        let cellPos:Vec3 = startPos.clone();
         let multiplierX:number;
         let multiplierY:number;
 
@@ -46,35 +46,35 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
             {
                 multiplierX = 1;
                 multiplierY = 1;
-                gridPos.set(startPos.x - Math.floor(columns / 2), startPos.y - Math.floor(rows / 2));
+                cellPos.set(startPos.x - Math.floor(columns / 2), startPos.y - Math.floor(rows / 2));
                 break;
             }
             case Location.BC:
             {
                 multiplierX = 1;
                 multiplierY = -1;
-                gridPos.x = startPos.x - Math.floor(columns / 2);
+                cellPos.x = startPos.x - Math.floor(columns / 2);
                 break;
             }
             case Location.TC:
             {
                 multiplierX = 1;
                 multiplierY = 1;
-                gridPos.x = startPos.x - Math.floor(columns / 2);
+                cellPos.x = startPos.x - Math.floor(columns / 2);
                 break;
             }
             case Location.LC:
             {
                 multiplierX = -1;
                 multiplierY = 1;
-                gridPos.y = startPos.y - Math.floor(rows / 2);
+                cellPos.y = startPos.y - Math.floor(rows / 2);
                 break;
             }
             case Location.RC:
             {
                 multiplierX = 1;
                 multiplierY = 1;
-                gridPos.y = startPos.y - Math.floor(rows / 2);
+                cellPos.y = startPos.y - Math.floor(rows / 2);
                 break;
             }
             case Location.RT:
@@ -109,8 +109,8 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
         // Сначало инкрементируем колонки а потом строки или слева направо и снизу вверх
         for (let i:number = 0; i < (columns * rows); i++)
         {
-            stepX = gridPos.x + (i % columns) * multiplierX;
-            stepY = gridPos.y + Math.floor(i / columns) * multiplierY;
+            stepX = cellPos.x + (i % columns) * multiplierX;
+            stepY = cellPos.y + Math.floor(i / columns) * multiplierY;
 
             if (fill)
             {
@@ -118,10 +118,10 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
             }
             else
             {
-                if (   stepY == gridPos.y
-                    || stepX == gridPos.x
-                    || Math.abs(gridPos.x - stepX) == columns - 1
-                    || Math.abs(gridPos.y - stepY) == rows - 1)
+                if (   stepY == cellPos.y
+                    || stepX == cellPos.x
+                    || Math.abs(cellPos.x - stepX) == columns - 1
+                    || Math.abs(cellPos.y - stepY) == rows - 1)
                 {
                     this.add(v3(stepX, stepY));
                 }
@@ -143,8 +143,8 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
     // public methods
     // --------------
 
-    public override getIndexByGridPos(gridPos:Vec3):number
+    public override getIndexBycellPos(cellPos:Vec3):number
     {
-        return (gridPos.y * this._columns) + gridPos.x;
+        return (cellPos.y * this._columns) + cellPos.x;
     }
 }

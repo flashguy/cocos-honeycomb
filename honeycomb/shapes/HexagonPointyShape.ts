@@ -26,7 +26,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
         super(placementConstructor);
@@ -53,16 +53,16 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
         {
             let stepX:number = radius * 2 + 1;
             let stepY:number = radius + 1;
-            let gridPos:Vec3 = v3();
+            let cellPos:Vec3 = v3();
 
             for (let x = 0; x < stepX; x++)
             {
-                gridPos.x = startPos.x;
+                cellPos.x = startPos.x;
 
                 for (let y = 0; y < stepY; y++)
                 {
-                    gridPos.y = startPos.y + y;
-                    this.add(gridPos);
+                    cellPos.y = startPos.y + y;
+                    this.add(cellPos);
                 }
 
                 if (x < radius)

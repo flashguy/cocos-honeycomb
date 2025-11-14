@@ -12,14 +12,14 @@ export class PlacementSorter
      */
     public static LT_RT_B(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return 1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return -1;
 
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
         
         return 0;
@@ -32,14 +32,14 @@ export class PlacementSorter
      */
     public static LB_RB_T(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return -1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return 1;
 
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
         
         return 0;
@@ -52,14 +52,14 @@ export class PlacementSorter
      */
     public static RB_LB_T(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return -1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return 1;
 
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return 1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return -1;
         
         return 0;
@@ -72,14 +72,14 @@ export class PlacementSorter
      */
     public static RT_LT_B(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return 1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return -1;
 
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return 1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return -1;
         
         return 0;
@@ -92,14 +92,14 @@ export class PlacementSorter
      */
     public static LB_LT_R(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return -1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return 1;
         
         return 0;
@@ -112,14 +112,14 @@ export class PlacementSorter
      */
     public static LT_LB_R(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return 1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return -1;
         
         return 0;
@@ -132,14 +132,14 @@ export class PlacementSorter
      */
     public static RT_RB_L(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x > b.gridPos.x)
+        if (a.cellPos.x > b.cellPos.x)
             return -1;
-        else if (a.gridPos.x < b.gridPos.x)
+        else if (a.cellPos.x < b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y > b.gridPos.y)
+        if (a.cellPos.y > b.cellPos.y)
             return -1;
-        else if (a.gridPos.y < b.gridPos.y)
+        else if (a.cellPos.y < b.cellPos.y)
             return 1;
         
         return 0;
@@ -152,14 +152,14 @@ export class PlacementSorter
      */
     public static RB_RT_L(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x > b.gridPos.x)
+        if (a.cellPos.x > b.cellPos.x)
             return -1;
-        else if (a.gridPos.x < b.gridPos.x)
+        else if (a.cellPos.x < b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y > b.gridPos.y)
+        if (a.cellPos.y > b.cellPos.y)
             return 1;
-        else if (a.gridPos.y < b.gridPos.y)
+        else if (a.cellPos.y < b.cellPos.y)
             return -1;
         
         return 0;
@@ -172,15 +172,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_RB_LB_T(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return -1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return 1;
 
-        if (a.gridPos.x < b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? 1 : -1;
-        else if (a.gridPos.x > b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? -1 : 1;
+        if (a.cellPos.x < b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? 1 : -1;
+        else if (a.cellPos.x > b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? -1 : 1;
         
         return 0;
     }
@@ -192,15 +192,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_LB_RB_T(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return -1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return 1;
 
-        if (a.gridPos.x < b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? -1 : 1;
-        else if (a.gridPos.x > b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? 1 : -1;
+        if (a.cellPos.x < b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? -1 : 1;
+        else if (a.cellPos.x > b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? 1 : -1;
         
         return 0;
     }
@@ -212,15 +212,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_LT_RT_B(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return 1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return -1;
 
-        if (a.gridPos.x < b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? -1 : 1;
-        else if (a.gridPos.x > b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? 1 : -1;
+        if (a.cellPos.x < b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? -1 : 1;
+        else if (a.cellPos.x > b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? 1 : -1;
         
         return 0;
     }
@@ -232,15 +232,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_RT_LT_B(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.y < b.gridPos.y)
+        if (a.cellPos.y < b.cellPos.y)
             return 1;
-        else if (a.gridPos.y > b.gridPos.y)
+        else if (a.cellPos.y > b.cellPos.y)
             return -1;
 
-        if (a.gridPos.x < b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? 1 : -1;
-        else if (a.gridPos.x > b.gridPos.x)
-            return a.gridPos.y % 2 == 0 ? -1 : 1;
+        if (a.cellPos.x < b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? 1 : -1;
+        else if (a.cellPos.x > b.cellPos.x)
+            return a.cellPos.y % 2 == 0 ? -1 : 1;
         
         return 0;
     }
@@ -252,15 +252,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_LT_LB_R(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y < b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? 1 : -1;
-        else if (a.gridPos.y > b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? -1 : 1;
+        if (a.cellPos.y < b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? 1 : -1;
+        else if (a.cellPos.y > b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? -1 : 1;
         
         return 0;
     }
@@ -272,15 +272,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_LB_LT_R(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x < b.gridPos.x)
+        if (a.cellPos.x < b.cellPos.x)
             return -1;
-        else if (a.gridPos.x > b.gridPos.x)
+        else if (a.cellPos.x > b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y < b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? -1 : 1;
-        else if (a.gridPos.y > b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? 1 : -1;
+        if (a.cellPos.y < b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? -1 : 1;
+        else if (a.cellPos.y > b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? 1 : -1;
         
         return 0;
     }
@@ -292,15 +292,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_RB_RT_L(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x > b.gridPos.x)
+        if (a.cellPos.x > b.cellPos.x)
             return -1;
-        else if (a.gridPos.x < b.gridPos.x)
+        else if (a.cellPos.x < b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y > b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? -1 : 1;
-        else if (a.gridPos.y < b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? 1 : -1;
+        if (a.cellPos.y > b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? -1 : 1;
+        else if (a.cellPos.y < b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? 1 : -1;
         
         return 0;
     }
@@ -312,15 +312,15 @@ export class PlacementSorter
      */
     public static ZIGZAG_RT_RB_L(a:IPlacement, b:IPlacement):number
     {
-        if (a.gridPos.x > b.gridPos.x)
+        if (a.cellPos.x > b.cellPos.x)
             return -1;
-        else if (a.gridPos.x < b.gridPos.x)
+        else if (a.cellPos.x < b.cellPos.x)
             return 1;
 
-        if (a.gridPos.y > b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? 1 : -1;
-        else if (a.gridPos.y < b.gridPos.y)
-            return a.gridPos.x % 2 == 0 ? -1 : 1;
+        if (a.cellPos.y > b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? 1 : -1;
+        else if (a.cellPos.y < b.cellPos.y)
+            return a.cellPos.x % 2 == 0 ? -1 : 1;
         
         return 0;
     }
@@ -351,8 +351,8 @@ export class PlacementSorter
         };
 
         return (a:IPlacement, b:IPlacement):number => {
-            const vecA:Vec3 = new Vec3(a.gridPos.x - centerPos.x, a.gridPos.y - centerPos.y);
-            const vecB:Vec3 = new Vec3(b.gridPos.x - centerPos.x, b.gridPos.y - centerPos.y);
+            const vecA:Vec3 = new Vec3(a.cellPos.x - centerPos.x, a.cellPos.y - centerPos.y);
+            const vecB:Vec3 = new Vec3(b.cellPos.x - centerPos.x, b.cellPos.y - centerPos.y);
 
             // const angleA:number = Math.atan2(vecA.y, vecA.x);
             // const angleB:number = Math.atan2(vecB.y, vecB.x);

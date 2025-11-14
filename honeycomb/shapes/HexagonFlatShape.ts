@@ -26,7 +26,7 @@ export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
         super(placementConstructor);
@@ -51,16 +51,16 @@ export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
         {
             let lineIter:number = radius + 1;
             let linesIter:number = radius * 2 + 1;
-            let gridPos:Vec3 = v3();
+            let cellPos:Vec3 = v3();
 
             for (let lines = 0; lines < linesIter; lines++)
             {
-                gridPos.set(startPos);
+                cellPos.set(startPos);
 
                 for (let line = 0; line < lineIter; line++)
                 {
-                    this.add(gridPos);
-                    gridPos.set(grid.getCellNeighbor(gridPos, Location.R));
+                    this.add(cellPos);
+                    cellPos.set(grid.getCellNeighbor(cellPos, Location.R));
                 }
 
                 if (lines < radius)

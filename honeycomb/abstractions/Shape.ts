@@ -26,7 +26,7 @@ export abstract class Shape<T extends IPlacement>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(protected placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T)
+    constructor(protected placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T)
     {
         
     }
@@ -55,38 +55,38 @@ export abstract class Shape<T extends IPlacement>
     // public methods
     // --------------
 
-    public isInShape(gridPos:Vec3):boolean
+    public isInShape(cellPos:Vec3):boolean
     {
-        const key:string = this.vec3ToKey(gridPos);
+        const key:string = this.vec3ToKey(cellPos);
 
         return this._placementsMap.has(key);
     }
 
-    public getPlacementByGridPos(gridPos:Vec3):T
+    public getPlacementBycellPos(cellPos:Vec3):T
     {
-        const key:string = this.vec3ToKey(gridPos);
+        const key:string = this.vec3ToKey(cellPos);
 
         return this._placementsMap.get(key)
     }
 
-    public getIndexByGridPos(gridPos:Vec3):number
+    public getIndexBycellPos(cellPos:Vec3):number
     {
         // TODO: расчитать для всех сеток
         return 0;
     }
 
-    public add(gridPos:Vec3):boolean
+    public add(cellPos:Vec3):boolean
     {
-        if (gridPos == null)
+        if (cellPos == null)
             return false;
         
-        const key:string = this.vec3ToKey(gridPos);
+        const key:string = this.vec3ToKey(cellPos);
 
         if (this._placementsMap.has(key))
             return false;
 
         let placement:T = this.createPlacement();
-        placement.gridPos = gridPos.clone();
+        placement.cellPos = cellPos.clone();
         
         this._placementsMap.set(key, placement);
         this._placements.push(placement);

@@ -28,7 +28,7 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
         super(placementConstructor);
@@ -44,16 +44,16 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
         let columns:number = (radius * 2) + 1
         let rows:number = (radius * 2) + 1;
 
-        let gridPos:Vec3 = v3();
-        gridPos.set(centerPos.x - Math.floor(columns / 2), centerPos.y - Math.floor(rows / 2));
+        let cellPos:Vec3 = v3();
+        cellPos.set(centerPos.x - Math.floor(columns / 2), centerPos.y - Math.floor(rows / 2));
 
         let stepX:number;
         let stepY:number;
 
         for (let i:number = 0; i < (columns * rows); i++)
         {
-            stepX = gridPos.x + (i % columns);
-            stepY = gridPos.y + Math.floor(i / columns);
+            stepX = cellPos.x + (i % columns);
+            stepY = cellPos.y + Math.floor(i / columns);
 
             if (Vec3.distance(v3(stepX, stepY), centerPos) > radius)
                 continue;

@@ -25,7 +25,7 @@ export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radius:number, smooth:boolean = false, fill:boolean = false)
     {
         super(placementConstructor);
