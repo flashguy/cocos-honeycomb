@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
@@ -8,7 +8,7 @@ const { ccclass } = _decorator;
 // Date of creation Sun Oct 19 2025 19:52:56 GMT+0300 (Москва, стандартное время),
 
 @ccclass('EllipseShape')
-export class EllipseShape<T extends ILocation> extends Shape<T>
+export class EllipseShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -26,10 +26,10 @@ export class EllipseShape<T extends ILocation> extends Shape<T>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 centerPos:Vec3, radiusX:number, radiusY:number, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         let x:number = 0;
         let y:number = radiusY;

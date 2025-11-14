@@ -1,6 +1,6 @@
 import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Grid } from '../abstractions/Grid';
 import { Position } from '../enums/Position';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
@@ -11,7 +11,7 @@ const { ccclass } = _decorator;
 // Date of creation Thu Oct 23 2025 14:27:35 GMT+0300 (Москва, стандартное время),
 
 @ccclass('SpiralShiftedShape')
-export class SpiralShiftedShape<T extends ILocation> extends Shape<T>
+export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -31,10 +31,10 @@ export class SpiralShiftedShape<T extends ILocation> extends Shape<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, startSpiralDirection:Position, clockwise:boolean)
     {
-        super(locationConstructor);
+        super(placementConstructor);
         
         if (grid instanceof HalfShiftedGrid)
         {

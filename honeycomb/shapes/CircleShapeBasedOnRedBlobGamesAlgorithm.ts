@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
@@ -9,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 07:54:58 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnRedBlobGamesAlgorithm')
-export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extends Shape<T>
+export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -27,10 +27,10 @@ export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extend
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 centerPos:Vec3, radius:number, smooth:boolean = false, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         const distancef:number = radius + (smooth ? 0.5 : 0);
 

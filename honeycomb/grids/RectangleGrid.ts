@@ -2,14 +2,14 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
 import { Position } from '../enums/Position';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File RectangleGrid.ts created am_empty
 // Date of creation Tue Jun 10 2025 22:10:36 GMT+0300 (Москва, стандартное время),
 
 @ccclass('RectangleGrid')
-export class RectangleGrid<T extends ILocation> extends Grid<T>
+export class RectangleGrid<T extends IPlacement> extends Grid<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,10 +29,10 @@ export class RectangleGrid<T extends ILocation> extends Grid<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
-        super(locationConstructor, cell, anchor, gap);
+        super(placementConstructor, cell, anchor, gap);
         
         this.initialize();
     }
@@ -92,12 +92,12 @@ export class RectangleGrid<T extends ILocation> extends Grid<T>
         {
             case Position.IN:
             {
-                return new this.locationConstructor(result, Position.IN);
+                return new this.placementConstructor(result, Position.IN);
             }
             case Position.OUT:
             default:
             {
-                return new this.locationConstructor(null, Position.OUT);
+                return new this.placementConstructor(null, Position.OUT);
             }
         }
     }

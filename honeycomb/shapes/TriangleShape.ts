@@ -4,14 +4,14 @@ import { Grid } from '../abstractions/Grid';
 import { Position } from '../enums/Position';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File TriangleShape.ts created am_empty
 // Date of creation Thu Oct 23 2025 21:43:38 GMT+0300 (Москва, стандартное время),
 
 @ccclass('TriangleShape')
-export class TriangleShape<T extends ILocation> extends Shape<T>
+export class TriangleShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -31,10 +31,10 @@ export class TriangleShape<T extends ILocation> extends Shape<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Position)
     {
-        super(locationConstructor)
+        super(placementConstructor)
 
         if (grid instanceof HalfShiftedGrid)
         {

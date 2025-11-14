@@ -1,6 +1,6 @@
 import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
@@ -9,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 08:25:37 GMT+0300 (Москва, стандартное время),
 
 @ccclass('LineShapeBasedOnRedBlobGamesWalkAlgorithm')
-export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends ILocation> extends Shape<T>
+export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,10 +29,10 @@ export class LineShapeBasedOnRedBlobGamesWalkAlgorithm<T extends ILocation> exte
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         const dx:number = endPos.x - startPos.x;
         const dy:number = endPos.y - startPos.y;

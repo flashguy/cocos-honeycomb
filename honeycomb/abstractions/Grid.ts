@@ -1,14 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Cell } from './Cell';
 import { Position } from '../enums/Position';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File Grid.ts created am_empty
 // Date of creation Tue Jun 10 2025 19:52:56 GMT+0300 (Москва, стандартное время),
 
 @ccclass('Grid')
-export abstract class Grid<T extends ILocation>
+export abstract class Grid<T extends IPlacement>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -38,7 +38,7 @@ export abstract class Grid<T extends ILocation>
     public get gap():Vec3 { return this._gap; }
     public get anchor():Vec3 { return this._anchor; }
 
-    constructor(protected locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(protected placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         this._cell = cell;
         this._anchor = anchor;
@@ -58,9 +58,9 @@ export abstract class Grid<T extends ILocation>
     protected abstract setNeighbors():void;
     protected abstract calculateGridSpecificPrameters():void;
 
-    protected createLocation():T
+    protected createPlacement():T
     {
-        return new this.locationConstructor(v3(), Position.NONE, 0);
+        return new this.placementConstructor(v3(), Position.NONE, 0);
     }
 
     protected initialize():void
@@ -71,10 +71,10 @@ export abstract class Grid<T extends ILocation>
 
     protected getNeighbor(gridPos:Vec3, position:Position):Vec3
     {
-        let resultLocation:Vec3 = gridPos.clone();
+        let resultPlacement:Vec3 = gridPos.clone();
         
         if (this.neighbors.has(position))
-            return resultLocation.add(this.neighbors.get(position));
+            return resultPlacement.add(this.neighbors.get(position));
         else
             return null;
     }

@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 import { Grid } from '../abstractions/Grid';
 const { ccclass } = _decorator;
@@ -9,7 +9,7 @@ const { ccclass } = _decorator;
 // Date of creation Tue Oct 21 2025 21:47:45 GMT+0300 (Москва, стандартное время),
 
 @ccclass('HexagonFlatShape')
-export class HexagonFlatShape<T extends ILocation> extends Shape<T>
+export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,10 +29,10 @@ export class HexagonFlatShape<T extends ILocation> extends Shape<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
         
         if (radius <= 0)
         {

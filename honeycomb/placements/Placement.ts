@@ -1,14 +1,10 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Position } from '../enums/Position';
-import { ILocation } from './ILocation';
+import { IPlacement } from './IPlacement';
 const { ccclass } = _decorator;
 
-// File Location.ts created am_empty
-// Date of creation Tue Jun 10 2025 21:06:13 GMT+0300 (Москва, стандартное время),
-
-// Place
-@ccclass('Location')
-export class Location implements ILocation
+@ccclass('Placement')
+export class Placement implements IPlacement
 {
     // ----------------------------------------
     // private properties / getters and setters

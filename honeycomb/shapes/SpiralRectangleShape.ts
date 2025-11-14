@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
@@ -8,7 +8,7 @@ const { ccclass } = _decorator;
 // Date of creation Thu Oct 23 2025 13:35:11 GMT+0300 (Москва, стандартное время),
 
 @ccclass('SpiralRectangleShape')
-export class SpiralRectangleShape<T extends ILocation> extends Shape<T>
+export class SpiralRectangleShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -28,10 +28,10 @@ export class SpiralRectangleShape<T extends ILocation> extends Shape<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 centerPos:Vec3, radius:number, clockwise:boolean)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         let x:number = 0;
         let y:number = 0;

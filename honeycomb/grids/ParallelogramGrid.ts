@@ -5,14 +5,14 @@ import { Cell } from '../abstractions/Cell';
 import { Position } from '../enums/Position';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File ParallelogramGrid.ts created am_empty
 // Date of creation Thu Oct 09 2025 21:15:23 GMT+0300 (Москва, стандартное время),
 
 @ccclass('ParallelogramGrid')
-export class ParallelogramGrid<T extends ILocation> extends Grid<T>
+export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -33,10 +33,10 @@ export class ParallelogramGrid<T extends ILocation> extends Grid<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 parallelogramType:ParallelogramGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
-        super(locationConstructor, cell, anchor, gap);
+        super(placementConstructor, cell, anchor, gap);
 
         this._parallelogramGridType = parallelogramType;
         this.initialize();
@@ -308,7 +308,7 @@ export class ParallelogramGrid<T extends ILocation> extends Grid<T>
     {
         let result:Vec3 = v3();
         let position:Position;
-        let location:T = new this.locationConstructor(null, Position.OUT);
+        let placement:T = new this.placementConstructor(null, Position.OUT);
 
         switch (this._parallelogramGridType)
         {
@@ -344,7 +344,7 @@ export class ParallelogramGrid<T extends ILocation> extends Grid<T>
         {
             case Position.IN:
             {
-                location = new this.locationConstructor(result, Position.IN);
+                placement = new this.placementConstructor(result, Position.IN);
                 break;
             }
             default:
@@ -353,13 +353,13 @@ export class ParallelogramGrid<T extends ILocation> extends Grid<T>
                 position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                     
                 if (position == Position.IN)
-                    location = new this.locationConstructor(result, Position.IN);
+                    placement = new this.placementConstructor(result, Position.IN);
 
                 break;
             }
         }
 
-        return location;
+        return placement;
     }
 
     public override getCellNeighbor(gridPos:Vec3, position:Position):Vec3

@@ -5,14 +5,14 @@ import { Position } from '../enums/Position';
 import { RhombGridType } from '../enums/RhombGridType';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File RhombGrid.ts created am_empty
 // Date of creation Wed Oct 08 2025 20:57:59 GMT+0300 (Москва, стандартное время),
 
 @ccclass('RhombGrid')
-export class RhombGrid<T extends ILocation> extends Grid<T>
+export class RhombGrid<T extends IPlacement> extends Grid<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -33,10 +33,10 @@ export class RhombGrid<T extends ILocation> extends Grid<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
-        super(locationConstructor, cell, anchor, gap);
+        super(placementConstructor, cell, anchor, gap);
 
         this._rhombGridType = rhombType;
         this.initialize();
@@ -146,7 +146,7 @@ export class RhombGrid<T extends ILocation> extends Grid<T>
     {
         let result:Vec3 = v3();
         let position:Position;
-        let location:T = new this.locationConstructor(null, Position.OUT);
+        let placement:T = new this.placementConstructor(null, Position.OUT);
 
         // работет без _anchor и _gap
         // result.x = Math.floor((wopldPoint.y / this._shift.y + (wopldPoint.x - this._shift.x) / this._shift.x) * 0.5);
@@ -164,7 +164,7 @@ export class RhombGrid<T extends ILocation> extends Grid<T>
         {
             case Position.IN:
             {
-                location = new this.locationConstructor(result, Position.IN);
+                placement = new this.placementConstructor(result, Position.IN);
                 break;
             }
             default:
@@ -174,13 +174,13 @@ export class RhombGrid<T extends ILocation> extends Grid<T>
                 position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
                 if (position == Position.IN)
-                    location = new this.locationConstructor(result, Position.IN);
+                    placement = new this.placementConstructor(result, Position.IN);
 
                 break;
             }
         }
 
-        return location;
+        return placement;
     }
 
     public override getCellNeighbor(gridPos:Vec3, position:Position):Vec3

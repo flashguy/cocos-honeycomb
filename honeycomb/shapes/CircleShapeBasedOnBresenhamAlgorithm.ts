@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
@@ -8,7 +8,7 @@ const { ccclass } = _decorator;
 // Date of creation Wed Oct 15 2025 21:53:03 GMT+0300 (Москва, стандартное время),
 
 @ccclass('CircleShapeBasedOnBresenhamAlgorithm')
-export class CircleShapeBasedOnBresenhamAlgorithm<T extends ILocation> extends Shape<T>
+export class CircleShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -26,10 +26,10 @@ export class CircleShapeBasedOnBresenhamAlgorithm<T extends ILocation> extends S
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
         
         let x:number = -radius;
         let y:number = 0;

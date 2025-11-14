@@ -1,14 +1,14 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Position } from '../enums/Position';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File RectangleShape.ts created am_empty
 // Date of creation Tue Jun 10 2025 22:23:30 GMT+0300 (Москва, стандартное время),
 
 @ccclass('RectangleShape')
-export class RectangleShape<T extends ILocation> extends Shape<T>
+export class RectangleShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -30,10 +30,10 @@ export class RectangleShape<T extends ILocation> extends Shape<T>
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 columns:number, rows:number, startPos:Vec3, directionTo:Position, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         this._columns = columns;
         this._rows = rows;

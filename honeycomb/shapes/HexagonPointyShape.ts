@@ -2,14 +2,14 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Grid } from '../abstractions/Grid';
 import { Position } from '../enums/Position';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
 // File HexagonPointyShape.ts created am_empty
 // Date of creation Wed Oct 22 2025 09:07:39 GMT+0300 (Москва, стандартное время),
 
 @ccclass('HexagonPointyShape')
-export class HexagonPointyShape<T extends ILocation> extends Shape<T>
+export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -29,10 +29,10 @@ export class HexagonPointyShape<T extends ILocation> extends Shape<T>
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
-        super(locationConstructor);
+        super(placementConstructor);
         
         if (radius <= 0)
         {

@@ -1,7 +1,7 @@
 import { _decorator, Vec3 } from 'cc';
 import { Position } from '../enums/Position';
 
-export interface ILocation
+export interface IPlacement
 {
    index:number;
    gridPos:Vec3;

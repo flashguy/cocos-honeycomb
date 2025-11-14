@@ -4,10 +4,7 @@ import { CellType } from '../enums/CellType';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
 
-// File Cell.ts created am_empty
-// Date of creation Tue Jun 10 2025 19:36:00 GMT+0300 (Москва, стандартное время),
-
-// Point
+// TODO: возможно назвать вот так Point
 @ccclass('Cell')
 export abstract class Cell
 {

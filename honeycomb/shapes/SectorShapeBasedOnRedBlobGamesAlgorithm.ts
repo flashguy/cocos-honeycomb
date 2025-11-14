@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { ILocation } from '../locations/ILocation';
+import { IPlacement } from '../placements/IPlacement';
 import { HMath } from '../utils/HMath';
 import { Position } from '../enums/Position';
 const { ccclass } = _decorator;
@@ -10,7 +10,7 @@ const { ccclass } = _decorator;
 // Date of creation Mon Oct 20 2025 10:27:41 GMT+0300 (Москва, стандартное время),
 
 @ccclass('SectorShapeBasedOnRedBlobGamesAlgorithm')
-export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extends Shape<T>
+export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
     // ----------------------------------------
     // private properties / getters and setters
@@ -30,10 +30,10 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends ILocation> extend
 
 
 
-    constructor(locationConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
                 centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
-        super(locationConstructor);
+        super(placementConstructor);
 
         // !!! РАСКОМЕНТИРОВАТЬ СТРОЧКИ С СЕКТОРОМ В GridViewer
 
