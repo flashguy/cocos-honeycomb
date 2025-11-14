@@ -143,7 +143,7 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
     // public methods
     // --------------
 
-    public override getIndexBycellPos(cellPos:Vec3):number
+    public override getIndexByCellPos(cellPos:Vec3):number
     {
         return (cellPos.y * this._columns) + cellPos.x;
     }

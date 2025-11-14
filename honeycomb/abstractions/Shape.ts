@@ -62,14 +62,14 @@ export abstract class Shape<T extends IPlacement>
         return this._placementsMap.has(key);
     }
 
-    public getPlacementBycellPos(cellPos:Vec3):T
+    public getPlacementByCellPos(cellPos:Vec3):T
     {
         const key:string = this.vec3ToKey(cellPos);
 
         return this._placementsMap.get(key)
     }
 
-    public getIndexBycellPos(cellPos:Vec3):number
+    public getIndexByCellPos(cellPos:Vec3):number
     {
         // TODO: расчитать для всех сеток
         return 0;
