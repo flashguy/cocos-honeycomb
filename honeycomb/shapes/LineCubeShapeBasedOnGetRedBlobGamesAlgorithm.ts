@@ -3,7 +3,7 @@ import { Grid } from '../abstractions/Grid';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { HMath } from '../utils/HMath';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // File LineCubeShapeBasedOnGetRedBlobGamesAlgorithm.ts created am_empty
@@ -30,7 +30,7 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> 
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

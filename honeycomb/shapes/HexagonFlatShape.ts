@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { Grid } from '../abstractions/Grid';
 const { ccclass } = _decorator;
 
@@ -29,7 +29,7 @@ export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
         super(placementConstructor);
@@ -44,7 +44,7 @@ export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
         
         for (let i = 0; i < radius; i++)
         {
-            startPos = grid.getCellNeighbor(startPos, Position.LB);
+            startPos = grid.getCellNeighbor(startPos, Location.LB);
             
             if (startPos == null)
                 return;
@@ -63,24 +63,24 @@ export class HexagonFlatShape<T extends IPlacement> extends Shape<T>
                 for (let line = 0; line < lineIter; line++)
                 {
                     this.add(gridPos);
-                    gridPos.set(grid.getCellNeighbor(gridPos, Position.R));
+                    gridPos.set(grid.getCellNeighbor(gridPos, Location.R));
                 }
 
                 if (lines < radius)
                 {
                     lineIter += 1;
-                    startPos.set(grid.getCellNeighbor(startPos, Position.LT));
+                    startPos.set(grid.getCellNeighbor(startPos, Location.LT));
                 }
                 else
                 {
                     lineIter -= 1;
-                    startPos.set(grid.getCellNeighbor(startPos, Position.RT));
+                    startPos.set(grid.getCellNeighbor(startPos, Location.RT));
                 }
             }
         }
         else
         {
-            const directions:Position[] = [Position.R, Position.RT, Position.LT, Position.L, Position.LB, Position.RB];
+            const directions:Location[] = [Location.R, Location.RT, Location.LT, Location.L, Location.LB, Location.RB];
 
             for (let i = 0; i < directions.length; i++)
             {

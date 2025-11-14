@@ -1,8 +1,5 @@
 import { Enum } from 'cc';
 
-// File Position.ts created am_empty
-// Date of creation Tue Jun 10 2025 19:31:44 GMT+0300 (Москва, стандартное время),
-
 // вид сверху
 // LT -- T -- RT
 // |     |     |
@@ -17,7 +14,7 @@ import { Enum } from 'cc';
 // |     |     |
 // LD -- D -- RD
 
-export enum Position
+export enum Location
 {
     NONE, // NONE
 
@@ -49,4 +46,4 @@ export enum Position
     RU,  // RIGHT UP
     RD,  // RIGHT DOWN
 }
-Enum(Position);
+Enum(Location);

@@ -1,6 +1,6 @@
 import { _decorator, Vec3 } from 'cc';
 import { Cell } from '../abstractions/Cell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { CellType } from '../enums/CellType';
 const { ccclass } = _decorator;
 
@@ -64,7 +64,7 @@ export class EllipseCell extends Cell
     // public methods
     // --------------
 
-    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Position
+    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {
         let tempPoint:Vec3 = this._center.clone().add(gridToWopldPoint);
         let ellipseHit:number = Math.pow(wopldPoint.x - tempPoint.x, 2) / Math.pow(this.halfWidth, 2)
@@ -73,8 +73,8 @@ export class EllipseCell extends Cell
         // ellipseHit > 1 находимся за эллипсом
         // _tempOvalHit == 1 находимся на краю эллипса ellipseHit < 1 находимся внутри эллипса
         if (ellipseHit > 1)
-            return defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : Position.OUT;
+            return defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : Location.OUT;
         else
-            return Position.IN;
+            return Location.IN;
     }
 }

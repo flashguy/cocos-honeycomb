@@ -1,6 +1,6 @@
 import { _decorator } from 'cc';
 import { HexagonCell } from './HexagonCell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
 const { ccclass } = _decorator;
@@ -71,23 +71,23 @@ export class HexagonPointyCell extends HexagonCell
     protected override setVertices():void
     {
         // INFO: точки углов формируем против часовой стрелки слева направо и снизу вверх
-        this.vertices.set(Position.RT, this.calculateVertex(30));
-        this.vertices.set(Position.T,  this.calculateVertex(90));
-        this.vertices.set(Position.LT, this.calculateVertex(150));
-        this.vertices.set(Position.LB, this.calculateVertex(210));
-        this.vertices.set(Position.B,  this.calculateVertex(270));
-        this.vertices.set(Position.RB, this.calculateVertex(330));
+        this.vertices.set(Location.RT, this.calculateVertex(30));
+        this.vertices.set(Location.T,  this.calculateVertex(90));
+        this.vertices.set(Location.LT, this.calculateVertex(150));
+        this.vertices.set(Location.LB, this.calculateVertex(210));
+        this.vertices.set(Location.B,  this.calculateVertex(270));
+        this.vertices.set(Location.RB, this.calculateVertex(330));
     }
 
     protected override setEdges():void
     {
         // INFO: рёбра нужно формировать против часовой стрелки для корректной работы алгоритма PointToEdgeDistance слева направо снизу вверх
-        this.edges.set(Position.LB, new Edge(this.getVertex(Position.LB), this.getVertex(Position.B)));
-        this.edges.set(Position.RB, new Edge(this.getVertex(Position.B),  this.getVertex(Position.RB)));
-        this.edges.set(Position.R,  new Edge(this.getVertex(Position.RB), this.getVertex(Position.RT)));
-        this.edges.set(Position.RT, new Edge(this.getVertex(Position.RT), this.getVertex(Position.T)));
-        this.edges.set(Position.LT, new Edge(this.getVertex(Position.T),  this.getVertex(Position.LT)));
-        this.edges.set(Position.L,  new Edge(this.getVertex(Position.LT), this.getVertex(Position.LB)));
+        this.edges.set(Location.LB, new Edge(this.getVertex(Location.LB), this.getVertex(Location.B)));
+        this.edges.set(Location.RB, new Edge(this.getVertex(Location.B),  this.getVertex(Location.RB)));
+        this.edges.set(Location.R,  new Edge(this.getVertex(Location.RB), this.getVertex(Location.RT)));
+        this.edges.set(Location.RT, new Edge(this.getVertex(Location.RT), this.getVertex(Location.T)));
+        this.edges.set(Location.LT, new Edge(this.getVertex(Location.T),  this.getVertex(Location.LT)));
+        this.edges.set(Location.L,  new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
     }
 
     // --------------

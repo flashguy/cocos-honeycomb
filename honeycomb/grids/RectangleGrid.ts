@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
@@ -29,7 +29,7 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -49,15 +49,15 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
 
     protected override setNeighbors():void
     {
-        this.neighbors.set(Position.L, v3(-1, 0));
-        this.neighbors.set(Position.T, v3(0, 1));
-        this.neighbors.set(Position.R, v3(1, 0));
-        this.neighbors.set(Position.B, v3(0, -1));
+        this.neighbors.set(Location.L, v3(-1, 0));
+        this.neighbors.set(Location.T, v3(0, 1));
+        this.neighbors.set(Location.R, v3(1, 0));
+        this.neighbors.set(Location.B, v3(0, -1));
         
-        this.diagonals.set(Position.LB, v3(-1, -1));
-        this.diagonals.set(Position.LT, v3(-1, 1));
-        this.diagonals.set(Position.RT, v3(1, 1));
-        this.diagonals.set(Position.RB, v3(1, -1));
+        this.diagonals.set(Location.LB, v3(-1, -1));
+        this.diagonals.set(Location.LT, v3(-1, 1));
+        this.diagonals.set(Location.RT, v3(1, 1));
+        this.diagonals.set(Location.RB, v3(1, -1));
     }
 
     protected override calculateGridSpecificPrameters():void
@@ -86,28 +86,28 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
         result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
         
-        let position:Position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false);
+        let location:Location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false);
      
-        switch (position)
+        switch (location)
         {
-            case Position.IN:
+            case Location.IN:
             {
-                return new this.placementConstructor(result, Position.IN);
+                return new this.placementConstructor(result, Location.IN);
             }
-            case Position.OUT:
+            case Location.OUT:
             default:
             {
-                return new this.placementConstructor(null, Position.OUT);
+                return new this.placementConstructor(null, Location.OUT);
             }
         }
     }
 
-    public override getCellNeighbor(gridPos:Vec3, position:Position):Vec3
+    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighbor(gridPos, position);
+        return this.getNeighbor(gridPos, location);
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Position, Vec3>
+    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
     {
         return this.getNeighbors(gridPos);
     }

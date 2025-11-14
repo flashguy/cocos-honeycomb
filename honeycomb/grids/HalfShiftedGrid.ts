@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { CellType } from '../enums/CellType';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
 import { HexagonCell } from '../cells/HexagonCell';
@@ -34,7 +34,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
     public get shiftGridType():ShiftedGridType { return this._shiftGridType; }
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 shiftType:ShiftedGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -65,11 +65,11 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                  || this._cell.type == CellType.HEXAGON_POINTY
                 )
                 {
-                    this.neighbors.set(Position.L, v3(-1, 0));
-                    this.neighbors.set(Position.R, v3(1, 0));
+                    this.neighbors.set(Location.L, v3(-1, 0));
+                    this.neighbors.set(Location.R, v3(1, 0));
 
-                    this.neighborsShifted.set(Position.L, v3(-1, 0));
-                    this.neighborsShifted.set(Position.R, v3(1, 0));
+                    this.neighborsShifted.set(Location.L, v3(-1, 0));
+                    this.neighborsShifted.set(Location.R, v3(1, 0));
                 }
 
                 break;
@@ -88,11 +88,11 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                  || this._cell.type == CellType.HEXAGON_FLAT
                 )
                 {
-                    this.neighbors.set(Position.T, v3(0, 1));
-                    this.neighbors.set(Position.B, v3(0, -1));
+                    this.neighbors.set(Location.T, v3(0, 1));
+                    this.neighbors.set(Location.B, v3(0, -1));
 
-                    this.neighborsShifted.set(Position.T, v3(0, 1));
-                    this.neighborsShifted.set(Position.B, v3(0, -1));
+                    this.neighborsShifted.set(Location.T, v3(0, 1));
+                    this.neighborsShifted.set(Location.B, v3(0, -1));
                 }
 
                 break;
@@ -104,60 +104,60 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             case ShiftedGridType.RIGHT_EVEN:
             case ShiftedGridType.RIGHT_ODD:
             {
-                this.neighbors.set(Position.LB, v3(-1, -1));
-                this.neighbors.set(Position.LT, v3(-1, 1));
-                this.neighbors.set(Position.RT, v3(0, 1));
-                this.neighbors.set(Position.RB, v3(0, -1));
+                this.neighbors.set(Location.LB, v3(-1, -1));
+                this.neighbors.set(Location.LT, v3(-1, 1));
+                this.neighbors.set(Location.RT, v3(0, 1));
+                this.neighbors.set(Location.RB, v3(0, -1));
 
-                this.neighborsShifted.set(Position.LB, v3(0, -1));
-                this.neighborsShifted.set(Position.LT, v3(0, 1));
-                this.neighborsShifted.set(Position.RT, v3(1, 1));
-                this.neighborsShifted.set(Position.RB, v3(1, -1));
+                this.neighborsShifted.set(Location.LB, v3(0, -1));
+                this.neighborsShifted.set(Location.LT, v3(0, 1));
+                this.neighborsShifted.set(Location.RT, v3(1, 1));
+                this.neighborsShifted.set(Location.RB, v3(1, -1));
 
                 break;
             }
             case ShiftedGridType.LEFT_EVEN:
             case ShiftedGridType.LEFT_ODD:
             {
-                this.neighbors.set(Position.LB, v3(0, -1));
-                this.neighbors.set(Position.LT, v3(0, 1));
-                this.neighbors.set(Position.RT, v3(1, 1));
-                this.neighbors.set(Position.RB, v3(1, -1));
+                this.neighbors.set(Location.LB, v3(0, -1));
+                this.neighbors.set(Location.LT, v3(0, 1));
+                this.neighbors.set(Location.RT, v3(1, 1));
+                this.neighbors.set(Location.RB, v3(1, -1));
 
-                this.neighborsShifted.set(Position.LB, v3(-1, -1));
-                this.neighborsShifted.set(Position.LT, v3(-1, 1));
-                this.neighborsShifted.set(Position.RT, v3(0, 1));
-                this.neighborsShifted.set(Position.RB, v3(0, -1));
+                this.neighborsShifted.set(Location.LB, v3(-1, -1));
+                this.neighborsShifted.set(Location.LT, v3(-1, 1));
+                this.neighborsShifted.set(Location.RT, v3(0, 1));
+                this.neighborsShifted.set(Location.RB, v3(0, -1));
                 
                 break;
             }
             case ShiftedGridType.TOP_EVEN:
             case ShiftedGridType.TOP_ODD:
             {
-                this.neighbors.set(Position.LB, v3(-1, -1));
-                this.neighbors.set(Position.LT, v3(-1, 0));
-                this.neighbors.set(Position.RT, v3(1, 0));
-                this.neighbors.set(Position.RB, v3(1, -1));
+                this.neighbors.set(Location.LB, v3(-1, -1));
+                this.neighbors.set(Location.LT, v3(-1, 0));
+                this.neighbors.set(Location.RT, v3(1, 0));
+                this.neighbors.set(Location.RB, v3(1, -1));
 
-                this.neighborsShifted.set(Position.LB, v3(-1, 0));
-                this.neighborsShifted.set(Position.LT, v3(-1, 1));
-                this.neighborsShifted.set(Position.RT, v3(1, 1));
-                this.neighborsShifted.set(Position.RB, v3(1, 0));
+                this.neighborsShifted.set(Location.LB, v3(-1, 0));
+                this.neighborsShifted.set(Location.LT, v3(-1, 1));
+                this.neighborsShifted.set(Location.RT, v3(1, 1));
+                this.neighborsShifted.set(Location.RB, v3(1, 0));
                 
                 break;
             }
             case ShiftedGridType.BOTTOM_EVEN:
             case ShiftedGridType.BOTTOM_ODD:
             {
-                this.neighbors.set(Position.LB, v3(-1, 0));
-                this.neighbors.set(Position.LT, v3(-1, 1));
-                this.neighbors.set(Position.RT, v3(1, 1));
-                this.neighbors.set(Position.RB, v3(1, 0));
+                this.neighbors.set(Location.LB, v3(-1, 0));
+                this.neighbors.set(Location.LT, v3(-1, 1));
+                this.neighbors.set(Location.RT, v3(1, 1));
+                this.neighbors.set(Location.RB, v3(1, 0));
 
-                this.neighborsShifted.set(Position.LB, v3(-1, -1));
-                this.neighborsShifted.set(Position.LT, v3(-1, 0));
-                this.neighborsShifted.set(Position.RT, v3(1, 0));
-                this.neighborsShifted.set(Position.RB, v3(1, -1));
+                this.neighborsShifted.set(Location.LB, v3(-1, -1));
+                this.neighborsShifted.set(Location.LT, v3(-1, 0));
+                this.neighborsShifted.set(Location.RT, v3(1, 0));
+                this.neighborsShifted.set(Location.RB, v3(1, -1));
                 
                 break;
             }
@@ -360,8 +360,8 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         let result:Vec3 = v3();
         let offsetPos:Vec3 = v3(); // Учёт смещений по позиции ячеек
         let offsetSize:Vec3 = v3(); // Учёт смещений по размеру ячеек
-        let position:Position;
-        let placement:T = new this.placementConstructor(null, Position.OUT);
+        let location:Location;
+        let placement:T = new this.placementConstructor(null, Location.OUT);
         
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
          || this._shiftGridType == ShiftedGridType.RIGHT_ODD
@@ -437,22 +437,22 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             result.y = Math.floor((wopldPoint.y - this._anchor.y + offsetPos.y) / (this._cell.height + this._gap.y));
         }
 
-        position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+        location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
         
-        switch (position)
+        switch (location)
         {
-            case Position.IN:
+            case Location.IN:
             {
-                placement = new this.placementConstructor(result, Position.IN);
+                placement = new this.placementConstructor(result, Location.IN);
                 break;
             }
             default:
             {
-                result = this.getCellNeighbor(result, position);
-                position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                result = this.getCellNeighbor(result, location);
+                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
-                if (position == Position.IN)
-                    placement = new this.placementConstructor(result, Position.IN);
+                if (location == Location.IN)
+                    placement = new this.placementConstructor(result, Location.IN);
 
                 break;
             }
@@ -461,7 +461,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return placement;
     }
 
-    public override getCellNeighbor(gridPos:Vec3, position:Position):Vec3
+    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
     {
         let result:Vec3 = gridPos.clone();
         let neighbor:Vec3;
@@ -469,30 +469,30 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN || this._shiftGridType == ShiftedGridType.LEFT_EVEN)
         {
             if (Math.abs(gridPos.y % 2) == 0)
-                neighbor = this.neighbors.get(position);
+                neighbor = this.neighbors.get(location);
             else
-                neighbor = this.neighborsShifted.get(position);
+                neighbor = this.neighborsShifted.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD || this._shiftGridType == ShiftedGridType.LEFT_ODD)
         {
             if (Math.abs(gridPos.y % 2) == 0)
-                neighbor = this.neighborsShifted.get(position);
+                neighbor = this.neighborsShifted.get(location);
             else
-                neighbor = this.neighbors.get(position);
+                neighbor = this.neighbors.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_EVEN || this._shiftGridType == ShiftedGridType.BOTTOM_EVEN)
         {
             if (Math.abs(gridPos.x % 2) == 0)
-                neighbor = this.neighbors.get(position);
+                neighbor = this.neighbors.get(location);
             else
-                neighbor = this.neighborsShifted.get(position);
+                neighbor = this.neighborsShifted.get(location);
         }
         else if (this._shiftGridType == ShiftedGridType.TOP_ODD || this._shiftGridType == ShiftedGridType.BOTTOM_ODD)
         {
             if (Math.abs(gridPos.x % 2) == 0)
-                neighbor = this.neighborsShifted.get(position);
+                neighbor = this.neighborsShifted.get(location);
             else
-                neighbor = this.neighbors.get(position);
+                neighbor = this.neighbors.get(location);
         }
 
         if (neighbor != null)
@@ -501,9 +501,9 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Position, Vec3>
+    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
     {
-        let result:Map<Position, Vec3> = new Map<Position, Vec3>();
+        let result:Map<Location, Vec3> = new Map<Location, Vec3>();
 
         if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN || this._shiftGridType == ShiftedGridType.LEFT_EVEN)
         {

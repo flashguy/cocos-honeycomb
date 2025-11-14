@@ -2,7 +2,7 @@ import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { Grid } from '../abstractions/Grid';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
 const { ccclass } = _decorator;
@@ -31,15 +31,15 @@ export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
-                grid:Grid<T>, centerPos:Vec3, radius:number, startSpiralDirection:Position, clockwise:boolean)
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+                grid:Grid<T>, centerPos:Vec3, radius:number, startSpiralDirection:Location, clockwise:boolean)
     {
         super(placementConstructor);
         
         if (grid instanceof HalfShiftedGrid)
         {
-            let directions:Position[] = [];
-            let fixPosition:Position;
+            let directions:Location[] = [];
+            let fixLocation:Location;
             let currentPos:Vec3 = centerPos.clone();
             let neighborPos:Vec3;
 
@@ -51,68 +51,68 @@ export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
             {
                 if (clockwise)
                 {
-                    if (startSpiralDirection == Position.LB)
+                    if (startSpiralDirection == Location.LB)
                     {
-                        directions = [Position.LT, Position.RT, Position.R, Position.RB, Position.LB];
-                        fixPosition = Position.L;
+                        directions = [Location.LT, Location.RT, Location.R, Location.RB, Location.LB];
+                        fixLocation = Location.L;
                     }
-                    else if (startSpiralDirection == Position.L)
+                    else if (startSpiralDirection == Location.L)
                     {
-                        directions = [Position.RT, Position.R, Position.RB, Position.LB, Position.L];
-                        fixPosition = Position.LT;
+                        directions = [Location.RT, Location.R, Location.RB, Location.LB, Location.L];
+                        fixLocation = Location.LT;
                     }
-                    else if (startSpiralDirection == Position.LT)
+                    else if (startSpiralDirection == Location.LT)
                     {
-                        directions = [Position.R, Position.RB, Position.LB, Position.L, Position.LT];
-                        fixPosition = Position.RT;
+                        directions = [Location.R, Location.RB, Location.LB, Location.L, Location.LT];
+                        fixLocation = Location.RT;
                     }
-                    else if (startSpiralDirection == Position.RT)
+                    else if (startSpiralDirection == Location.RT)
                     {
-                        directions = [Position.RB, Position.LB, Position.L, Position.LT, Position.RT];
-                        fixPosition = Position.R;
+                        directions = [Location.RB, Location.LB, Location.L, Location.LT, Location.RT];
+                        fixLocation = Location.R;
                     }
-                    else if (startSpiralDirection == Position.R)
+                    else if (startSpiralDirection == Location.R)
                     {
-                        directions = [Position.LB, Position.L, Position.LT, Position.RT, Position.R];
-                        fixPosition = Position.RB;
+                        directions = [Location.LB, Location.L, Location.LT, Location.RT, Location.R];
+                        fixLocation = Location.RB;
                     }
-                    else if (startSpiralDirection == Position.RB)
+                    else if (startSpiralDirection == Location.RB)
                     {
-                        directions = [Position.L, Position.LT, Position.RT, Position.R, Position.RB];
-                        fixPosition = Position.LB;
+                        directions = [Location.L, Location.LT, Location.RT, Location.R, Location.RB];
+                        fixLocation = Location.LB;
                     }
                 }
                 else
                 {
-                    if (startSpiralDirection == Position.LB)
+                    if (startSpiralDirection == Location.LB)
                     {
-                        directions = [Position.R, Position.RT, Position.LT, Position.L, Position.LB];
-                        fixPosition = Position.RB;
+                        directions = [Location.R, Location.RT, Location.LT, Location.L, Location.LB];
+                        fixLocation = Location.RB;
                     }
-                    else if (startSpiralDirection == Position.L)
+                    else if (startSpiralDirection == Location.L)
                     {
-                        directions = [Position.RB, Position.R, Position.RT, Position.LT, Position.L];
-                        fixPosition = Position.LB;
+                        directions = [Location.RB, Location.R, Location.RT, Location.LT, Location.L];
+                        fixLocation = Location.LB;
                     }
-                    else if (startSpiralDirection == Position.LT)
+                    else if (startSpiralDirection == Location.LT)
                     {
-                        directions = [Position.LB, Position.RB, Position.R, Position.RT, Position.LT];
-                        fixPosition = Position.L;
+                        directions = [Location.LB, Location.RB, Location.R, Location.RT, Location.LT];
+                        fixLocation = Location.L;
                     }
-                    else if (startSpiralDirection == Position.RT)
+                    else if (startSpiralDirection == Location.RT)
                     {
-                        directions = [Position.L, Position.LB, Position.RB, Position.R, Position.RT];
-                        fixPosition = Position.LT;
+                        directions = [Location.L, Location.LB, Location.RB, Location.R, Location.RT];
+                        fixLocation = Location.LT;
                     }
-                    else if (startSpiralDirection == Position.R)
+                    else if (startSpiralDirection == Location.R)
                     {
-                        directions = [Position.LT, Position.L, Position.LB, Position.RB, Position.R];
-                        fixPosition = Position.RT;
+                        directions = [Location.LT, Location.L, Location.LB, Location.RB, Location.R];
+                        fixLocation = Location.RT;
                     }
-                    else if (startSpiralDirection == Position.RB)
+                    else if (startSpiralDirection == Location.RB)
                     {
-                        directions = [Position.RT, Position.LT, Position.L, Position.LB, Position.RB];
-                        fixPosition = Position.R;
+                        directions = [Location.RT, Location.LT, Location.L, Location.LB, Location.RB];
+                        fixLocation = Location.R;
                     }
                 }
             }
@@ -125,68 +125,68 @@ export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
             {
                 if (clockwise)
                 {
-                    if (startSpiralDirection == Position.LB)
+                    if (startSpiralDirection == Location.LB)
                     {
-                        directions = [Position.T, Position.RT, Position.RB, Position.B, Position.LB];
-                        fixPosition = Position.LT;
+                        directions = [Location.T, Location.RT, Location.RB, Location.B, Location.LB];
+                        fixLocation = Location.LT;
                     }
-                    else if (startSpiralDirection == Position.LT)
+                    else if (startSpiralDirection == Location.LT)
                     {
-                        directions = [Position.RT, Position.RB, Position.B, Position.LB, Position.LT];
-                        fixPosition = Position.T;
+                        directions = [Location.RT, Location.RB, Location.B, Location.LB, Location.LT];
+                        fixLocation = Location.T;
                     }
-                    else if (startSpiralDirection == Position.T)
+                    else if (startSpiralDirection == Location.T)
                     {
-                        directions = [Position.RB, Position.B, Position.LB, Position.LT, Position.T];
-                        fixPosition = Position.RT;
+                        directions = [Location.RB, Location.B, Location.LB, Location.LT, Location.T];
+                        fixLocation = Location.RT;
                     }
-                    else if (startSpiralDirection == Position.RT)
+                    else if (startSpiralDirection == Location.RT)
                     {
-                        directions = [Position.B, Position.LB, Position.LT, Position.T, Position.RT];
-                        fixPosition = Position.RB;
+                        directions = [Location.B, Location.LB, Location.LT, Location.T, Location.RT];
+                        fixLocation = Location.RB;
                     }
-                    else if (startSpiralDirection == Position.RB)
+                    else if (startSpiralDirection == Location.RB)
                     {
-                        directions = [Position.LB, Position.LT, Position.T, Position.RT, Position.RB];
-                        fixPosition = Position.B;
+                        directions = [Location.LB, Location.LT, Location.T, Location.RT, Location.RB];
+                        fixLocation = Location.B;
                     }
-                    else if (startSpiralDirection == Position.B)
+                    else if (startSpiralDirection == Location.B)
                     {
-                        directions = [Position.LT, Position.T, Position.RT, Position.RB, Position.B];
-                        fixPosition = Position.LB;
+                        directions = [Location.LT, Location.T, Location.RT, Location.RB, Location.B];
+                        fixLocation = Location.LB;
                     }
                 }
                 else
                 {
-                    if (startSpiralDirection == Position.LB)
+                    if (startSpiralDirection == Location.LB)
                     {
-                        directions = [Position.RB, Position.RT, Position.T, Position.LT, Position.LB];
-                        fixPosition = Position.B;
+                        directions = [Location.RB, Location.RT, Location.T, Location.LT, Location.LB];
+                        fixLocation = Location.B;
                     }
-                    else if (startSpiralDirection == Position.LT)
+                    else if (startSpiralDirection == Location.LT)
                     {
-                        directions = [Position.B, Position.RB, Position.RT, Position.T, Position.LT];
-                        fixPosition = Position.LB;
+                        directions = [Location.B, Location.RB, Location.RT, Location.T, Location.LT];
+                        fixLocation = Location.LB;
                     }
-                    else if (startSpiralDirection == Position.T)
+                    else if (startSpiralDirection == Location.T)
                     {
-                        directions = [Position.LB, Position.B, Position.RB, Position.RT, Position.T];
-                        fixPosition = Position.LT;
+                        directions = [Location.LB, Location.B, Location.RB, Location.RT, Location.T];
+                        fixLocation = Location.LT;
                     }
-                    else if (startSpiralDirection == Position.RT)
+                    else if (startSpiralDirection == Location.RT)
                     {
-                        directions = [Position.LT, Position.LB, Position.B, Position.RB, Position.RT];
-                        fixPosition = Position.T;
+                        directions = [Location.LT, Location.LB, Location.B, Location.RB, Location.RT];
+                        fixLocation = Location.T;
                     }
-                    else if (startSpiralDirection == Position.RB)
+                    else if (startSpiralDirection == Location.RB)
                     {
-                        directions = [Position.T, Position.LT, Position.LB, Position.B, Position.RB];
-                        fixPosition = Position.RT;
+                        directions = [Location.T, Location.LT, Location.LB, Location.B, Location.RB];
+                        fixLocation = Location.RT;
                     }
-                    else if (startSpiralDirection == Position.B)
+                    else if (startSpiralDirection == Location.B)
                     {
-                        directions = [Position.RT, Position.T, Position.LT, Position.LB, Position.B];
-                        fixPosition = Position.RB;
+                        directions = [Location.RT, Location.T, Location.LT, Location.LB, Location.B];
+                        fixLocation = Location.RB;
                     }
                 }
             }
@@ -204,7 +204,7 @@ export class SpiralShiftedShape<T extends IPlacement> extends Shape<T>
 
                 for (let fix = 0; fix < r - 1; fix++)
                 {
-                    neighborPos = grid.getCellNeighbor(currentPos, fixPosition);
+                    neighborPos = grid.getCellNeighbor(currentPos, fixLocation);
 
                     if (neighborPos != null)
                         currentPos.set(neighborPos);

@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Grid } from '../abstractions/Grid';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
@@ -29,7 +29,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
         super(placementConstructor);
@@ -44,7 +44,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
         
         for (let i = 0; i < radius; i++)
         {
-            startPos = grid.getCellNeighbor(startPos, Position.LB);
+            startPos = grid.getCellNeighbor(startPos, Location.LB);
             
             if (startPos == null)
                 return;
@@ -71,7 +71,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
                 if (x < radius)
                 {
                     stepY += 1;
-                    neighborPos = grid.getCellNeighbor(startPos, Position.RB);
+                    neighborPos = grid.getCellNeighbor(startPos, Location.RB);
 
                     if (neighborPos != null)
                         startPos.set(neighborPos);
@@ -79,7 +79,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
                 else
                 {
                     stepY -= 1;
-                    neighborPos = grid.getCellNeighbor(startPos, Position.RT)
+                    neighborPos = grid.getCellNeighbor(startPos, Location.RT)
 
                     if (neighborPos != null)
                         startPos.set(neighborPos);
@@ -88,7 +88,7 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
         }
         else
         {
-            const directions:Position[] = [Position.RB, Position.RT, Position.T, Position.LT, Position.LB, Position.B];
+            const directions:Location[] = [Location.RB, Location.RT, Location.T, Location.LT, Location.LB, Location.B];
 
             for (let i = 0; i < directions.length; i++)
             {

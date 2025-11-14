@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { RhombGridType } from '../enums/RhombGridType';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
@@ -33,7 +33,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -57,19 +57,19 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     {
         if (this._cell.type == CellType.RHOMB)
         {
-            this.neighbors.set(Position.LB, v3(-1, 0));
-            this.neighbors.set(Position.LT, v3(0, 1));
-            this.neighbors.set(Position.RT, v3(1, 0));
-            this.neighbors.set(Position.RB, v3(0, -1));
+            this.neighbors.set(Location.LB, v3(-1, 0));
+            this.neighbors.set(Location.LT, v3(0, 1));
+            this.neighbors.set(Location.RT, v3(1, 0));
+            this.neighbors.set(Location.RB, v3(0, -1));
         }
         else
         {
-            this.neighbors.set(Position.B, v3(-1, -1));
-            this.neighbors.set(Position.LB, v3(-1, 0));
-            this.neighbors.set(Position.LT, v3(0, 1));
-            this.neighbors.set(Position.T, v3(1, 1));
-            this.neighbors.set(Position.RT, v3(1, 0));
-            this.neighbors.set(Position.RB, v3(0, -1));
+            this.neighbors.set(Location.B, v3(-1, -1));
+            this.neighbors.set(Location.LB, v3(-1, 0));
+            this.neighbors.set(Location.LT, v3(0, 1));
+            this.neighbors.set(Location.T, v3(1, 1));
+            this.neighbors.set(Location.RT, v3(1, 0));
+            this.neighbors.set(Location.RB, v3(0, -1));
         }
     }
 
@@ -145,8 +145,8 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     public override worldToGrid(wopldPoint:Vec3):T
     {
         let result:Vec3 = v3();
-        let position:Position;
-        let placement:T = new this.placementConstructor(null, Position.OUT);
+        let location:Location;
+        let placement:T = new this.placementConstructor(null, Location.OUT);
 
         // работет без _anchor и _gap
         // result.x = Math.floor((wopldPoint.y / this._shift.y + (wopldPoint.x - this._shift.x) / this._shift.x) * 0.5);
@@ -158,23 +158,23 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         result.x = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y + (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
         result.y = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y - (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
 
-        position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+        location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
 
-        switch (position)
+        switch (location)
         {
-            case Position.IN:
+            case Location.IN:
             {
-                placement = new this.placementConstructor(result, Position.IN);
+                placement = new this.placementConstructor(result, Location.IN);
                 break;
             }
             default:
             {
-                result.add(this.neighbors.get(position));
+                result.add(this.neighbors.get(location));
 
-                position = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
-                if (position == Position.IN)
-                    placement = new this.placementConstructor(result, Position.IN);
+                if (location == Location.IN)
+                    placement = new this.placementConstructor(result, Location.IN);
 
                 break;
             }
@@ -183,12 +183,12 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         return placement;
     }
 
-    public override getCellNeighbor(gridPos:Vec3, position:Position):Vec3
+    public override getCellNeighbor(gridPos:Vec3, location:Location):Vec3
     {
-        return this.getNeighbor(gridPos, position);
+        return this.getNeighbor(gridPos, location);
     }
 
-    public override getCellNeighbors(gridPos:Vec3):Map<Position, Vec3>
+    public override getCellNeighbors(gridPos:Vec3):Map<Location, Vec3>
     {
         return this.getNeighbors(gridPos);
     }

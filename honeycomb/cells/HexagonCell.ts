@@ -1,6 +1,6 @@
 import { _decorator, toRadian, v3, Vec3 } from 'cc';
 import { Cell } from '../abstractions/Cell';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // File HexagonCell.ts created am_empty
@@ -82,7 +82,7 @@ export class HexagonCell extends Cell
     // public methods
     // --------------
 
-    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Position
+    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }

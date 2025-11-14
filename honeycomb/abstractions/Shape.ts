@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { IPlacement } from '../placements/IPlacement';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // File Shape.ts created am_empty
@@ -29,7 +29,7 @@ export abstract class Shape<T extends IPlacement>
     // public properties / getters and setters
     // ---------------------------------------
 
-    constructor(protected placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T)
+    constructor(protected placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T)
     {
         
     }
@@ -46,7 +46,7 @@ export abstract class Shape<T extends IPlacement>
 
     protected createPlacement():T
     {
-        return new this.placementConstructor(v3(), Position.NONE, 0);
+        return new this.placementConstructor(v3(), Location.NONE, 0);
     }
 
     protected vec3ToKey(vec3:Vec3):string

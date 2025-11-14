@@ -1,7 +1,7 @@
-import { _decorator, Component, Node, v3, Vec3 } from 'cc';
+import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Grid } from '../abstractions/Grid';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { HalfShiftedGrid } from '../grids/HalfShiftedGrid';
 import { ShiftedGridType } from '../enums/ShiftedGridType';
 import { IPlacement } from '../placements/IPlacement';
@@ -31,8 +31,8 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
-                grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Position)
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+                grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Location)
     {
         super(placementConstructor)
 
@@ -40,8 +40,8 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
         {
             let startRowPos:Vec3 = v3();
             let currentPos:Vec3;
-            let nextStepX:Position;
-            let nextStepY:Position;
+            let nextStepX:Location;
+            let nextStepY:Location;
             let stepX:number = distance - 1;
             let stepY:number = distance;
 
@@ -51,45 +51,45 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
                 || grid.shiftGridType == ShiftedGridType.LEFT_ODD
             )
             {
-                if (directionTo == Position.RT)
+                if (directionTo == Location.RT)
                 {
                     startRowPos.set(startPos);
-                    nextStepX = Position.R;
-                    nextStepY = Position.RT;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RT;
                 }
-                else if (directionTo == Position.TC)
+                else if (directionTo == Location.TC)
                 {
                     startRowPos.x = startPos.x - Math.floor((distance - 1) / 2);
                     startRowPos.y = startPos.y;
-                    nextStepX = Position.R;
-                    nextStepY = Position.RT;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RT;
                 }
-                else if (directionTo == Position.LT)
+                else if (directionTo == Location.LT)
                 {
                     startRowPos.x = startPos.x - (distance - 1);
                     startRowPos.y = startPos.y;
-                    nextStepX = Position.R;
-                    nextStepY = Position.RT;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RT;
                 }
-                else if (directionTo == Position.RB)
+                else if (directionTo == Location.RB)
                 {
                     startRowPos.set(startPos);
-                    nextStepX = Position.R;
-                    nextStepY = Position.RB;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RB;
                 }
-                else if (directionTo == Position.BC)
+                else if (directionTo == Location.BC)
                 {
                     startRowPos.x = startPos.x - Math.floor((distance - 1) / 2);
                     startRowPos.y = startPos.y;
-                    nextStepX = Position.R;
-                    nextStepY = Position.RB;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RB;
                 }
-                else if (directionTo == Position.LB)
+                else if (directionTo == Location.LB)
                 {
                     startRowPos.x = startPos.x - (distance - 1);
                     startRowPos.y = startPos.y;
-                    nextStepX = Position.R;
-                    nextStepY = Position.RB;
+                    nextStepX = Location.R;
+                    nextStepY = Location.RB;
                 }
                 else
                 {
@@ -103,46 +103,46 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
                 || grid.shiftGridType == ShiftedGridType.BOTTOM_ODD
             )
             {
-                if (directionTo == Position.RT)
+                if (directionTo == Location.RT)
                 {
                     startRowPos.set(startPos);
-                    nextStepX = Position.RT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.RT;
+                    nextStepY = Location.T;
                 }
-                else if (directionTo == Position.RC)
+                else if (directionTo == Location.RC)
                 {
                     startRowPos.x = startPos.x;
                     startRowPos.y = startPos.y - Math.floor((distance - 1) / 2);
-                    nextStepX = Position.RT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.RT;
+                    nextStepY = Location.T;
                 }
-                else if (directionTo == Position.LT)
+                else if (directionTo == Location.LT)
                 {
                     startRowPos.x = startPos.x;
                     startRowPos.y = startPos.y;
-                    nextStepX = Position.LT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.LT;
+                    nextStepY = Location.T;
                 }
-                else if (directionTo == Position.RB)
+                else if (directionTo == Location.RB)
                 {
                     startRowPos.x = startPos.x;
                     startRowPos.y = startPos.y - (distance - 1);
-                    nextStepX = Position.RT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.RT;
+                    nextStepY = Location.T;
                 }
-                else if (directionTo == Position.LC)
+                else if (directionTo == Location.LC)
                 {
                     startRowPos.x = startPos.x;
                     startRowPos.y = startPos.y - Math.floor((distance - 1) / 2);
-                    nextStepX = Position.LT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.LT;
+                    nextStepY = Location.T;
                 }
-                else if (directionTo == Position.LB)
+                else if (directionTo == Location.LB)
                 {
                     startRowPos.x = startPos.x;
                     startRowPos.y = startPos.y - (distance - 1);
-                    nextStepX = Position.LT;
-                    nextStepY = Position.T;
+                    nextStepX = Location.LT;
+                    nextStepY = Location.T;
                 }
                 else
                 {

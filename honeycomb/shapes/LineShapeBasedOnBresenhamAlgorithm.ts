@@ -1,7 +1,7 @@
 import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // File LineShapeBasedOnBresenhamAlgorithm.ts created am_empty
@@ -28,7 +28,7 @@ export class LineShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends Sh
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

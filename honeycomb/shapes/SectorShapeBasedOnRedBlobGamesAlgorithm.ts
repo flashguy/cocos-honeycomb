@@ -2,7 +2,7 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { HMath } from '../utils/HMath';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/circle-drawing/
@@ -30,7 +30,7 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
 
 
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
         super(placementConstructor);

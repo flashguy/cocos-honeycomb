@@ -1,6 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
@@ -30,8 +30,8 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
 
-    constructor(placementConstructor: new (gridPos?:Vec3, position?:Position, index?:number) => T,
-                columns:number, rows:number, startPos:Vec3, directionTo:Position, fill:boolean = false)
+    constructor(placementConstructor: new (gridPos?:Vec3, location?:Location, index?:number) => T,
+                columns:number, rows:number, startPos:Vec3, directionTo:Location, fill:boolean = false)
     {
         super(placementConstructor);
 
@@ -45,60 +45,60 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
         // directionTo определяет построение фигуры относительно начальной ячейки и центра координат
         switch (directionTo)
         {
-            case Position.C:
+            case Location.C:
             {
                 multiplierX = 1;
                 multiplierY = 1;
                 gridPos.set(startPos.x - Math.floor(columns / 2), startPos.y - Math.floor(rows / 2));
                 break;
             }
-            case Position.BC:
+            case Location.BC:
             {
                 multiplierX = 1;
                 multiplierY = -1;
                 gridPos.x = startPos.x - Math.floor(columns / 2);
                 break;
             }
-            case Position.TC:
+            case Location.TC:
             {
                 multiplierX = 1;
                 multiplierY = 1;
                 gridPos.x = startPos.x - Math.floor(columns / 2);
                 break;
             }
-            case Position.LC:
+            case Location.LC:
             {
                 multiplierX = -1;
                 multiplierY = 1;
                 gridPos.y = startPos.y - Math.floor(rows / 2);
                 break;
             }
-            case Position.RC:
+            case Location.RC:
             {
                 multiplierX = 1;
                 multiplierY = 1;
                 gridPos.y = startPos.y - Math.floor(rows / 2);
                 break;
             }
-            case Position.RT:
+            case Location.RT:
             {
                 multiplierX = 1;
                 multiplierY = 1;
                 break;
             }
-            case Position.RB:
+            case Location.RB:
             {
                 multiplierX = 1;
                 multiplierY = -1;
                 break;
             }
-            case Position.LT:
+            case Location.LT:
             {
                 multiplierX = -1;
                 multiplierY = 1;
                 break;
             }
-            case Position.LB:
+            case Location.LB:
             {
                 multiplierX = -1;
                 multiplierY = -1;

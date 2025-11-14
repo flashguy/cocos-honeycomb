@@ -1,7 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 // TODO: возможно назвать вот так Point
@@ -24,8 +24,8 @@ export abstract class Cell
     protected _halfWidth:number;
     protected _halfHeight:number;
     protected _center:Vec3 = v3();
-    protected _vertices:Map<Position, Vec3> = new Map<Position, Vec3>();
-    protected _edges:Map<Position, Edge> = new Map<Position, Edge>();
+    protected _vertices:Map<Location, Vec3> = new Map<Location, Vec3>();
+    protected _edges:Map<Location, Edge> = new Map<Location, Edge>();
 
     // ---------------------------------------
     // public properties / getters and setters
@@ -37,8 +37,8 @@ export abstract class Cell
     public get halfWidth():number { return this._halfWidth; }
     public get halfHeight():number { return this._halfHeight; }
     public get center():Vec3 { return this._center; }
-    public get vertices():Map<Position, Vec3> { return this._vertices; }
-    public get edges():Map<Position, Edge> { return this._edges; }
+    public get vertices():Map<Location, Vec3> { return this._vertices; }
+    public get edges():Map<Location, Edge> { return this._edges; }
 
     constructor()
     {
@@ -68,10 +68,10 @@ export abstract class Cell
         this.setEdges();
     }
 
-    protected checkEdges(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Position
+    protected checkEdges(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {
         let tempPoint:Vec3 = this._center.clone().add(gridToWopldPoint);
-        let position:Position = Position.IN;
+        let location:Location = Location.IN;
 
         for (let [key, value] of this._edges)
         {
@@ -79,34 +79,34 @@ export abstract class Cell
 
             if (tempEdge.isPointOutOfEdge2D(wopldPoint))
             {
-                position = defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : key;
+                location = defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : key;
                 break;
             }
         }
 
-        return position;
+        return location;
     }
 
-    public defineQuadrant(wopldPoint:Vec3, centerPoint:Vec3):Position
+    public defineQuadrant(wopldPoint:Vec3, centerPoint:Vec3):Location
     {
         if (wopldPoint.x <= centerPoint.x)
-            return wopldPoint.y >= centerPoint.y ? Position.LT : Position.LB;
+            return wopldPoint.y >= centerPoint.y ? Location.LT : Location.LB;
         else
-            return wopldPoint.y >= centerPoint.y ? Position.RT : Position.RB;
+            return wopldPoint.y >= centerPoint.y ? Location.RT : Location.RB;
     }
 
     // --------------
     // public methods
     // --------------
 
-    public abstract isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Position;
+    public abstract isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location;
 
-    public getVertex(key:Position):Vec3
+    public getVertex(key:Location):Vec3
     {
         return this._vertices.get(key);
     }
 
-    public getEdge(key:Position):Edge
+    public getEdge(key:Location):Edge
     {
         return this._edges.get(key);
     }

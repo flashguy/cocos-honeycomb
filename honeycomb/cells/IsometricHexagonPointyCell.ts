@@ -1,5 +1,5 @@
 import { _decorator, v3, Vec3 } from 'cc';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { HexagonCell } from './HexagonCell';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
@@ -57,30 +57,30 @@ export class IsometricHexagonPointyCell extends HexagonCell
     protected override setVertices():void
     {
         // INFO: точки углов формируем против часовой стрелки слева направо и снизу вверх
-        this.vertices.set(Position.B,  v3(this._width - this._width * this.ISO_RATIO));
-        this.vertices.set(Position.RB, v3(this._width - this._horizontalOffset, this._verticalOffset));
-        this.vertices.set(Position.RT, v3(this._width, this._height * this.ISO_RATIO));
-        this.vertices.set(Position.T,  v3(this._width * this.ISO_RATIO, this._height));
-        this.vertices.set(Position.LT, v3(this._horizontalOffset, this._height - this._verticalOffset));
-        this.vertices.set(Position.LB, v3(0, this._height - this._height * this.ISO_RATIO));
+        this.vertices.set(Location.B,  v3(this._width - this._width * this.ISO_RATIO));
+        this.vertices.set(Location.RB, v3(this._width - this._horizontalOffset, this._verticalOffset));
+        this.vertices.set(Location.RT, v3(this._width, this._height * this.ISO_RATIO));
+        this.vertices.set(Location.T,  v3(this._width * this.ISO_RATIO, this._height));
+        this.vertices.set(Location.LT, v3(this._horizontalOffset, this._height - this._verticalOffset));
+        this.vertices.set(Location.LB, v3(0, this._height - this._height * this.ISO_RATIO));
     }
 
     protected override setEdges():void
     {
         // INFO: рёбра нужно формировать против часовой стрелки для корректной работы алгоритма PointToEdgeDistance слева направо снизу вверх
-        this.edges.set(Position.RB, new Edge(this.getVertex(Position.B),  this.getVertex(Position.RB)));
-        this.edges.set(Position.R,  new Edge(this.getVertex(Position.RB), this.getVertex(Position.RT)));
-        this.edges.set(Position.RT, new Edge(this.getVertex(Position.RT), this.getVertex(Position.T)));
-        this.edges.set(Position.LT, new Edge(this.getVertex(Position.T),  this.getVertex(Position.LT)));
-        this.edges.set(Position.L,  new Edge(this.getVertex(Position.LT), this.getVertex(Position.LB)));
-        this.edges.set(Position.LB, new Edge(this.getVertex(Position.LB), this.getVertex(Position.B)));
+        this.edges.set(Location.RB, new Edge(this.getVertex(Location.B),  this.getVertex(Location.RB)));
+        this.edges.set(Location.R,  new Edge(this.getVertex(Location.RB), this.getVertex(Location.RT)));
+        this.edges.set(Location.RT, new Edge(this.getVertex(Location.RT), this.getVertex(Location.T)));
+        this.edges.set(Location.LT, new Edge(this.getVertex(Location.T),  this.getVertex(Location.LT)));
+        this.edges.set(Location.L,  new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
+        this.edges.set(Location.LB, new Edge(this.getVertex(Location.LB), this.getVertex(Location.B)));
     }
 
     // --------------
     // public methods
     // --------------
 
-    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Position
+    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }

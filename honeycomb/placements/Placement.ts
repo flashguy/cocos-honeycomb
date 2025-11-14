@@ -1,5 +1,5 @@
 import { _decorator, v3, Vec3 } from 'cc';
-import { Position } from '../enums/Position';
+import { Location } from '../enums/Location';
 import { IPlacement } from './IPlacement';
 const { ccclass } = _decorator;
 
@@ -23,13 +23,13 @@ export class Placement implements IPlacement
     // ---------------------------------------
 
     public gridPos:Vec3;
-    public position:Position;
+    public location:Location;
     public index:number;
 
-    constructor(gridPos:Vec3 = v3(), position:Position = Position.NONE, index:number = 0)
+    constructor(gridPos:Vec3 = v3(), location:Location = Location.NONE, index:number = 0)
     {
         this.gridPos = gridPos;
-        this.position = position;
+        this.location = location;
         this.index = index;
     }
 
