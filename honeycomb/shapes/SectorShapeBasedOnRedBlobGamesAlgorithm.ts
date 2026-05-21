@@ -14,7 +14,7 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
     // private properties / getters and setters
     // ----------------------------------------
 
-// the class is based on 
+    
 
     // ------------------------------------------
     // protected properties / getters and setters
@@ -32,12 +32,6 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
                 centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
         super(placementConstructor);
-
-        // !!! РАСКОМЕНТИРОВАТЬ СТРОЧКИ С СЕКТОРОМ В GridViewer
-
-        // angle - angle - <input v-model="angle" type="range" min="0" max="360">
-        // width - sector - <input v-model="sector" type="range" min="0" max="180">
-        // conservative - coneExpansion - permissive - <input v-model="coneExpansion" type="range" min="0.0" max="0.5" step="0.01">
 
         // TODO: + 1 к ширине или высоте чтоб было четное число
 
