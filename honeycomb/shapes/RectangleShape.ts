@@ -7,22 +7,8 @@ const { ccclass } = _decorator;
 @ccclass('RectangleShape')
 export class RectangleShape<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
     private _columns:number = 0;
     private _rows:number = 0;
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
@@ -128,20 +114,6 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
             }
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
-
-    // --------------
-    // public methods
-    // --------------
 
     public override getIndexByCellPos(cellPos:Vec3):number
     {

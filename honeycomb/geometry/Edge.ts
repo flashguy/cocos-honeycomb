@@ -4,60 +4,14 @@ const { ccclass } = _decorator;
 @ccclass('Edge')
 export class Edge
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
     public v1:Vec3;
     public v2:Vec3;
-
-    // ----------------------------------
-    // Access methods getters and setters
-    // ----------------------------------
-
-    // private _a: = ;
-    // public set a(value:)
-    // {
-    //     this._a = value;
-    // }
-    // public get a():
-    // {
-    //     return this._a;
-    // }
 
     constructor(v1?:Vec3, v2?:Vec3)
     {
         this.v1 = v1 ? v1.clone() : v3();
         this.v2 = v2 ? v2.clone() : v3();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
 
     public set(e:Edge):Edge
     {

@@ -7,24 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('EllipseCell')
 export class EllipseCell extends Cell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(width:number, height:number)
     {
         super();
@@ -37,10 +19,6 @@ export class EllipseCell extends Cell
         this.initialize();
     }
 
-    // ---------------
-    // private methods
-    // ---------------
-
     protected override setVertices():void
     {
         
@@ -50,16 +28,6 @@ export class EllipseCell extends Cell
     {
         
     }
-
-    // -----------------
-    // protected methods
-    // -----------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
 
     public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {

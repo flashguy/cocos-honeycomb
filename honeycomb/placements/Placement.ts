@@ -6,22 +6,6 @@ const { ccclass } = _decorator;
 @ccclass('Placement')
 export class Placement implements IPlacement
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
     public cellPos:Vec3;
     public location:Location;
     public index:number;
@@ -32,22 +16,4 @@ export class Placement implements IPlacement
         this.location = location;
         this.index = index;
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-
 }

@@ -7,24 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('LineShapeBasedOnBresenhamAlgorithm')
 export class LineShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
@@ -72,16 +54,4 @@ export class LineShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends Sh
 
         this.add(endPos.clone());
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

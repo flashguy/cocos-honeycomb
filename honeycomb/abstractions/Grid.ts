@@ -7,16 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('Grid')
 export abstract class Grid<T extends IPlacement>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
     protected _cell:Cell;
     protected _gap:Vec3 = v3();
     protected _anchor:Vec3 = v3();
@@ -26,10 +16,6 @@ export abstract class Grid<T extends IPlacement>
     
     protected readonly neighborsShifted:Map<Location, Vec3> = new Map<Location, Vec3>();
     protected readonly diagonalsShifted:Map<Location, Vec3> = new Map<Location, Vec3>();
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     public get cell():Cell { return this._cell; }
     public get gap():Vec3 { return this._gap; }
@@ -41,16 +27,6 @@ export abstract class Grid<T extends IPlacement>
         this._anchor = anchor;
         this._gap = gap;
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected abstract setNeighbors():void;
     protected abstract calculateGridSpecificPrameters():void;
@@ -128,10 +104,6 @@ export abstract class Grid<T extends IPlacement>
     {
         return this.getNeighborsShifted(cellPos.y % 2 == 0);
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public abstract gridToWorld(cellPos:Vec3):Vec3;
     public abstract worldToGrid(wopldPoint:Vec3):T;

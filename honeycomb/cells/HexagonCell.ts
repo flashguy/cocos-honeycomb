@@ -6,16 +6,6 @@ const { ccclass } = _decorator;
 @ccclass('HexagonCell')
 export class HexagonCell extends Cell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
     protected _asRegularPolygon:boolean = false;
     protected _outerRadius:number;
     protected _innerRadius:number;
@@ -27,10 +17,6 @@ export class HexagonCell extends Cell
 
     protected _verticalOffset:number;
     protected _horizontalOffset:number;
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     public readonly ISO_RATIO:number = 0.6666666666667;
 
@@ -46,16 +32,6 @@ export class HexagonCell extends Cell
         this._innerRadius = this._outerRadius * Math.cos(Math.PI / 6);
         this._side = 2 * this._outerRadius * Math.sin(Math.PI / 6);
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected calculateVertex(degrees:number):Vec3
     {
@@ -74,10 +50,6 @@ export class HexagonCell extends Cell
     {
         
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {

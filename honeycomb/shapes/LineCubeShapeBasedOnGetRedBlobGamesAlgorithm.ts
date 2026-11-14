@@ -9,24 +9,6 @@ const { ccclass } = _decorator;
 @ccclass('LineCubeShapeBasedOnGetRedBlobGamesAlgorithm')
 export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, endPos:Vec3)
     {
@@ -45,16 +27,4 @@ export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> 
             this.add(grid.cubeToOffset(result));
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

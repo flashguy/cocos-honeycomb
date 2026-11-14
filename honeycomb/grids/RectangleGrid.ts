@@ -8,24 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('RectangleGrid')
 export class RectangleGrid<T extends IPlacement> extends Grid<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
@@ -33,16 +15,6 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         
         this.initialize();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected override setNeighbors():void
     {
@@ -61,10 +33,6 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
     {
         
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override gridToWorld(cellPos:Vec3):Vec3
     {

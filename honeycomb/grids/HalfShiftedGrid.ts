@@ -12,22 +12,8 @@ const { ccclass } = _decorator;
 @ccclass('HalfShiftedGrid')
 export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
     protected _shift:Vec3 = v3();
     protected _shiftGridType:ShiftedGridType = ShiftedGridType.NONE;
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     public get shiftGridType():ShiftedGridType { return this._shiftGridType; }
 
@@ -39,14 +25,6 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         this._shiftGridType = shiftType;
         this.initialize();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-    
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected override setNeighbors():void
     {
@@ -257,10 +235,6 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             // }
         }
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override gridToWorld(cellPos:Vec3):Vec3
     {

@@ -8,23 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('RhombCell')
 export class RhombCell extends Cell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(width:number, height:number)
     {
         super();
@@ -36,16 +19,6 @@ export class RhombCell extends Cell
         
         this.initialize();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected override setVertices():void
     {
@@ -64,10 +37,6 @@ export class RhombCell extends Cell
         this._edges.set(Location.RT, new Edge(this.getVertex(Location.R), this.getVertex(Location.T)));
         this._edges.set(Location.LT, new Edge(this.getVertex(Location.T), this.getVertex(Location.L)));
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {

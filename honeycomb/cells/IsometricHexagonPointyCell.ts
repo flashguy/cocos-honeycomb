@@ -8,24 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('IsometricHexagonPointyCell')
 export class IsometricHexagonPointyCell extends HexagonCell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(width:number, height:number)
     {
         super(width, height, false);
@@ -40,16 +22,6 @@ export class IsometricHexagonPointyCell extends HexagonCell
         
         this.initialize();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected override setVertices():void
     {
@@ -72,10 +44,6 @@ export class IsometricHexagonPointyCell extends HexagonCell
         this.edges.set(Location.L,  new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
         this.edges.set(Location.LB, new Edge(this.getVertex(Location.LB), this.getVertex(Location.B)));
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {

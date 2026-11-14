@@ -9,37 +9,13 @@ const { ccclass } = _decorator;
 @ccclass('Shape')
 export abstract class Shape<T extends IPlacement>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
     protected readonly _placements:Array<T> = new Array<T>();
     protected readonly _placementsMap:Map<string, T> = new Map<string, T>();
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     constructor(protected placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T)
     {
         
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected createPlacement():T
     {
@@ -50,10 +26,6 @@ export abstract class Shape<T extends IPlacement>
     {
         return `${vec3.x},${vec3.y},${vec3.z}`;
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public isInShape(cellPos:Vec3):boolean
     {

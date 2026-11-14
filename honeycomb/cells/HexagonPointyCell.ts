@@ -8,24 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('HexagonPointyCell')
 export class HexagonPointyCell extends HexagonCell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(width:number, height:number, asRegularPolygon:boolean)
     {
         super(width, height, asRegularPolygon);
@@ -55,16 +37,6 @@ export class HexagonPointyCell extends HexagonCell
         this.initialize();
     }
 
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
-
     protected override setVertices():void
     {
         // INFO: точки углов формируем против часовой стрелки слева направо и снизу вверх
@@ -86,10 +58,4 @@ export class HexagonPointyCell extends HexagonCell
         this.edges.set(Location.LT, new Edge(this.getVertex(Location.T),  this.getVertex(Location.LT)));
         this.edges.set(Location.L,  new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
     }
-
-    // --------------
-    // public methods
-    // --------------
-
-
 }

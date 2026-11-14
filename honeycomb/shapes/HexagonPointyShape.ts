@@ -8,24 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('HexagonPointyShape')
 export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, centerPos:Vec3, radius:number, fill:boolean = false)
     {
@@ -101,16 +83,4 @@ export class HexagonPointyShape<T extends IPlacement> extends Shape<T>
             }
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

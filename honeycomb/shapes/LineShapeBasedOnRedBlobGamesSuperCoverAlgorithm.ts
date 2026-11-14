@@ -9,24 +9,6 @@ const { ccclass } = _decorator;
 @ccclass('LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm')
 export class LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
@@ -70,16 +52,4 @@ export class LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm<T extends IPlacemen
             this.add(currentPoint.clone());
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

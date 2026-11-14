@@ -7,16 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('Cell')
 export abstract class Cell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
     protected _type:CellType = CellType.NONE;
     protected _width:number;
     protected _height:number;
@@ -25,10 +15,6 @@ export abstract class Cell
     protected _center:Vec3 = v3();
     protected _vertices:Map<Location, Vec3> = new Map<Location, Vec3>();
     protected _edges:Map<Location, Edge> = new Map<Location, Edge>();
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
 
     public get type():CellType { return this._type; }
     public get width():number { return this._width; }
@@ -43,16 +29,6 @@ export abstract class Cell
     {
         
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected abstract setVertices():void;
     protected abstract setEdges():void;
@@ -93,10 +69,6 @@ export abstract class Cell
         else
             return wopldPoint.y >= centerPoint.y ? Location.RT : Location.RB;
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public abstract isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location;
 

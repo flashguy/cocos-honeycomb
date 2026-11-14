@@ -7,22 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('EllipseShape')
 export class EllipseShape<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-    
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radiusX:number, radiusY:number, fill:boolean = false)
     {
@@ -134,16 +118,4 @@ export class EllipseShape<T extends IPlacement> extends Shape<T>
             }
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

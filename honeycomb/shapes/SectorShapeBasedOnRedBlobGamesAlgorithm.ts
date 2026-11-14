@@ -10,24 +10,6 @@ const { ccclass } = _decorator;
 @ccclass('SectorShapeBasedOnRedBlobGamesAlgorithm')
 export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-    
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radius:number, angle:number, sector:number, coneExpansion:number)
     {
@@ -69,16 +51,4 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
             }
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }

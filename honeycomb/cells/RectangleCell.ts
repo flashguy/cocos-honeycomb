@@ -8,23 +8,6 @@ const { ccclass } = _decorator;
 @ccclass('RectangleCell')
 export class RectangleCell extends Cell
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(width:number, height:number)
     {
         super();
@@ -36,16 +19,6 @@ export class RectangleCell extends Cell
         
         this.initialize();
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
 
     protected override setVertices():void
     {
@@ -64,10 +37,6 @@ export class RectangleCell extends Cell
         this._edges.set(Location.T, new Edge(this.getVertex(Location.RT), this.getVertex(Location.LT)));
         this._edges.set(Location.L, new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
     }
-
-    // --------------
-    // public methods
-    // --------------
 
     public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
     {

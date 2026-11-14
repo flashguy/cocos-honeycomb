@@ -10,24 +10,6 @@ const { ccclass } = _decorator;
 @ccclass('TriangleShape')
 export class TriangleShape<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, distance:number, directionTo:Location)
     {
@@ -165,22 +147,4 @@ export class TriangleShape<T extends IPlacement> extends Shape<T>
             }
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-
-
-    // -----------------
-    // protected methods
-    // -----------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-
 }

@@ -7,24 +7,6 @@ const { ccclass } = _decorator;
 @ccclass('SpiralRectangleShape')
 export class SpiralRectangleShape<T extends IPlacement> extends Shape<T>
 {
-    // ----------------------------------------
-    // private properties / getters and setters
-    // ----------------------------------------
-
-
-
-    // ------------------------------------------
-    // protected properties / getters and setters
-    // ------------------------------------------
-
-    
-
-    // ---------------------------------------
-    // public properties / getters and setters
-    // ---------------------------------------
-
-
-
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 centerPos:Vec3, radius:number, clockwise:boolean)
     {
@@ -58,16 +40,4 @@ export class SpiralRectangleShape<T extends IPlacement> extends Shape<T>
             y += dy;
         }
     }
-
-    // ---------------
-    // private methods
-    // ---------------
-
-    
-
-    // --------------
-    // public methods
-    // --------------
-
-    
 }
