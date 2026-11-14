@@ -55,8 +55,8 @@ export class CircleShapeBasedOnMidpointAlgorithm<T extends IPlacement> extends S
                     this.addRow(centerPos.x - x, centerPos.x + x, centerPos.y + y);
                     this.addRow(centerPos.x - x, centerPos.x + x, centerPos.y - y);
 
-                    this.addRow(centerPos.x - y, centerPos.x + y, centerPos.y + x);
-                    this.addRow(centerPos.x - y, centerPos.x + y, centerPos.y - x);
+                    this.addRow(centerPos.x + y, centerPos.x - y, centerPos.y + x);
+                    this.addRow(centerPos.x + y, centerPos.x - y, centerPos.y - x);
                 }
                 else
                 {
