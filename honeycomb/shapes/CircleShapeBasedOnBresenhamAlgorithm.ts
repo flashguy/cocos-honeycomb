@@ -43,8 +43,8 @@ export class CircleShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends 
             {
                 if (fill)
                 {
-                    this.addRow(centerPos.x - x, centerPos.x + x, centerPos.y + y);
-                    this.addRow(centerPos.x - x, centerPos.x + x, centerPos.y - y);
+                    this.addRow(centerPos.x + x, centerPos.x - x, centerPos.y + y);
+                    this.addRow(centerPos.x + x, centerPos.x - x, centerPos.y - y);
                 }
                 else
                 {
