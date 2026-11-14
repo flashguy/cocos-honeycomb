@@ -34,6 +34,7 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
         super(placementConstructor);
 
         // TODO: + 1 к ширине или высоте чтоб было четное число
+        // TODO не работает :( починить
 
         let columns:number = (radius * 2) + 1
         let rows:number = (radius * 2) + 1;
