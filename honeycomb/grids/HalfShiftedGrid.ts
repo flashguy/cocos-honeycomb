@@ -211,28 +211,25 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                 this._shift.set(this._cell.halfWidth, this._cell.halfHeight);
                 break;
             }
-            // case CellType.ISO_HEXAGON_FLAT:
-            // {
-            //     switch (this._shiftGridType)
-            //     {
-            //         case ShiftedGridType.TOP_EVEN:
-            //         case ShiftedGridType.TOP_ODD:
-            //         case ShiftedGridType.BOTTOM_EVEN:
-            //         case ShiftedGridType.BOTTOM_ODD:
-            //         {
-            //             // const offsetX:number = (this._cell.width - this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //             // const offsetY:number = (this._cell.height - this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //             const offsetX:number = (this._cell.width - this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //             const offsetY:number = (this._cell.height - this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //             // const offsetX:number = this._cell.width;
-            //             // const offsetY:number = this._cell.height;
-            //             this._shift.set(offsetX, offsetY);
-            //             break;
-            //         }
-            //     }
+            case CellType.ISO_HEXAGON_FLAT:
+            {
+                switch (this._shiftGridType)
+                {
+                    case ShiftedGridType.TOP_EVEN:
+                    case ShiftedGridType.TOP_ODD:
+                    case ShiftedGridType.BOTTOM_EVEN:
+                    case ShiftedGridType.BOTTOM_ODD:
+                    {
+                        const offsetX:number = (this._cell.width - this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
+                        const offsetY:number = (this._cell.height - this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
+                        
+                        this._shift.set(offsetX, offsetY);
+                        break;
+                    }
+                }
 
-            //     break;
-            // }
+                break;
+            }
         }
     }
 
@@ -240,45 +237,40 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
     {
         let result:Vec3 = v3();
 
-        // if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
-        // {
-        //     let offsetPos:Vec3 = v3(); // Учет смещений по позиции ячеек
-
-        //     // result.x = this._anchor.x
-        //     //             + (cellPos.x - cellPos.y)
-        //     //             * (this._cell.width - this._shift.x * 2)
-        //     //             + Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
-        //     //             - this._shift.x * cellPos.x;
-
-        //     // result.y = this._anchor.y
-        //     //             + (cellPos.x + cellPos.y)
-        //     //             * (this._cell.height - this._shift.y * 2)
-        //     //             - Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
-        //     //             - this._shift.y * cellPos.x;
-                       
-        //     // result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x);
-        //     // result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y);
-
-        //     if      (this._shiftGridType == ShiftedGridType.RIGHT_EVEN)  { if (Math.abs(cellPos.y % 2) == 1) offsetPos.x =  this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD)   { if (Math.abs(cellPos.y % 2) == 0) offsetPos.x =  this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.LEFT_EVEN)   { if (Math.abs(cellPos.y % 2) == 1) offsetPos.x = -this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.LEFT_ODD)    { if (Math.abs(cellPos.y % 2) == 0) offsetPos.x = -this._shift.x; }
-        //     else if (this._shiftGridType == ShiftedGridType.TOP_EVEN)    { //if (Math.abs(cellPos.x % 2) == 1)
-        //     {
-        //         // offsetPos.x =  -Math.abs(cellPos.x % 2 * this._shift.x) - this._shift.x * cellPos.x;
-        //         // offsetPos.y =  this._shift.y/*  * cellPos.y */;
-        //         console.log(cellPos.toString(), (cellPos.x - cellPos.y))
-        //         offsetPos.x = this._shift.x;
-        //         offsetPos.y = this._shift.y;
-        //     } }
-        //     else if (this._shiftGridType == ShiftedGridType.TOP_ODD)     { if (Math.abs(cellPos.x % 2) == 0) offsetPos.y =  this._shift.y; }
-        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_EVEN) { if (Math.abs(cellPos.x % 2) == 1) offsetPos.y = -this._shift.y; }
-        //     else if (this._shiftGridType == ShiftedGridType.BOTTOM_ODD)  { if (Math.abs(cellPos.x % 2) == 0) offsetPos.y = -this._shift.y; }
-
-        //     result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x) + offsetPos.x;
-        //     result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y) + offsetPos.y;
-        // }
-        // else
+        if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+        {
+            if (this._shiftGridType == ShiftedGridType.TOP_ODD
+                || this._shiftGridType == ShiftedGridType.BOTTOM_EVEN)
+            {
+                result.x = this._anchor.x
+                            + (cellPos.x - cellPos.y)
+                            * (this._cell.width - this._shift.x * 2)
+                            + Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
+                            - this._shift.x * cellPos.x;
+                    
+                result.y = this._anchor.y
+                            + (cellPos.x + cellPos.y)
+                            * (this._cell.height - this._shift.y * 2)
+                            - Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
+                            - this._shift.y * cellPos.x;
+            }
+            else if (this._shiftGridType == ShiftedGridType.TOP_EVEN
+                || this._shiftGridType == ShiftedGridType.BOTTOM_ODD)
+            {
+                result.x = this._anchor.x
+                            + (cellPos.x - cellPos.y)
+                            * (this._cell.width - this._shift.x * 2)
+                            - Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
+                            - this._shift.x * cellPos.x;
+                    
+                result.y = this._anchor.y
+                            + (cellPos.x + cellPos.y)
+                            * (this._cell.height - this._shift.y * 2)
+                            + Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
+                            - this._shift.y * cellPos.x;
+            }
+        }
+        else
         {
             let offsetPos:Vec3 = v3(); // Учет смещений по позиции ячеек
             let gapOffset:Vec3 = v3(); // Учет смещений по расстаянию между ячейками (gap)
