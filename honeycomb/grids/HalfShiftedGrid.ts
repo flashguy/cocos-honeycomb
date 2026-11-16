@@ -244,13 +244,13 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             {
                 result.x = this._anchor.x
                             + (cellPos.x - cellPos.y)
-                            * (this._cell.width - this._shift.x * 2)
+                            * (this._cell.width - this._shift.x * 2 + this._gap.x)
                             + Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
                             - this._shift.x * cellPos.x;
                     
                 result.y = this._anchor.y
                             + (cellPos.x + cellPos.y)
-                            * (this._cell.height - this._shift.y * 2)
+                            * (this._cell.height - this._shift.y * 2 + this._gap.y)
                             - Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
                             - this._shift.y * cellPos.x;
             }
@@ -259,13 +259,13 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             {
                 result.x = this._anchor.x
                             + (cellPos.x - cellPos.y)
-                            * (this._cell.width - this._shift.x * 2)
+                            * (this._cell.width - this._shift.x * 2 + this._gap.x)
                             - Math.abs(cellPos.x % 2 * (this._cell.halfWidth - this._shift.x))
                             - this._shift.x * cellPos.x;
                     
                 result.y = this._anchor.y
                             + (cellPos.x + cellPos.y)
-                            * (this._cell.height - this._shift.y * 2)
+                            * (this._cell.height - this._shift.y * 2 + this._gap.y)
                             + Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
                             - this._shift.y * cellPos.x;
             }
