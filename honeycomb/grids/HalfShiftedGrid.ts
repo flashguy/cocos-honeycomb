@@ -230,6 +230,25 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
                 break;
             }
+            case CellType.ISO_HEXAGON_POINTY:
+            {
+                switch (this._shiftGridType)
+                {
+                    case ShiftedGridType.LEFT_EVEN:
+                    case ShiftedGridType.LEFT_ODD:
+                    case ShiftedGridType.RIGHT_EVEN:
+                    case ShiftedGridType.RIGHT_ODD:
+                    {
+                        const offsetX:number = (this._cell.width - this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
+                        const offsetY:number = (this._cell.height - this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
+                        
+                        this._shift.set(offsetX, offsetY);
+                        break;
+                    }
+                }
+
+                break;
+            }
         }
     }
 
@@ -268,6 +287,39 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                             * (this._cell.height - this._shift.y * 2 + this._gap.y)
                             + Math.abs(cellPos.x % 2 * (this._cell.halfHeight - this._shift.y))
                             - this._shift.y * cellPos.x;
+            }
+        }
+        else if (this._cell.type == CellType.ISO_HEXAGON_POINTY)
+        {
+            if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
+                || this._shiftGridType == ShiftedGridType.LEFT_ODD)
+            {
+                result.x = this._anchor.x
+                            + (cellPos.x - cellPos.y)
+                            * (this._cell.width - this._shift.x * 2 + this._gap.x)
+                            + Math.abs(cellPos.y % 2 * (this._cell.halfWidth - this._shift.x))
+                            + cellPos.y * this._shift.x;
+
+                result.y = this._anchor.y
+                            + (cellPos.x + cellPos.y)
+                            * (this._cell.height - this._shift.y * 2 + this._gap.y)
+                            + Math.abs(cellPos.y % 2 * (this._cell.halfHeight - this._shift.y))
+                            - cellPos.y * this._shift.y;
+            }
+            else if (this._shiftGridType == ShiftedGridType.RIGHT_ODD
+                || this._shiftGridType == ShiftedGridType.LEFT_EVEN)
+            {
+                result.x = this._anchor.x
+                            + (cellPos.x - cellPos.y)
+                            * (this._cell.width - this._shift.x * 2 + this._gap.x)
+                            - Math.abs(cellPos.y % 2 * (this._cell.halfWidth - this._shift.x))
+                            + cellPos.y * this._shift.x;
+
+                result.y = this._anchor.y
+                            + (cellPos.x + cellPos.y)
+                            * (this._cell.height - this._shift.y * 2 + this._gap.y)
+                            - Math.abs(cellPos.y % 2 * (this._cell.halfHeight - this._shift.y))
+                            - cellPos.y * this._shift.y;
             }
         }
         else
@@ -326,7 +378,80 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         let location:Location;
         let placement:T = new this.placementConstructor(null, Location.OUT);
         
-        if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
+        if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+        {
+            // INFO: обратное преобразование формул из gridToWorld;
+            // центр гексагона смещён от узла решётки на (centerX, centerY), поэтому вычитаем его перед округлением
+            const stepX:number = this._cell.width - this._shift.x * 2 + this._gap.x;
+            const stepY:number = this._cell.height - this._shift.y * 2 + this._gap.y;
+            const columnX:number = stepX - this._shift.x;
+            const columnY:number = stepY - this._shift.y;
+            const determinant:number = columnX * stepY + columnY * stepX;
+            const centerX:number = (stepY * this._cell.halfWidth + stepX * this._cell.halfHeight) / determinant;
+            const centerY:number = (columnX * this._cell.halfHeight - columnY * this._cell.halfWidth) / determinant;
+            const u:number = wopldPoint.x - this._anchor.x;
+            const v:number = wopldPoint.y - this._anchor.y;
+
+            const gridX:number = (stepY * u + stepX * v) / determinant - centerX;
+            const gridY:number = (columnX * v - columnY * u) / determinant - centerY;
+
+            result.set(Math.round(gridX), Math.round(gridY));
+
+            // INFO: гексагон шире единичного квадрата решётки, поэтому после округления
+            // искомую ячейку уточняем перебором соседей через isPointInside
+            let cellPos:Vec3 = null;
+
+            for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+            {
+                for (let dy = -1; dy <= 1 && cellPos == null; dy++)
+                {
+                    const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+
+                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                        cellPos = candidate;
+                }
+            }
+
+            if (cellPos != null)
+                result = cellPos;
+        }
+        else if (this._cell.type == CellType.ISO_HEXAGON_POINTY)
+        {
+            // INFO: обратное преобразование формул из gridToWorld — решение линейной системы
+            // без члена чётности, округление вокруг центра гексагона и уточнение перебором
+            // соседей через isPointInside (член |cellPos.y % 2 * ...| учитывается самим gridToWorld)
+            const stepX:number = this._cell.width - this._shift.x * 2 + this._gap.x;
+            const stepY:number = this._cell.height - this._shift.y * 2 + this._gap.y;
+            const rowX:number = stepX - this._shift.x; // коэффициент при cellPos.y в x (член +cellPos.y * shift.x)
+            const rowY:number = stepY - this._shift.y; // коэффициент при cellPos.y в y (член -cellPos.y * shift.y)
+            const determinant:number = stepX * rowY + rowX * stepY;
+            const centerX:number = (rowY * this._cell.halfWidth + rowX * this._cell.halfHeight) / determinant;
+            const centerY:number = (stepX * this._cell.halfHeight - stepY * this._cell.halfWidth) / determinant;
+            const u:number = wopldPoint.x - this._anchor.x;
+            const v:number = wopldPoint.y - this._anchor.y;
+
+            const gridX:number = (rowY * u + rowX * v) / determinant - centerX;
+            const gridY:number = (stepX * v - stepY * u) / determinant - centerY;
+
+            result.set(Math.round(gridX), Math.round(gridY));
+
+            let cellPos:Vec3 = null;
+
+            for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+            {
+                for (let dy = -1; dy <= 1 && cellPos == null; dy++)
+                {
+                    const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+
+                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                        cellPos = candidate;
+                }
+            }
+
+            if (cellPos != null)
+                result = cellPos;
+        }
+        else if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
          || this._shiftGridType == ShiftedGridType.RIGHT_ODD
          || this._shiftGridType == ShiftedGridType.LEFT_EVEN
          || this._shiftGridType == ShiftedGridType.LEFT_ODD)
@@ -362,8 +487,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
             result.x = Math.floor((wopldPoint.x - this._anchor.x + offsetPos.x) / (this._cell.width + this._gap.x));
         }
-
-        if (this._shiftGridType == ShiftedGridType.TOP_EVEN
+        else if (this._shiftGridType == ShiftedGridType.TOP_EVEN
          || this._shiftGridType == ShiftedGridType.TOP_ODD
          || this._shiftGridType == ShiftedGridType.BOTTOM_EVEN
          || this._shiftGridType == ShiftedGridType.BOTTOM_ODD)
