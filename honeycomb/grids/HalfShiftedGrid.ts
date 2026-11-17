@@ -397,23 +397,23 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
             result.set(Math.round(gridX), Math.round(gridY));
 
-            // INFO: гексагон шире единичного квадрата решётки, поэтому после округления
-            // искомую ячейку уточняем перебором соседей через isPointInside
-            let cellPos:Vec3 = null;
+            // INFO: гексагон шире единичного квадрата решётки, поэтому после округления искомую ячейку
+            // уточняем тем же приёмом, что и в хвосте метода: isPointInside + переход к соседу
+            location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
 
-            for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+            let attempts:number = 0;
+
+            while (location != Location.IN && attempts < 4)
             {
-                for (let dy = -1; dy <= 1 && cellPos == null; dy++)
-                {
-                    const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+                const neighbor:Vec3 = this.getCellNeighbor(result, location);
 
-                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
-                        cellPos = candidate;
-                }
+                if (Vec3.equals(neighbor, result)) // соседа в этом направлении нет
+                    break;
+
+                result = neighbor;
+                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+                attempts++;
             }
-
-            if (cellPos != null)
-                result = cellPos;
         }
         else if (this._cell.type == CellType.ISO_HEXAGON_POINTY)
         {
@@ -435,21 +435,23 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
             result.set(Math.round(gridX), Math.round(gridY));
 
-            let cellPos:Vec3 = null;
+            // INFO: гексагон шире единичного квадрата решётки, поэтому после округления искомую ячейку
+            // уточняем тем же приёмом, что и в хвосте метода: isPointInside + переход к соседю
+            location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
 
-            for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+            let attempts:number = 0;
+
+            while (location != Location.IN && attempts < 4)
             {
-                for (let dy = -1; dy <= 1 && cellPos == null; dy++)
-                {
-                    const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+                const neighbor:Vec3 = this.getCellNeighbor(result, location);
 
-                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
-                        cellPos = candidate;
-                }
+                if (Vec3.equals(neighbor, result)) // соседа в этом направлении нет
+                    break;
+
+                result = neighbor;
+                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+                attempts++;
             }
-
-            if (cellPos != null)
-                result = cellPos;
         }
         else if (this._shiftGridType == ShiftedGridType.RIGHT_EVEN
          || this._shiftGridType == ShiftedGridType.RIGHT_ODD
