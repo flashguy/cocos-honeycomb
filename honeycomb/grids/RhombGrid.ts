@@ -88,13 +88,14 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 this._shift.set(this._cell.halfWidth, this._cell.halfHeight);
                 break;
             }
-            // case CellType.ISO_HEXAGON_FLAT:
-            // {
-            //     const offsetX:number = (this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //     const offsetY:number = (this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
-            //     this._shift.set(offsetX, offsetY);
-            //     break;
-            // }
+            case CellType.ISO_HEXAGON_FLAT:
+            {
+                const offsetX:number = (this._cell.width - this._cell.width * (this._cell as HexagonCell).ISO_RATIO) / 2;
+                const offsetY:number = (this._cell.height - this._cell.height * (this._cell as HexagonCell).ISO_RATIO) / 2;
+
+                this._shift.set(offsetX, offsetY);
+                break;
+            }
         }
     }
 
@@ -102,8 +103,18 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     {
         let result:Vec3 = v3();
 
-        result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x);
-        result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y);
+        if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+        {
+            // INFO: gap раздвигает ячейки во всех стыкующихся направлениях: вдоль ряда +(gap.x, gap.y),
+            // по диагонали (x + 1, y + 1) +(-gap.x, +gap.y), между рядами -2·gap.x по x
+            result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x) + cellPos.y * (this._shift.x * 2 - this._cell.width - this._gap.x);
+            result.y = this._anchor.y + (cellPos.x - cellPos.y) * (this._cell.height - this._shift.y + this._gap.y) + cellPos.y * (this._cell.height - this._shift.y * 2 + this._gap.y);
+        }
+        else
+        {
+            result.x = this._anchor.x + (cellPos.x - cellPos.y) * (this._shift.x + this._gap.x);
+            result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y);
+        }
 
         return result;
     }
@@ -114,15 +125,54 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         let location:Location;
         let placement:T = new this.placementConstructor(null, Location.OUT);
 
-        // работет без _anchor и _gap
-        // result.x = Math.floor((wopldPoint.y / this._shift.y + (wopldPoint.x - this._shift.x) / this._shift.x) * 0.5);
-        // result.y = Math.floor((wopldPoint.y / this._shift.y - (wopldPoint.x - this._shift.x) / this._shift.x) * 0.5);
+        if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+        {
+            // INFO: обратное преобразование формул из gridToWorld:
+            // u = (x - y)·(shift.x + gap.x) + y·(2·shift.x - width - gap.x)
+            // v = (x - y)·(height - shift.y + gap.y) + y·(height - 2·shift.y + gap.y)
+            const a:number = this._shift.x + this._gap.x;
+            const b:number = this._shift.x * 2 - this._cell.width - this._gap.x;
+            const c:number = this._cell.height - this._shift.y + this._gap.y;
+            const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
+            const determinant:number = a * d - b * c;
+            const u:number = wopldPoint.x - this._anchor.x;
+            const v:number = wopldPoint.y - this._anchor.y;
 
-        const shiftWithGap:Vec3 = this._shift.clone().add(this._gap); // добавляем _gap
-        const wopldPointWithAnchor:Vec3 = wopldPoint.clone().subtract(this._anchor); // добавляем _anchor
+            // INFO: центр гексагона смещён от узла решётки, поэтому вычитаем смещение перед округлением
+            const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
+            const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
 
-        result.x = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y + (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
-        result.y = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y - (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
+            const gridY:number = (a * v - c * u) / determinant - centerY;
+            const gridX:number = (d * u - b * v) / determinant + (a * v - c * u) / determinant - centerX - centerY; // x = (x - y) + y
+
+            result.set(Math.round(gridX), Math.round(gridY));
+
+            // INFO: гексагон шире единичного параллелограмма решётки, поэтому после округления
+            // искомую ячейку уточняем перебором соседей через isPointInside
+            let cellPos:Vec3 = null;
+
+            for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+            {
+                for (let dy = -1; dy <= 1 && cellPos == null; dy++)
+                {
+                    const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+
+                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                        cellPos = candidate;
+                }
+            }
+
+            if (cellPos != null)
+                result = cellPos;
+        }
+        else
+        {
+            const shiftWithGap:Vec3 = this._shift.clone().add(this._gap); // добавляем _gap
+            const wopldPointWithAnchor:Vec3 = wopldPoint.clone().subtract(this._anchor); // добавляем _anchor
+
+            result.x = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y + (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
+            result.y = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y - (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
+        }
 
         location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
 
