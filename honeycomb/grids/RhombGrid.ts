@@ -50,9 +50,13 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             case CellType.RECTANGLE:
             {
                 if (this._rhombGridType == RhombGridType.HORIZONTAL)
+                {
                     this._shift.set(this._cell.width, this._cell.halfHeight);
+                }
                 else if (this._rhombGridType == RhombGridType.VERTICAL)
+                {
                     this._shift.set(this._cell.halfWidth, this._cell.height);
+                }
 
                 break;
             }
@@ -111,9 +115,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         }
         else if (this._cell.type == CellType.ISO_HEXAGON_POINTY)
         {
-            // INFO: зеркальное отражение относительно оси (n, n): (x, y) встает на место (y, x), ось неподвижна;
-            // шаг (+1, 0) — по LT-грани (-shift.x, height - shift.y) — вверх-влево,
-            // шаг (0, +1) — по L-грани (-(width - shift.x), shift.y) — влево
             result.x = this._anchor.x + (cellPos.x + cellPos.y) * (this._shift.x - this._cell.width - this._gap.x) + cellPos.x * (this._cell.width - this._shift.x * 2 + this._gap.x);
             result.y = this._anchor.y + (cellPos.x + cellPos.y) * (this._shift.y + this._gap.y) + cellPos.x * (this._cell.height - this._shift.y * 2 + this._gap.y);
         }
@@ -134,9 +135,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
 
         if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
         {
-            // INFO: обратное преобразование формул из gridToWorld:
-            // u = (x - y)·(shift.x + gap.x) + y·(2·shift.x - width - gap.x)
-            // v = (x - y)·(height - shift.y + gap.y) + y·(height - 2·shift.y + gap.y)
             const a:number = this._shift.x + this._gap.x;
             const b:number = this._shift.x * 2 - this._cell.width - this._gap.x;
             const c:number = this._cell.height - this._shift.y + this._gap.y;
@@ -145,7 +143,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             const u:number = wopldPoint.x - this._anchor.x;
             const v:number = wopldPoint.y - this._anchor.y;
 
-            // INFO: центр гексагона смещён от узла решётки, поэтому вычитаем смещение перед округлением
             const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
             const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
 
@@ -154,8 +151,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
 
             result.set(Math.round(gridX), Math.round(gridY));
 
-            // INFO: гексагон шире единичного параллелограмма решётки, поэтому после округления
-            // искомую ячейку уточняем перебором соседей через isPointInside
             let cellPos:Vec3 = null;
 
             for (let dx = -1; dx <= 1 && cellPos == null; dx++)
@@ -174,9 +169,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         }
         else if (this._cell.type == CellType.ISO_HEXAGON_POINTY)
         {
-            // INFO: обратное преобразование формул из gridToWorld:
-            // u = (x + y)·(shift.x - width - gap.x) + x·(width - 2·shift.x + gap.x)
-            // v = (x + y)·(shift.y + gap.y) + x·(height - 2·shift.y + gap.y)
             const a:number = this._shift.x - this._cell.width - this._gap.x;
             const b:number = this._cell.width - this._shift.x * 2 + this._gap.x;
             const c:number = this._shift.y + this._gap.y;
@@ -185,7 +177,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             const u:number = wopldPoint.x - this._anchor.x;
             const v:number = wopldPoint.y - this._anchor.y;
 
-            // INFO: центр гексагона смещён от узла решётки, поэтому вычитаем смещение перед округлением
             const centerS:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
             const centerX:number = (a * this._cell.halfHeight - c * this._cell.halfWidth) / determinant;
 
@@ -195,8 +186,6 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
 
             result.set(Math.round(gridX), Math.round(gridY));
 
-            // INFO: гексагон шире единичного параллелограмма сетки, поэтому после округления
-            // искомую ячейку уточняем перебором соседей через isPointInside
             let cellPos:Vec3 = null;
 
             for (let dx = -1; dx <= 1 && cellPos == null; dx++)
