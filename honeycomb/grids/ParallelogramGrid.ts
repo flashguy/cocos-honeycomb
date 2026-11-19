@@ -250,12 +250,12 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             }
             case ParallelogramGridType.BOTTOM:
             {
-                // if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
-                // {
-                //     result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
-                //     result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.x * this._shift.y;
-                // }
-                // else
+                if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+                {
+                    result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) - cellPos.y * (this._cell.width - this._shift.x * 2 + this._gap.x);
+                    result.y = this._anchor.y + cellPos.x * (this._shift.y + this._gap.y) + cellPos.y * (this._cell.height - this._shift.y * 2 + this._gap.y);
+                }
+                else
                 {
                     result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
                     result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) - cellPos.x * this._shift.y;
@@ -264,8 +264,16 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             }
             case ParallelogramGridType.TOP:
             {
-                result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
-                result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) + cellPos.x * this._shift.y;
+                if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+                {
+                    result.x = this._anchor.x + cellPos.x * (this._shift.x + this._gap.x) - cellPos.y * (this._cell.width - this._shift.x * 2 + this._gap.x);
+                    result.y = this._anchor.y + cellPos.x * (this._cell.height - this._shift.y + this._gap.y) + cellPos.y * (this._cell.height - this._shift.y * 2 + this._gap.y);
+                }
+                else
+                {
+                    result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
+                    result.y = (this._anchor.y + cellPos.y * (this._cell.height + this._gap.y)) + cellPos.x * this._shift.y;
+                }
                 break;
             }
         }
@@ -369,14 +377,88 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             }
             case ParallelogramGridType.BOTTOM:
             {
-                result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
-                result.y = Math.floor(((wopldPoint.y - this._anchor.y) + result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+                {
+                    const a:number = this._cell.width - this._shift.x + this._gap.x;
+                    const b:number = -(this._cell.width - this._shift.x * 2 + this._gap.x);
+                    const c:number = this._shift.y + this._gap.y;
+                    const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
+                    const determinant:number = a * d - b * c;
+                    const u:number = wopldPoint.x - this._anchor.x;
+                    const v:number = wopldPoint.y - this._anchor.y;
+
+                    const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
+                    const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
+
+                    const gridX:number = (d * u - b * v) / determinant - centerX;
+                    const gridY:number = (-c * u + a * v) / determinant - centerY;
+
+                    result.set(Math.round(gridX), Math.round(gridY));
+
+                    let cellPos:Vec3 = null;
+
+                    for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+                    {
+                        for (let dy = -1; dy <= 1 && cellPos == null; dy++)
+                        {
+                            const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+
+                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                                cellPos = candidate;
+                        }
+                    }
+
+                    if (cellPos != null)
+                        result = cellPos;
+                }
+                else
+                {
+                    result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
+                    result.y = Math.floor(((wopldPoint.y - this._anchor.y) + result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                }
                 break;
             }
             case ParallelogramGridType.TOP:
             {
-                result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
-                result.y = Math.floor(((wopldPoint.y - this._anchor.y) - result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
+                {
+                    const a:number = this._shift.x + this._gap.x;
+                    const b:number = -(this._cell.width - this._shift.x * 2 + this._gap.x);
+                    const c:number = this._cell.height - this._shift.y + this._gap.y;
+                    const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
+                    const determinant:number = a * d - b * c;
+                    const u:number = wopldPoint.x - this._anchor.x;
+                    const v:number = wopldPoint.y - this._anchor.y;
+
+                    const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
+                    const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
+
+                    const gridX:number = (d * u - b * v) / determinant - centerX;
+                    const gridY:number = (-c * u + a * v) / determinant - centerY;
+
+                    result.set(Math.round(gridX), Math.round(gridY));
+
+                    let cellPos:Vec3 = null;
+
+                    for (let dx = -1; dx <= 1 && cellPos == null; dx++)
+                    {
+                        for (let dy = -1; dy <= 1 && cellPos == null; dy++)
+                        {
+                            const candidate:Vec3 = v3(result.x + dx, result.y + dy);
+
+                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                                cellPos = candidate;
+                        }
+                    }
+
+                    if (cellPos != null)
+                        result = cellPos;
+                }
+                else
+                {
+                    result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
+                    result.y = Math.floor(((wopldPoint.y - this._anchor.y) - result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                }
                 break;
             }
         }
