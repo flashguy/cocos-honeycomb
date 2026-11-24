@@ -9,6 +9,9 @@ export class ParallelogramCell extends Cell
     protected _widthSkew:number;
     protected _heightSkew:number;
 
+    public get widthSkew():number { return this._widthSkew; }
+    public get heightSkew():number { return this._heightSkew; }
+
     constructor(width:number, height:number, widthSkew:number, heightSkew:number)
     {
         super();

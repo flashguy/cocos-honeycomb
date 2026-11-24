@@ -3,11 +3,15 @@ import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
 import { IPlacement } from '../placements/IPlacement';
+import { CellType } from '../enums/CellType';
+import { ParallelogramCell } from '../cells/ParallelogramCell';
 const { ccclass } = _decorator;
 
 @ccclass('RectangleGrid')
 export class RectangleGrid<T extends IPlacement> extends Grid<T>
 {
+    protected _shift:Vec3 = v3();
+
     constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
@@ -31,15 +35,47 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
 
     protected override calculateGridSpecificPrameters():void
     {
-        
+        switch (this._cell.type)
+        {
+            case CellType.PARALLELOGRAM_TOP:
+            case CellType.PARALLELOGRAM_BOTTOM:
+            {
+                this._shift.set(this._cell.width * (this._cell as ParallelogramCell).widthSkew,
+                                this._cell.height * (this._cell as ParallelogramCell).heightSkew,
+                                0);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     public override gridToWorld(cellPos:Vec3):Vec3
     {
         let result:Vec3 = v3();
         
-        result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x);
-        result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y);
+        switch (this._cell.type)
+        {
+            case CellType.PARALLELOGRAM_TOP:
+            {
+                result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) - cellPos.y * this._shift.x;
+                result.y = this._anchor.y + cellPos.y * (this._cell.height - this._shift.y + this._gap.y) + cellPos.x * this._shift.y;
+                break;
+            }
+            case CellType.PARALLELOGRAM_BOTTOM:
+            {
+                result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) + cellPos.y * this._shift.x;
+                result.y = this._anchor.y + cellPos.y * (this._cell.height - this._shift.y + this._gap.y) - cellPos.x * this._shift.y;
+                break;
+            }
+            default:
+            {
+                result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x);
+                result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y);
+            }
+        }
 
         return result;
     }
