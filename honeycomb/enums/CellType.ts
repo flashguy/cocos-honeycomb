@@ -10,5 +10,7 @@ export enum CellType
     RHOMB,
     ISO_HEXAGON_FLAT,
     ISO_HEXAGON_POINTY,
+    PARALLELOGRAM_TOP,
+    PARALLELOGRAM_BOTTOM,
 }
 Enum(CellType);

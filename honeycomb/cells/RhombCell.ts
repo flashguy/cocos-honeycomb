@@ -42,4 +42,11 @@ export class RhombCell extends Cell
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [Location.L, Location.B, Location.R, Location.T];
+
+        return result;
+    }
 }

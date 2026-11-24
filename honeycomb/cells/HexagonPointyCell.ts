@@ -58,4 +58,11 @@ export class HexagonPointyCell extends HexagonCell
         this.edges.set(Location.LT, new Edge(this.getVertex(Location.T),  this.getVertex(Location.LT)));
         this.edges.set(Location.L,  new Edge(this.getVertex(Location.LT), this.getVertex(Location.LB)));
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [Location.LB, Location.B, Location.RB, Location.RT, Location.T, Location.LT];
+
+        return result;
+    }
 }

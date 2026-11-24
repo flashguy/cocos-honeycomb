@@ -58,4 +58,11 @@ export class HexagonFlatCell extends HexagonCell
         this.edges.set(Location.LT, new Edge(this.getVertex(Location.LT), this.getVertex(Location.L)));
         this.edges.set(Location.LB, new Edge(this.getVertex(Location.L),  this.getVertex(Location.LB)));
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [Location.LB, Location.RB, Location.R, Location.RT, Location.LT, Location.L];
+
+        return result;
+    }
 }

@@ -49,4 +49,11 @@ export class IsometricHexagonPointyCell extends HexagonCell
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [Location.B, Location.RB, Location.RT, Location.T, Location.LT, Location.LB];
+
+        return result;
+    }
 }

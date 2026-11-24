@@ -42,4 +42,11 @@ export class EllipseCell extends Cell
         else
             return Location.IN;
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [];
+
+        return result;
+    }
 }

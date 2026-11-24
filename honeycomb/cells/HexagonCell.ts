@@ -55,4 +55,11 @@ export class HexagonCell extends Cell
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [];
+
+        return result;
+    }
 }

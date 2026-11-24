@@ -42,4 +42,11 @@ export class RectangleCell extends Cell
     {
         return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
     }
+
+    public override getVerticesOrder():Location[]
+    {
+        const result:Location[] = [Location.LB, Location.RB, Location.RT, Location.LT];
+
+        return result;
+    }
 }

@@ -71,6 +71,7 @@ export abstract class Cell
     }
 
     public abstract isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location;
+    public abstract getVerticesOrder():Location[];
 
     public getVertex(key:Location):Vec3
     {
