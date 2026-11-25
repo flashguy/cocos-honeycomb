@@ -7,6 +7,8 @@ const { ccclass } = _decorator;
 @ccclass('Cell')
 export abstract class Cell
 {
+    private _tempEdge:Edge = new Edge();
+    
     protected _type:CellType = CellType.NONE;
     protected _width:number;
     protected _height:number;
@@ -50,9 +52,9 @@ export abstract class Cell
 
         for (let [key, value] of this._edges)
         {
-            let tempEdge:Edge = new Edge().set(value).add(gridToWopldPoint);
+            this._tempEdge.set(value).add(gridToWopldPoint);
 
-            if (tempEdge.isPointOutOfEdge2D(wopldPoint))
+            if (this._tempEdge.isPointOutOfEdge2D(wopldPoint))
             {
                 location = defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : key;
                 break;
