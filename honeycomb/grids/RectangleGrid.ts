@@ -33,7 +33,7 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         this.diagonals.set(Location.RB, v3(1, -1));
     }
 
-    protected override calculateGridSpecificPrameters():void
+    protected override calculateGridSpecificParameters():void
     {
         
     }

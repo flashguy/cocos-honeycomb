@@ -12,12 +12,12 @@ export class CircleShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends 
     {
         super(placementConstructor);
         
-        let x:number = -radius;
+        let r:number = radius;
+        let x:number = -r;
         let y:number = 0;
-        let error:number = 2 - 2 * radius;
-        let index:number = 0;
+        let error:number = 2 - 2 * r;
 
-        if (radius <= 0)
+        if (r <= 0)
         {
             this.add(centerPos.clone());
         }
@@ -38,14 +38,14 @@ export class CircleShapeBasedOnBresenhamAlgorithm<T extends IPlacement> extends 
                     this.add(v3(centerPos.x + y, centerPos.y + x));
                 }
 
-                index++;
-                radius = error;
+                r = error;
 
-                if (radius <= y) 
+                if (r <= y) 
                     error += ++y * 2 + 1;
 
-                if (radius > x || error > y)
+                if (r > x || error > y)
                     error += ++x * 2 + 1;
+
             } while (x < 0);
         }
     }

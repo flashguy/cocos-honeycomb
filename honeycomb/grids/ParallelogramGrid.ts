@@ -110,7 +110,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
         }
     }
 
-    protected override calculateGridSpecificPrameters():void
+    protected override calculateGridSpecificParameters():void
     {
         switch (this._cell.type)
         {

@@ -29,7 +29,7 @@ export abstract class Grid<T extends IPlacement>
     }
 
     protected abstract setNeighbors():void;
-    protected abstract calculateGridSpecificPrameters():void;
+    protected abstract calculateGridSpecificParameters():void;
 
     protected createPlacement():T
     {
@@ -39,7 +39,7 @@ export abstract class Grid<T extends IPlacement>
     protected initialize():void
     {
         this.setNeighbors();
-        this.calculateGridSpecificPrameters();
+        this.calculateGridSpecificParameters();
     }
 
     protected getNeighbor(cellPos:Vec3, location:Location):Vec3
@@ -115,12 +115,12 @@ export abstract class Grid<T extends IPlacement>
         return Vec3.distance(gridStartPos, gridEndPos);
     }
     
-    public offsetToCube(vec:Vec3)
+    public offsetToCube(vec:Vec3):Vec3
     {
         return vec;
     }
     
-    public cubeToOffset(vec:Vec3)
+    public cubeToOffset(vec:Vec3):Vec3
     {
         return vec;
     }

@@ -4,7 +4,7 @@ import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 @ccclass('HexagonCell')
-export class HexagonCell extends Cell
+export abstract class HexagonCell extends Cell
 {
     protected _asRegularPolygon:boolean = false;
     protected _outerRadius:number;

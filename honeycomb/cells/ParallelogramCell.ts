@@ -4,7 +4,7 @@ import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
 @ccclass('ParallelogramCell')
-export class ParallelogramCell extends Cell
+export abstract class ParallelogramCell extends Cell
 {
     protected _widthSkew:number;
     protected _heightSkew:number;

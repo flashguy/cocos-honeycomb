@@ -139,7 +139,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         }
     }
 
-    protected override calculateGridSpecificPrameters():void
+    protected override calculateGridSpecificParameters():void
     {
         switch (this._cell.type)
         {
@@ -633,7 +633,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return HMath.cubeDistance(this.offsetToCube(gridStartPos), this.offsetToCube(gridEndPos));
     }
     
-    public offsetToCube(vec:Vec3)
+    public offsetToCube(vec:Vec3):Vec3
     {
         let x:number = vec.x;
         let y:number = vec.y;
@@ -667,7 +667,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
         return v3(x, y, z);
     }
     
-    public cubeToOffset(vec:Vec3)
+    public cubeToOffset(vec:Vec3):Vec3
     {
         let x:number = vec.x;
         let y:number = vec.y;
