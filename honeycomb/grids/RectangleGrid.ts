@@ -35,47 +35,15 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
 
     protected override calculateGridSpecificPrameters():void
     {
-        switch (this._cell.type)
-        {
-            case CellType.PARALLELOGRAM_TOP:
-            case CellType.PARALLELOGRAM_BOTTOM:
-            {
-                this._shift.set(this._cell.width * (this._cell as ParallelogramCell).widthSkew,
-                                this._cell.height * (this._cell as ParallelogramCell).heightSkew,
-                                0);
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
+        
     }
 
     public override gridToWorld(cellPos:Vec3):Vec3
     {
         let result:Vec3 = v3();
         
-        switch (this._cell.type)
-        {
-            case CellType.PARALLELOGRAM_TOP:
-            {
-                result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) - cellPos.y * this._shift.x;
-                result.y = this._anchor.y + cellPos.y * (this._cell.height - this._shift.y + this._gap.y) + cellPos.x * this._shift.y;
-                break;
-            }
-            case CellType.PARALLELOGRAM_BOTTOM:
-            {
-                result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) + cellPos.y * this._shift.x;
-                result.y = this._anchor.y + cellPos.y * (this._cell.height - this._shift.y + this._gap.y) - cellPos.x * this._shift.y;
-                break;
-            }
-            default:
-            {
-                result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x);
-                result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y);
-            }
-        }
+        result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x);
+        result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y);
 
         return result;
     }
@@ -84,53 +52,8 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
     {
         let result:Vec3 = v3();
 
-        switch (this._cell.type)
-        {
-            case CellType.PARALLELOGRAM_TOP:
-            {
-                const a:number = this._cell.width - this._shift.x + this._gap.x;
-                const b:number = -this._shift.x;
-                const c:number = this._shift.y;
-                const d:number = this._cell.height - this._shift.y + this._gap.y;
-                const determinant:number = a * d - b * c;
-                const u:number = wopldPoint.x - this._anchor.x;
-                const v:number = wopldPoint.y - this._anchor.y;
-
-                const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
-                const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
-
-                const gridX:number = (d * u - b * v) / determinant - centerX;
-                const gridY:number = (-c * u + a * v) / determinant - centerY;
-
-                result.set(Math.round(gridX), Math.round(gridY));
-                break;
-            }
-            case CellType.PARALLELOGRAM_BOTTOM:
-            {
-                const a:number = this._cell.width - this._shift.x + this._gap.x;
-                const b:number = this._shift.x;
-                const c:number = -this._shift.y;
-                const d:number = this._cell.height - this._shift.y + this._gap.y;
-                const determinant:number = a * d - b * c;
-                const u:number = wopldPoint.x - this._anchor.x;
-                const v:number = wopldPoint.y - this._anchor.y;
-
-                const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
-                const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
-
-                const gridX:number = (d * u - b * v) / determinant - centerX;
-                const gridY:number = (-c * u + a * v) / determinant - centerY;
-
-                result.set(Math.round(gridX), Math.round(gridY));
-                break;
-            }
-            default:
-            {
-                result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
-                result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
-                break;
-            }
-        }
+        result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
+        result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
         
         let location:Location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false);
      

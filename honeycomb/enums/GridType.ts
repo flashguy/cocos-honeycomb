@@ -7,5 +7,6 @@ export enum GridType
     HALF_SHIFTED,
     RHOMB,
     PARALLELOGRAM,
+    TRIMETRIC,
 }
 Enum(GridType);
