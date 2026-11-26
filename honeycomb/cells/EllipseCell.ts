@@ -29,16 +29,16 @@ export class EllipseCell extends Cell
         
     }
 
-    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
     {
-        let tempPoint:Vec3 = this._center.clone().add(gridToWopldPoint);
-        let ellipseHit:number = Math.pow(wopldPoint.x - tempPoint.x, 2) / Math.pow(this.halfWidth, 2)
-                              + Math.pow(wopldPoint.y - tempPoint.y, 2) / Math.pow(this.halfHeight, 2);
+        let tempPoint:Vec3 = this._center.clone().add(gridToWorldPoint);
+        let ellipseHit:number = Math.pow(worldPoint.x - tempPoint.x, 2) / Math.pow(this.halfWidth, 2)
+                              + Math.pow(worldPoint.y - tempPoint.y, 2) / Math.pow(this.halfHeight, 2);
         
         // ellipseHit > 1 находимся за эллипсом
         // _tempOvalHit == 1 находимся на краю эллипса ellipseHit < 1 находимся внутри эллипса
         if (ellipseHit > 1)
-            return defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : Location.OUT;
+            return defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : Location.OUT;
         else
             return Location.IN;
     }

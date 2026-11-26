@@ -48,14 +48,14 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):T
+    public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
 
-        result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
-        result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
+        result.x = Math.floor((worldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
+        result.y = Math.floor((worldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
         
-        let location:Location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false);
+        let location:Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false);
      
         switch (location)
         {

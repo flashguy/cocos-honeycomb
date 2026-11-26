@@ -281,7 +281,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):T
+    public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
         let location:Location;
@@ -298,8 +298,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                     const c:number = this._cell.height - this._shift.y * 2 + this._gap.y;
                     const d:number = this._shift.y + this._gap.y;
                     const determinant:number = a * d - b * c;
-                    const u:number = wopldPoint.x - this._anchor.x;
-                    const v:number = wopldPoint.y - this._anchor.y;
+                    const u:number = worldPoint.x - this._anchor.x;
+                    const v:number = worldPoint.y - this._anchor.y;
 
                     const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                     const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -317,7 +317,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -327,8 +327,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                 }
                 else
                 {
-                    result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y - this._shift.y));
-                    result.x = Math.floor(((wopldPoint.x - this._anchor.x) + result.y * this._cell.halfWidth) / (this._cell.width + this._gap.x));
+                    result.y = Math.floor((worldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y - this._shift.y));
+                    result.x = Math.floor(((worldPoint.x - this._anchor.x) + result.y * this._cell.halfWidth) / (this._cell.width + this._gap.x));
                 }
                 break;
             }
@@ -341,8 +341,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                     const c:number = this._cell.height - this._shift.y * 2 + this._gap.y;
                     const d:number = this._cell.height - this._shift.y + this._gap.y;
                     const determinant:number = a * d - b * c;
-                    const u:number = wopldPoint.x - this._anchor.x;
-                    const v:number = wopldPoint.y - this._anchor.y;
+                    const u:number = worldPoint.x - this._anchor.x;
+                    const v:number = worldPoint.y - this._anchor.y;
 
                     const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                     const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -360,7 +360,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -370,8 +370,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                 }
                 else
                 {
-                    result.y = Math.floor((wopldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y - this._shift.y));
-                    result.x = Math.floor(((wopldPoint.x - this._anchor.x) - result.y * this._cell.halfWidth) / (this._cell.width + this._gap.x));
+                    result.y = Math.floor((worldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y - this._shift.y));
+                    result.x = Math.floor(((worldPoint.x - this._anchor.x) - result.y * this._cell.halfWidth) / (this._cell.width + this._gap.x));
                 }
                 break;
             }
@@ -384,8 +384,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                     const c:number = this._shift.y + this._gap.y;
                     const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
                     const determinant:number = a * d - b * c;
-                    const u:number = wopldPoint.x - this._anchor.x;
-                    const v:number = wopldPoint.y - this._anchor.y;
+                    const u:number = worldPoint.x - this._anchor.x;
+                    const v:number = worldPoint.y - this._anchor.y;
 
                     const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                     const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -403,7 +403,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -413,8 +413,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                 }
                 else
                 {
-                    result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
-                    result.y = Math.floor(((wopldPoint.y - this._anchor.y) + result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                    result.x = Math.floor((worldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
+                    result.y = Math.floor(((worldPoint.y - this._anchor.y) + result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
                 }
                 break;
             }
@@ -427,8 +427,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                     const c:number = this._cell.height - this._shift.y + this._gap.y;
                     const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
                     const determinant:number = a * d - b * c;
-                    const u:number = wopldPoint.x - this._anchor.x;
-                    const v:number = wopldPoint.y - this._anchor.y;
+                    const u:number = worldPoint.x - this._anchor.x;
+                    const v:number = worldPoint.y - this._anchor.y;
 
                     const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                     const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -446,7 +446,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -456,14 +456,14 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                 }
                 else
                 {
-                    result.x = Math.floor((wopldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
-                    result.y = Math.floor(((wopldPoint.y - this._anchor.y) - result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
+                    result.x = Math.floor((worldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x - this._shift.x));
+                    result.y = Math.floor(((worldPoint.y - this._anchor.y) - result.x * this._cell.halfHeight) / (this._cell.height + this._gap.y));
                 }
                 break;
             }
         }
 
-        location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+        location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
 
         switch (location)
         {
@@ -475,7 +475,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             default:
             {
                 result.add(this.neighbors.get(location));
-                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                     
                 if (location == Location.IN)
                     placement = new this.placementConstructor(result, Location.IN);

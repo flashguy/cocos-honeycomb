@@ -91,7 +91,7 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):T
+    public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
 
@@ -106,8 +106,8 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
                 const c:number = this._shift.y;
                 const d:number = this._cell.height - this._shift.y + this._gap.y;
                 const determinant:number = a * d - b * c;
-                const u:number = wopldPoint.x - this._anchor.x;
-                const v:number = wopldPoint.y - this._anchor.y;
+                const u:number = worldPoint.x - this._anchor.x;
+                const v:number = worldPoint.y - this._anchor.y;
 
                 const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                 const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -125,8 +125,8 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
                 const c:number = -this._shift.y;
                 const d:number = this._cell.height - this._shift.y + this._gap.y;
                 const determinant:number = a * d - b * c;
-                const u:number = wopldPoint.x - this._anchor.x;
-                const v:number = wopldPoint.y - this._anchor.y;
+                const u:number = worldPoint.x - this._anchor.x;
+                const v:number = worldPoint.y - this._anchor.y;
 
                 const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
                 const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -143,7 +143,7 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
             }
         }
         
-        let location:Location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false);
+        let location:Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false);
      
         switch (location)
         {

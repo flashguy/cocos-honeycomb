@@ -127,7 +127,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         return result;
     }
 
-    public override worldToGrid(wopldPoint:Vec3):T
+    public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
         let location:Location;
@@ -140,8 +140,8 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             const c:number = this._cell.height - this._shift.y + this._gap.y;
             const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
             const determinant:number = a * d - b * c;
-            const u:number = wopldPoint.x - this._anchor.x;
-            const v:number = wopldPoint.y - this._anchor.y;
+            const u:number = worldPoint.x - this._anchor.x;
+            const v:number = worldPoint.y - this._anchor.y;
 
             const centerX:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
             const centerY:number = (-c * this._cell.halfWidth + a * this._cell.halfHeight) / determinant;
@@ -159,7 +159,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                         cellPos = candidate;
                 }
             }
@@ -174,8 +174,8 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             const c:number = this._shift.y + this._gap.y;
             const d:number = this._cell.height - this._shift.y * 2 + this._gap.y;
             const determinant:number = a * d - b * c;
-            const u:number = wopldPoint.x - this._anchor.x;
-            const v:number = wopldPoint.y - this._anchor.y;
+            const u:number = worldPoint.x - this._anchor.x;
+            const v:number = worldPoint.y - this._anchor.y;
 
             const centerS:number = (d * this._cell.halfWidth - b * this._cell.halfHeight) / determinant;
             const centerX:number = (a * this._cell.halfHeight - c * this._cell.halfWidth) / determinant;
@@ -194,7 +194,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(wopldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
                         cellPos = candidate;
                 }
             }
@@ -205,13 +205,13 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
         else
         {
             const shiftWithGap:Vec3 = this._shift.clone().add(this._gap); // добавляем _gap
-            const wopldPointWithAnchor:Vec3 = wopldPoint.clone().subtract(this._anchor); // добавляем _anchor
+            const worldPointWithAnchor:Vec3 = worldPoint.clone().subtract(this._anchor); // добавляем _anchor
 
-            result.x = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y + (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
-            result.y = Math.floor((wopldPointWithAnchor.y / shiftWithGap.y - (wopldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
+            result.x = Math.floor((worldPointWithAnchor.y / shiftWithGap.y + (worldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
+            result.y = Math.floor((worldPointWithAnchor.y / shiftWithGap.y - (worldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
         }
 
-        location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), true);
+        location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
 
         switch (location)
         {
@@ -224,7 +224,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             {
                 result.add(this.neighbors.get(location));
 
-                location = this._cell.isPointInside(wopldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
                 
                 if (location == Location.IN)
                     placement = new this.placementConstructor(result, Location.IN);

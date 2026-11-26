@@ -45,9 +45,9 @@ export class IsometricHexagonPointyCell extends HexagonCell
         this.edges.set(Location.LB, new Edge(this.getVertex(Location.LB), this.getVertex(Location.B)));
     }
 
-    public override isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
     {
-        return this.checkEdges(wopldPoint, gridToWopldPoint, defineQuadrant);
+        return this.checkEdges(worldPoint, gridToWorldPoint, defineQuadrant);
     }
 
     public override getVerticesOrder():Location[]

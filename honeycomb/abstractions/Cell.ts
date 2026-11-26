@@ -45,18 +45,18 @@ export abstract class Cell
         this.setEdges();
     }
 
-    protected checkEdges(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location
+    protected checkEdges(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
     {
-        let tempPoint:Vec3 = this._center.clone().add(gridToWopldPoint);
+        let tempPoint:Vec3 = this._center.clone().add(gridToWorldPoint);
         let location:Location = Location.IN;
 
         for (let [key, value] of this._edges)
         {
-            this._tempEdge.set(value).add(gridToWopldPoint);
+            this._tempEdge.set(value).add(gridToWorldPoint);
 
-            if (this._tempEdge.isPointOutOfEdge2D(wopldPoint))
+            if (this._tempEdge.isPointOutOfEdge2D(worldPoint))
             {
-                location = defineQuadrant ? this.defineQuadrant(wopldPoint, tempPoint) : key;
+                location = defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : key;
                 break;
             }
         }
@@ -64,15 +64,15 @@ export abstract class Cell
         return location;
     }
 
-    public defineQuadrant(wopldPoint:Vec3, centerPoint:Vec3):Location
+    public defineQuadrant(worldPoint:Vec3, centerPoint:Vec3):Location
     {
-        if (wopldPoint.x <= centerPoint.x)
-            return wopldPoint.y >= centerPoint.y ? Location.LT : Location.LB;
+        if (worldPoint.x <= centerPoint.x)
+            return worldPoint.y >= centerPoint.y ? Location.LT : Location.LB;
         else
-            return wopldPoint.y >= centerPoint.y ? Location.RT : Location.RB;
+            return worldPoint.y >= centerPoint.y ? Location.RT : Location.RB;
     }
 
-    public abstract isPointInside(wopldPoint:Vec3, gridToWopldPoint:Vec3, defineQuadrant:boolean):Location;
+    public abstract isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location;
     public abstract getVerticesOrder():Location[];
 
     public getVertex(key:Location):Vec3

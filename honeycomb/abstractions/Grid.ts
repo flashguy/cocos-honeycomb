@@ -106,7 +106,7 @@ export abstract class Grid<T extends IPlacement>
     }
 
     public abstract gridToWorld(cellPos:Vec3):Vec3;
-    public abstract worldToGrid(wopldPoint:Vec3):T;
+    public abstract worldToGrid(worldPoint:Vec3):T;
     public abstract getCellNeighbor(cellPos:Vec3, location:Location):Vec3;
     public abstract getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>;
 
