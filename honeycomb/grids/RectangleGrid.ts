@@ -39,9 +39,9 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         
     }
 
-    public override gridToWorld(cellPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3, out?:Vec3):Vec3
     {
-        let result:Vec3 = v3();
+        let result:Vec3 = out ?? v3();
         
         result.x = this._anchor.x + cellPos.x * (this._cell.width + this._gap.x);
         result.y = this._anchor.y + cellPos.y * (this._cell.height + this._gap.y);

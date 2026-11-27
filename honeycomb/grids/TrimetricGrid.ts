@@ -63,9 +63,9 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
         }
     }
 
-    public override gridToWorld(cellPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3, out?:Vec3):Vec3
     {
-        let result:Vec3 = v3();
+        let result:Vec3 = out ?? v3();
         
         switch (this._cell.type)
         {

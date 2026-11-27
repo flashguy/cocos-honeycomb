@@ -215,9 +215,9 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
         }
     }
 
-    public override gridToWorld(cellPos:Vec3):Vec3
+    public override gridToWorld(cellPos:Vec3, out?:Vec3):Vec3
     {
-        let result:Vec3 = v3();
+        let result:Vec3 = out ?? v3();
 
         switch (this._parallelogramGridType)
         {
@@ -256,6 +256,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                     result.x = this._anchor.x + cellPos.x * (this._cell.width - this._shift.x + this._gap.x) - cellPos.y * (this._cell.width - this._shift.x * 2 + this._gap.x);
                     result.y = this._anchor.y + cellPos.x * (this._shift.y + this._gap.y) + cellPos.y * (this._cell.height - this._shift.y * 2 + this._gap.y);
                 }
+                
                 else
                 {
                     result.x = (this._anchor.x + cellPos.x * (this._cell.width + this._gap.x)) - cellPos.x * this._shift.x;
