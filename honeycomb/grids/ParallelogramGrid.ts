@@ -489,14 +489,4 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
 
         return placement;
     }
-
-    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
-    {
-        return this.getNeighbor(cellPos, location);
-    }
-
-    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
-    {
-        return this.getNeighbors(cellPos);
-    }
 }

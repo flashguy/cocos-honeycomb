@@ -114,8 +114,17 @@ export abstract class Grid<T extends IPlacement>
 
     public abstract gridToWorld(cellPos:Vec3, out?:Vec3):Vec3;
     public abstract worldToGrid(worldPoint:Vec3):T;
-    public abstract getCellNeighbor(cellPos:Vec3, location:Location):Vec3;
-    public abstract getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>;
+
+    // INFO: дефолтные реализации для сеток без чётности рядов; HalfShiftedGrid переопределяет
+    public getCellNeighbor(cellPos:Vec3, location:Location):Vec3
+    {
+        return this.getNeighbor(cellPos, location);
+    }
+
+    public getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
+    {
+        return this.getNeighbors(cellPos);
+    }
 
     public getDistance(gridStartPos:Vec3, gridEndPos:Vec3):number
     {

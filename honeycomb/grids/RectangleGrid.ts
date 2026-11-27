@@ -59,14 +59,4 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         else
             return new this.placementConstructor(null, HitResult.OUT);
     }
-
-    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
-    {
-        return this.getNeighbor(cellPos, location);
-    }
-
-    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
-    {
-        return this.getNeighbors(cellPos);
-    }
 }
