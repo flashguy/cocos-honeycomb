@@ -56,7 +56,7 @@ export class RectangleGrid<T extends IPlacement> extends Grid<T>
         result.x = Math.floor((worldPoint.x - this._anchor.x) / (this._cell.width + this._gap.x));
         result.y = Math.floor((worldPoint.y - this._anchor.y) / (this._cell.height + this._gap.y));
         
-        const hitResult:HitResult | Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false);
+        const hitResult:HitResult | Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), false);
 
         if (hitResult == HitResult.IN)
             return new this.placementConstructor(result, HitResult.IN);

@@ -18,6 +18,9 @@ export abstract class Grid<T extends IPlacement>
     protected readonly neighborsShifted:Map<Location, Vec3> = new Map<Location, Vec3>();
     protected readonly diagonalsShifted:Map<Location, Vec3> = new Map<Location, Vec3>();
 
+    // INFO: переиспользуемый буфер для внутренних вызовов gridToWorld в worldToGrid (без аллокаций на клик)
+    protected readonly _gridToWorldScratch:Vec3 = v3();
+
     public get cell():Cell { return this._cell; }
     public get gap():Vec3 { return this._gap; }
     public get anchor():Vec3 { return this._anchor; }

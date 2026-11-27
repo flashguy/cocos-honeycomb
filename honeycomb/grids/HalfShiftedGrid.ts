@@ -400,7 +400,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
             // INFO: гексагон шире единичного квадрата решётки, поэтому после округления искомую ячейку
             // уточняем тем же приёмом, что и в хвосте метода: isPointInside + переход к соседу
-            hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+            hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
 
             let attempts:number = 0;
 
@@ -416,7 +416,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                     result = neighbor;
                 }
 
-                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
                 attempts++;
             }
         }
@@ -442,7 +442,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 
             // INFO: гексагон шире единичного квадрата решётки, поэтому после округления искомую ячейку
             // уточняем тем же приёмом, что и в хвосте метода: isPointInside + переход к соседю
-            hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+            hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
 
             let attempts:number = 0;
 
@@ -458,7 +458,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                     result = neighbor;
                 }
 
-                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
                 attempts++;
             }
         }
@@ -535,7 +535,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
             result.y = Math.floor((worldPoint.y - this._anchor.y + offsetPos.y) / (this._cell.height + this._gap.y));
         }
 
-        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
 
         switch (hitResult)
         {
@@ -549,7 +549,7 @@ export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
                 if (hitResult != HitResult.OUT)
                     result = this.getCellNeighbor(result, hitResult);
 
-                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), false); // Эта проверка нужна если между ячейками есть отступ
 
                 if (hitResult == HitResult.IN)
                     placement = new this.placementConstructor(result, HitResult.IN);

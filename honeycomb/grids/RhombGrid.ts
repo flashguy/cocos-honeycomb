@@ -160,7 +160,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate, this._gridToWorldScratch), false) == HitResult.IN)
                         cellPos = candidate;
                 }
             }
@@ -195,7 +195,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate, this._gridToWorldScratch), false) == HitResult.IN)
                         cellPos = candidate;
                 }
             }
@@ -212,7 +212,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             result.y = Math.floor((worldPointWithAnchor.y / shiftWithGap.y - (worldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
         }
 
-        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), true);
 
         switch (hitResult)
         {
@@ -226,7 +226,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 if (hitResult != HitResult.OUT)
                     result.add(this.neighbors.get(hitResult));
 
-                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), false); // Эта проверка нужна если между ячейками есть отступ
 
                 if (hitResult == HitResult.IN)
                     placement = new this.placementConstructor(result, HitResult.IN);

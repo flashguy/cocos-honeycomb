@@ -144,7 +144,7 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
             }
         }
         
-        const hitResult:HitResult | Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false);
+        const hitResult:HitResult | Location = this._cell.isPointInside(worldPoint, this.gridToWorld(result, this._gridToWorldScratch), false);
 
         if (hitResult == HitResult.IN)
             return new this.placementConstructor(result, HitResult.IN);
