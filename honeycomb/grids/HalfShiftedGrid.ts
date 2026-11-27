@@ -13,7 +13,6 @@ const { ccclass } = _decorator;
 @ccclass('HalfShiftedGrid')
 export class HalfShiftedGrid<T extends IPlacement> extends Grid<T>
 {
-    protected _shift:Vec3 = v3();
     protected _shiftGridType:ShiftedGridType = ShiftedGridType.NONE;
 
     public get shiftGridType():ShiftedGridType { return this._shiftGridType; }

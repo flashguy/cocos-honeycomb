@@ -12,7 +12,6 @@ const { ccclass } = _decorator;
 @ccclass('RhombGrid')
 export class RhombGrid<T extends IPlacement> extends Grid<T>
 {
-    protected _shift:Vec3 = v3();
     protected _rhombGridType:RhombGridType = RhombGridType.NONE;
 
     constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,

@@ -4,15 +4,11 @@ import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
 import { HitResult } from '../enums/HitResult';
 import { IPlacement } from '../placements/IPlacement';
-import { CellType } from '../enums/CellType';
-import { ParallelogramCell } from '../cells/ParallelogramCell';
 const { ccclass } = _decorator;
 
 @ccclass('RectangleGrid')
 export class RectangleGrid<T extends IPlacement> extends Grid<T>
 {
-    protected _shift:Vec3 = v3();
-
     constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {

@@ -12,7 +12,6 @@ const { ccclass } = _decorator;
 @ccclass('ParallelogramGrid')
 export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
 {
-    protected _shift:Vec3 = v3();
     protected _parallelogramGridType:ParallelogramGridType = ParallelogramGridType.NONE;
 
     constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,

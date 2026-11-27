@@ -12,6 +12,9 @@ export abstract class Grid<T extends IPlacement>
     protected _gap:Vec3 = v3();
     protected _anchor:Vec3 = v3();
 
+    // INFO: сеточно-специфичный сдвиг, считается в calculateGridSpecificParameters()
+    protected _shift:Vec3 = v3();
+
     protected readonly neighbors:Map<Location, Vec3> = new Map<Location, Vec3>();
     protected readonly diagonals:Map<Location, Vec3> = new Map<Location, Vec3>();
     
