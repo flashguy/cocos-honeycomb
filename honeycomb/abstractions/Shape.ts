@@ -70,8 +70,9 @@ export abstract class Shape<T extends IPlacement>
     {
         if (columnTo < columnFrom)
         {
-            columnFrom *= -1;
-            columnTo *= -1;
+            const temp:number = columnFrom;
+            columnFrom = columnTo;
+            columnTo = temp;
         }
 
         for (let c:number = columnFrom; c <= columnTo; c++)
