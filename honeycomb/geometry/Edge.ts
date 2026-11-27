@@ -76,7 +76,7 @@ export class Edge
         }
     }
 
-    public intersectedWithEdge(line:Edge):Vec3
+    public intersectedWithEdge(line:Edge):Vec3 | null
     {
         const A1:number = this.v2.y - this.v1.y;
         const A2:number = line.v2.y - line.v1.y;
@@ -86,9 +86,13 @@ export class Edge
                           (this.v2.x - this.v1.x) * this.v1.y;
         const C2:number = (line.v2.y - line.v1.y) * line.v1.x -
                           (line.v2.x - line.v1.x) * line.v1.y;
+        const denominator:number = A1 * B2 - A2 * B1;
 
-        return v3(((C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1)),
-                 -((A1 * C2 - A2 * C1) / (A1 * B2 - A2 * B1))
+        if (denominator == 0)
+            return null; // прямые параллельны или совпадают, единственной точки пересечения нет
+
+        return v3(((C1 * B2 - C2 * B1) / denominator),
+                 -((A1 * C2 - A2 * C1) / denominator)
         );
     }
 
