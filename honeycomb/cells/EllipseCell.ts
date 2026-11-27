@@ -1,6 +1,7 @@
 import { _decorator, Vec3 } from 'cc';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { CellType } from '../enums/CellType';
 const { ccclass } = _decorator;
 
@@ -29,7 +30,7 @@ export class EllipseCell extends Cell
         
     }
 
-    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location
     {
         let tempPoint:Vec3 = this._center.clone().add(gridToWorldPoint);
         let ellipseHit:number = Math.pow(worldPoint.x - tempPoint.x, 2) / Math.pow(this.halfWidth, 2)
@@ -38,9 +39,9 @@ export class EllipseCell extends Cell
         // ellipseHit > 1 находимся за эллипсом
         // _tempOvalHit == 1 находимся на краю эллипса ellipseHit < 1 находимся внутри эллипса
         if (ellipseHit > 1)
-            return defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : Location.OUT;
+            return defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : HitResult.OUT;
         else
-            return Location.IN;
+            return HitResult.IN;
     }
 
     public override getVerticesOrder():Location[]

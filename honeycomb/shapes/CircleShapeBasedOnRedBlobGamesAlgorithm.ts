@@ -2,6 +2,7 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/circle-drawing/
@@ -9,7 +10,7 @@ const { ccclass } = _decorator;
 @ccclass('CircleShapeBasedOnRedBlobGamesAlgorithm')
 export class CircleShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 centerPos:Vec3, radius:number, smooth:boolean = false, fill:boolean = false)
     {
         super(placementConstructor);

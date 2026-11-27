@@ -2,6 +2,7 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 @ccclass('Cell')
@@ -45,10 +46,10 @@ export abstract class Cell
         this.setEdges();
     }
 
-    protected checkEdges(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
+    protected checkEdges(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location
     {
         let tempPoint:Vec3 = this._center.clone().add(gridToWorldPoint);
-        let location:Location = Location.IN;
+        let hitResult:HitResult | Location = HitResult.IN;
 
         for (let [key, value] of this._edges)
         {
@@ -56,12 +57,12 @@ export abstract class Cell
 
             if (this._tempEdge.isPointOutOfEdge2D(worldPoint))
             {
-                location = defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : key;
+                hitResult = defineQuadrant ? this.defineQuadrant(worldPoint, tempPoint) : key;
                 break;
             }
         }
 
-        return location;
+        return hitResult;
     }
 
     public defineQuadrant(worldPoint:Vec3, centerPoint:Vec3):Location
@@ -72,7 +73,7 @@ export abstract class Cell
             return worldPoint.y >= centerPoint.y ? Location.RT : Location.RB;
     }
 
-    public abstract isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location;
+    public abstract isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location;
     public abstract getVerticesOrder():Location[];
 
     public getVertex(key:Location):Vec3

@@ -1,6 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Cell } from './Cell';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
@@ -21,7 +22,7 @@ export abstract class Grid<T extends IPlacement>
     public get gap():Vec3 { return this._gap; }
     public get anchor():Vec3 { return this._anchor; }
 
-    constructor(protected placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
+    constructor(protected placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         this._cell = cell;
         this._anchor = anchor;
@@ -33,7 +34,7 @@ export abstract class Grid<T extends IPlacement>
 
     protected createPlacement():T
     {
-        return new this.placementConstructor(v3(), Location.NONE, 0);
+        return new this.placementConstructor(v3(), HitResult.IN, 0);
     }
 
     protected initialize():void

@@ -3,6 +3,7 @@ import { Grid } from '../abstractions/Grid';
 import { ParallelogramGridType } from '../enums/ParallelogramGridType';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
 import { IPlacement } from '../placements/IPlacement';
@@ -14,7 +15,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
     protected _shift:Vec3 = v3();
     protected _parallelogramGridType:ParallelogramGridType = ParallelogramGridType.NONE;
 
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 parallelogramType:ParallelogramGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -284,8 +285,8 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
     public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
-        let location:Location;
-        let placement:T = new this.placementConstructor(null, Location.OUT);
+        let hitResult:HitResult | Location;
+        let placement:T = new this.placementConstructor(null, HitResult.OUT);
 
         switch (this._parallelogramGridType)
         {
@@ -317,7 +318,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -360,7 +361,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -403,7 +404,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -446,7 +447,7 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
                         {
                             const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                            if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                                 cellPos = candidate;
                         }
                     }
@@ -463,22 +464,24 @@ export class ParallelogramGrid<T extends IPlacement> extends Grid<T>
             }
         }
 
-        location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
 
-        switch (location)
+        switch (hitResult)
         {
-            case Location.IN:
+            case HitResult.IN:
             {
-                placement = new this.placementConstructor(result, Location.IN);
+                placement = new this.placementConstructor(result, HitResult.IN);
                 break;
             }
             default:
             {
-                result.add(this.neighbors.get(location));
-                location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
-                    
-                if (location == Location.IN)
-                    placement = new this.placementConstructor(result, Location.IN);
+                if (hitResult != HitResult.OUT)
+                    result.add(this.neighbors.get(hitResult));
+
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+
+                if (hitResult == HitResult.IN)
+                    placement = new this.placementConstructor(result, HitResult.IN);
 
                 break;
             }

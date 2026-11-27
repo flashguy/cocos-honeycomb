@@ -1,6 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 // x - column
@@ -12,14 +13,14 @@ export abstract class Shape<T extends IPlacement>
     protected readonly _placements:Array<T> = new Array<T>();
     protected readonly _placementsMap:Map<string, T> = new Map<string, T>();
 
-    constructor(protected placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T)
+    constructor(protected placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T)
     {
         
     }
 
     protected createPlacement():T
     {
-        return new this.placementConstructor(v3(), Location.NONE, 0);
+        return new this.placementConstructor(v3(), HitResult.IN, 0);
     }
 
     protected vec3ToKey(vec3:Vec3):string

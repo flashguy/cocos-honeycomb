@@ -2,6 +2,7 @@ import { _decorator, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 // https://www.redblobgames.com/grids/line-drawing/
@@ -9,7 +10,7 @@ const { ccclass } = _decorator;
 @ccclass('LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm')
 export class LineShapeBasedOnRedBlobGamesSuperCoverAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);

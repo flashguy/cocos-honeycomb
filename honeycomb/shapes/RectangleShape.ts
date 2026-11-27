@@ -1,6 +1,7 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { IPlacement } from '../placements/IPlacement';
 const { ccclass } = _decorator;
 
@@ -13,7 +14,7 @@ export class RectangleShape<T extends IPlacement> extends Shape<T>
     public get columns():number { return this._columns; }
     public get rows():number { return this._rows; }
 
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 columns:number, rows:number, startPos:Vec3, directionTo:Location, fill:boolean = false)
     {
         super(placementConstructor);

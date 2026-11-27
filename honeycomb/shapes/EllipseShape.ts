@@ -2,12 +2,13 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 @ccclass('EllipseShape')
 export class EllipseShape<T extends IPlacement> extends Shape<T>
 {
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 centerPos:Vec3, radiusX:number, radiusY:number, fill:boolean = false)
     {
         super(placementConstructor);

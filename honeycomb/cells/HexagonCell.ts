@@ -1,6 +1,7 @@
 import { _decorator, toRadian, v3, Vec3 } from 'cc';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 @ccclass('HexagonCell')
@@ -51,7 +52,7 @@ export abstract class HexagonCell extends Cell
         
     }
 
-    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location
     {
         return this.checkEdges(worldPoint, gridToWorldPoint, defineQuadrant);
     }

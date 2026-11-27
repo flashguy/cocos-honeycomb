@@ -3,6 +3,7 @@ import { Cell } from '../abstractions/Cell';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 @ccclass('RhombCell')
@@ -38,7 +39,7 @@ export class RhombCell extends Cell
         this._edges.set(Location.LT, new Edge(this.getVertex(Location.T), this.getVertex(Location.L)));
     }
 
-    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location
     {
         return this.checkEdges(worldPoint, gridToWorldPoint, defineQuadrant);
     }

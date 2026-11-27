@@ -1,5 +1,6 @@
 import { _decorator, v3, Vec3 } from 'cc';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { HexagonCell } from './HexagonCell';
 import { Edge } from '../geometry/Edge';
 import { CellType } from '../enums/CellType';
@@ -45,7 +46,7 @@ export class IsometricHexagonPointyCell extends HexagonCell
         this.edges.set(Location.LB, new Edge(this.getVertex(Location.LB), this.getVertex(Location.B)));
     }
 
-    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):Location
+    public override isPointInside(worldPoint:Vec3, gridToWorldPoint:Vec3, defineQuadrant:boolean):HitResult | Location
     {
         return this.checkEdges(worldPoint, gridToWorldPoint, defineQuadrant);
     }

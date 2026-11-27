@@ -7,43 +7,25 @@ import { Enum } from 'cc';
 // |     |     |
 // LB -- B -- RB
 
-// вид сзади
-// LU -- U -- RU
-// |     |     |
-// L  -- C --  R
-// |     |     |
-// LD -- D -- RD
-
+// INFO: числовые значения сохранены от прежней версии enum — в .scene/.prefab viewer'а
+// значения Location сериализуются числами, менять нумерацию нельзя
 export enum Location
 {
-    NONE, // NONE
+    C = 3,   // CENTER - horizontal and vertical or horizontal and vertical and up and down
 
-    OUT, // OUTSIDE
-    IN,  // INSIDE
-    
-    C,   // CENTER - horizontal and vertical or horizontal and vertical and up and down
-    
-    L,   // LEFT
-    T,   // TOP
-    R,   // RIGHT
-    B,   // BOTTOM
-    
-    BC,  // BOTTOM CENTER
-    RC,  // RIGHT CENTER
-    TC,  // TOP CENTER
-    LC,  // LEFT CENTER
+    L = 4,   // LEFT
+    T = 5,   // TOP
+    R = 6,   // RIGHT
+    B = 7,   // BOTTOM
 
-    LB,  // LEFT BOTTOM
-    RB,  // RIGHT BOTTOM
-    RT,  // RIGHT TOP
-    LT,  // LEFT TOP
-    
-    U,   // UP
-    D,   // DOWN
+    BC = 8,  // BOTTOM CENTER
+    RC = 9,  // RIGHT CENTER
+    TC = 10, // TOP CENTER
+    LC = 11, // LEFT CENTER
 
-    LD,  // LEFT DOWN
-    LU,  // LEFT UP
-    RU,  // RIGHT UP
-    RD,  // RIGHT DOWN
+    LB = 12, // LEFT BOTTOM
+    RB = 13, // RIGHT BOTTOM
+    RT = 14, // RIGHT TOP
+    LT = 15, // LEFT TOP
 }
 Enum(Location);

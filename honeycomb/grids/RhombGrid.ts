@@ -2,6 +2,7 @@ import { _decorator, v3, Vec3 } from 'cc';
 import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 import { RhombGridType } from '../enums/RhombGridType';
 import { CellType } from '../enums/CellType';
 import { HexagonCell } from '../cells/HexagonCell';
@@ -14,7 +15,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     protected _shift:Vec3 = v3();
     protected _rhombGridType:RhombGridType = RhombGridType.NONE;
 
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 rhombType:RhombGridType, cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
@@ -130,8 +131,8 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
     public override worldToGrid(worldPoint:Vec3):T
     {
         let result:Vec3 = v3();
-        let location:Location;
-        let placement:T = new this.placementConstructor(null, Location.OUT);
+        let hitResult:HitResult | Location;
+        let placement:T = new this.placementConstructor(null, HitResult.OUT);
 
         if (this._cell.type == CellType.ISO_HEXAGON_FLAT)
         {
@@ -159,7 +160,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                         cellPos = candidate;
                 }
             }
@@ -194,7 +195,7 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
                 {
                     const candidate:Vec3 = v3(result.x + dx, result.y + dy);
 
-                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == Location.IN)
+                    if (this._cell.isPointInside(worldPoint, this.gridToWorld(candidate), false) == HitResult.IN)
                         cellPos = candidate;
                 }
             }
@@ -211,23 +212,24 @@ export class RhombGrid<T extends IPlacement> extends Grid<T>
             result.y = Math.floor((worldPointWithAnchor.y / shiftWithGap.y - (worldPointWithAnchor.x - shiftWithGap.x) / shiftWithGap.x) * 0.5);
         }
 
-        location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
+        hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), true);
 
-        switch (location)
+        switch (hitResult)
         {
-            case Location.IN:
+            case HitResult.IN:
             {
-                placement = new this.placementConstructor(result, Location.IN);
+                placement = new this.placementConstructor(result, HitResult.IN);
                 break;
             }
             default:
             {
-                result.add(this.neighbors.get(location));
+                if (hitResult != HitResult.OUT)
+                    result.add(this.neighbors.get(hitResult));
 
-                location = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
-                
-                if (location == Location.IN)
-                    placement = new this.placementConstructor(result, Location.IN);
+                hitResult = this._cell.isPointInside(worldPoint, this.gridToWorld(result), false); // Эта проверка нужна если между ячейками есть отступ
+
+                if (hitResult == HitResult.IN)
+                    placement = new this.placementConstructor(result, HitResult.IN);
 
                 break;
             }

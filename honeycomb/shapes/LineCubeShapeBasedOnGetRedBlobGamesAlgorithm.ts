@@ -4,12 +4,13 @@ import { Shape } from '../abstractions/Shape';
 import { IPlacement } from '../placements/IPlacement';
 import { HMath } from '../utils/HMath';
 import { Location } from '../enums/Location';
+import { HitResult } from '../enums/HitResult';
 const { ccclass } = _decorator;
 
 @ccclass('LineCubeShapeBasedOnGetRedBlobGamesAlgorithm')
 export class LineCubeShapeBasedOnGetRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
 {
-    constructor(placementConstructor: new (cellPos?:Vec3, location?:Location, index?:number) => T,
+    constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 grid:Grid<T>, startPos:Vec3, endPos:Vec3)
     {
         super(placementConstructor);
