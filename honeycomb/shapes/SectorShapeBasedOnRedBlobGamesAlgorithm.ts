@@ -5,7 +5,7 @@ import { HMath } from '../utils/HMath';
 import { Location } from '../enums/Location';
 const { ccclass } = _decorator;
 
-// https://www.redblobgames.com/grids/circle-drawing/
+// https://www.redblobgames.com/grids/circle-drawing/ (раздел "Cones / sectors")
 
 @ccclass('SectorShapeBasedOnRedBlobGamesAlgorithm')
 export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> extends Shape<T>
@@ -15,40 +15,61 @@ export class SectorShapeBasedOnRedBlobGamesAlgorithm<T extends IPlacement> exten
     {
         super(placementConstructor);
 
-        // TODO: + 1 к ширине или высоте чтоб было четное число
-        // TODO не работает :( починить
+        // INFO: bounding box вокруг круга
+        const top:number = Math.ceil(centerPos.y - radius);
+        const bottom:number = Math.floor(centerPos.y + radius);
+        const left:number = Math.ceil(centerPos.x - radius);
+        const right:number = Math.floor(centerPos.x + radius);
 
-        let columns:number = (radius * 2) + 1
-        let rows:number = (radius * 2) + 1;
+        const halfSector:number = sector / 2;
+        const radiusSquared:number = radius * radius;
 
-        let cellPos:Vec3 = v3();
-        cellPos.set(centerPos.x - Math.floor(columns / 2), centerPos.y - Math.floor(rows / 2));
-
-        let stepX:number;
-        let stepY:number;
-
-        for (let i:number = 0; i < (columns * rows); i++)
+        for (let y = top; y <= bottom; y++)
         {
-            stepX = cellPos.x + (i % columns);
-            stepY = cellPos.y + Math.floor(i / columns);
-
-            if (Vec3.distance(v3(stepX, stepY), centerPos) > radius)
-                continue;
-
-            const inRange = ({x, y}) =>
+            for (let x = left; x <= right; x++)
             {
-                let θ:number = 180 / Math.PI * Math.atan2(y - centerPos.y, x - centerPos.x);
-                return HMath.degreesApart(angle, θ) <= sector / 2;
-            };
+                const dx:number = x - centerPos.x;
+                const dy:number = y - centerPos.y;
 
-            const R = coneExpansion;
+                // условие по радиусу
+                if (dx * dx + dy * dy > radiusSquared)
+                    continue;
 
-            for (let corner of [[-R, -R], [-R, +R],
-                                [+R, -R], [+R, +R]])
-            {
-                if (inRange({x: stepX + corner[0], y: stepY + corner[1]}))
-                    this.add(v3(stepX, stepY));
+                // центральная ячейка конуса входит всегда
+                if (dx == 0 && dy == 0)
+                {
+                    this.add(v3(x, y));
+                    continue;
+                }
+
+                // условие по углу: строгое — только центр ячейки;
+                // при coneExpansion > 0 мягкое — ещё 4 точки вокруг ячейки, входит любая попавшая
+                let include:boolean = this.isInSector(angle, halfSector, dx, dy);
+
+                if (!include && coneExpansion > 0)
+                {
+                    for (const corner of [[-coneExpansion, -coneExpansion], [-coneExpansion, coneExpansion],
+                                          [coneExpansion, -coneExpansion], [coneExpansion, coneExpansion]])
+                    {
+                        if (this.isInSector(angle, halfSector, dx + corner[0], dy + corner[1]))
+                        {
+                            include = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (include)
+                    this.add(v3(x, y));
             }
         }
+    }
+
+    private isInSector(angle:number, halfSector:number, dx:number, dy:number):boolean
+    {
+        const theta:number = 180 / Math.PI * Math.atan2(dy, dx);
+
+        // degreesApart учитывает переход через 0°/360°
+        return HMath.degreesApart(angle, theta) <= halfSector;
     }
 }
