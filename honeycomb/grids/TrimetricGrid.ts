@@ -1,37 +1,20 @@
 import { _decorator, v3, Vec3 } from 'cc';
-import { Grid } from '../abstractions/Grid';
 import { Cell } from '../abstractions/Cell';
 import { Location } from '../enums/Location';
 import { HitResult } from '../enums/HitResult';
 import { IPlacement } from '../placements/IPlacement';
 import { CellType } from '../enums/CellType';
 import { ParallelogramCell } from '../cells/ParallelogramCell';
+import { RectangleGrid } from './RectangleGrid';
 const { ccclass } = _decorator;
 
 @ccclass('TrimetricGrid')
-export class TrimetricGrid<T extends IPlacement> extends Grid<T>
+export class TrimetricGrid<T extends IPlacement> extends RectangleGrid<T>
 {
-    protected _shift:Vec3 = v3();
-
     constructor(placementConstructor: new (cellPos?:Vec3, hit?:HitResult, index?:number) => T,
                 cell:Cell, anchor:Vec3 = v3(), gap:Vec3 = v3())
     {
         super(placementConstructor, cell, anchor, gap);
-        
-        this.initialize();
-    }
-
-    protected override setNeighbors():void
-    {
-        this.neighbors.set(Location.L, v3(-1, 0));
-        this.neighbors.set(Location.T, v3(0, 1));
-        this.neighbors.set(Location.R, v3(1, 0));
-        this.neighbors.set(Location.B, v3(0, -1));
-        
-        this.diagonals.set(Location.LB, v3(-1, -1));
-        this.diagonals.set(Location.LT, v3(-1, 1));
-        this.diagonals.set(Location.RT, v3(1, 1));
-        this.diagonals.set(Location.RB, v3(1, -1));
     }
 
     protected override calculateGridSpecificParameters():void
@@ -150,15 +133,5 @@ export class TrimetricGrid<T extends IPlacement> extends Grid<T>
             return new this.placementConstructor(result, HitResult.IN);
         else
             return new this.placementConstructor(null, HitResult.OUT);
-    }
-
-    public override getCellNeighbor(cellPos:Vec3, location:Location):Vec3
-    {
-        return this.getNeighbor(cellPos, location);
-    }
-
-    public override getCellNeighbors(cellPos:Vec3):Map<Location, Vec3>
-    {
-        return this.getNeighbors(cellPos);
     }
 }

@@ -10,6 +10,9 @@ const { ccclass } = _decorator;
 @ccclass('Shape')
 export abstract class Shape<T extends IPlacement>
 {
+    // INFO: _placements — рабочий упорядоченный список (нужен для индексного доступа и сортировки),
+    // _placementsMap — тот же набор для O(1) проверки вхождения и отсечения дубликатов по значению
+    // координат (входящие Vec3 — разные объекты). Синхронизируются только через add(), удаления нет.
     protected readonly _placements:Array<T> = new Array<T>();
     protected readonly _placementsMap:Map<string, T> = new Map<string, T>();
 
